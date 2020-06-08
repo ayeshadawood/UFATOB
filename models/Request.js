@@ -13,20 +13,14 @@ const RequestSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  fathername: {
+  fatherName: {
     type: String,
   },
   cnic: {
     type: String,
-    required: true,
   },
-  dateofbirth: {
+  dateOfBirth: {
     type: String,
-    required: true,
-  },
-  gender: {
-    type: String,
-    required: true,
   },
   institute: {
     type: String,
@@ -34,13 +28,11 @@ const RequestSchema = mongoose.Schema({
   },
   campus: {
     type: String,
-    required: true,
   },
-  registrationnumber: {
+  registrationNumber: {
     type: String,
-    required: true,
   },
-  degreeprogram: {
+  degreeProgram: {
     type: String,
   },
   department: {
@@ -48,19 +40,19 @@ const RequestSchema = mongoose.Schema({
     required: true,
   },
   semester: {
-    type: String,
+    type: Number,
   },
-  requestdescription: {
+  description: {
     type: String,
     required: true,
   },
   status: {
     type: Number,
-    default: 0,
+    required: true,
   },
   date: {
     type: Date,
-    default: Date.now,
+    default: Date.now(),
   },
 });
 

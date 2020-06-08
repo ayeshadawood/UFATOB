@@ -8,7 +8,7 @@ import Table from 'components/Table/Table.js';
 import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
-import RequestListTabs from './RequestListTabs';
+import RequestTabs from './RequestTabs';
 
 const styles = {
   cardCategoryWhite: {
@@ -55,7 +55,7 @@ export default function TableList() {
             </p>
           </CardHeader>
           <CardBody>
-            <RequestListTabs />
+            <RequestTabs />
           </CardBody>
         </Card>
       </GridItem>
