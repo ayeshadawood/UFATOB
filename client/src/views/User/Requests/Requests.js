@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -6,6 +6,8 @@ import Card from 'components/Card/Card.js';
 import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import RequestTabs from './RequestTabs';
+import { Button } from '@material-ui/core';
+import { Link } from 'react-router-dom';
 
 const styles = {
   cardCategoryWhite: {
@@ -41,21 +43,29 @@ const useStyles = makeStyles(styles);
 
 export default function Requests() {
   const classes = useStyles();
+
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color='primary'>
-            <h4 className={classes.cardTitleWhite}>Fund Requests</h4>
-            <p className={classes.cardCategoryWhite}>
-              Below is a list of all the fund requests
-            </p>
-          </CardHeader>
-          <CardBody>
-            <RequestTabs />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <Fragment>
+      <Link to='/user/create-request'>
+        <Button color='primary' variant='contained'>
+          Create new request
+        </Button>
+      </Link>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color='primary'>
+              <h4 className={classes.cardTitleWhite}>Fund Requests</h4>
+              <p className={classes.cardCategoryWhite}>
+                Below is a list of all the fund requests
+              </p>
+            </CardHeader>
+            <CardBody>
+              <RequestTabs />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </Fragment>
   );
 }

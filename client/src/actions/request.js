@@ -4,42 +4,35 @@ import {
   ALL_REQUESTS_LOADED_FOR_USER,
   REQUEST_ERROR,
   REQUEST_LOADED,
+  REQUEST_CREATED,
 } from './types';
 
-// //Create fund request
-// export const createRequest = (
-//   formData,
-//   history,
-//   edit = false
-// ) => async dispatch => {
-//   try {
-//     const config = {
-//       headers: {
-//         "Content-Type": "application/json"
-//       }
-//     };
-//     const res = await axios.post("/api/request", formData, config);
+//Create fund request
+export const createRequest = (formData, history) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const res = await axios.post('/api/requests', formData, config);
 
-//     dispatch({
-//       type: ADD_REQUEST,
-//       payload: res.data
-//     });
-//     dispatch(setAlert("Request Dispatched", "success"));
-//     if (!edit) {
-//       history.push("/dashboard");
-//     }
-//   } catch (err) {
-//     const errors = err.response.data.errors;
+    dispatch({
+      type: REQUEST_CREATED,
+      payload: res.data,
+    });
 
-//     if (errors) {
-//       errors.forEach(error => dispatch(setAlert(error.msg, "danger")));
-//     }
-//     dispatch({
-//       type: REQUEST_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status }
-//     });
-//   }
-// };
+    dispatch(setAlert('Request Created', 'success'));
+
+    history.push('/user/requests');
+  } catch (err) {
+    const errors = err.response.data.errors;
+
+    if (errors) {
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+    }
+  }
+};
 
 // Get all requests for user
 export const getUserRequests = () => async (dispatch) => {

@@ -2,6 +2,7 @@ import {
   ALL_REQUESTS_LOADED_FOR_USER,
   REQUEST_ERROR,
   REQUEST_LOADED,
+  REQUEST_CREATED,
 } from '../actions/types';
 
 const initialState = {
@@ -27,6 +28,13 @@ export default function (state = initialState, action) {
         loading: false,
         errors: null,
         request: payload,
+      };
+    case REQUEST_CREATED:
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        requests: [...state.requests, payload],
       };
     case REQUEST_ERROR:
       return {
