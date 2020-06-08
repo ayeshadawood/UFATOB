@@ -11,6 +11,7 @@ import { Button } from '@material-ui/core';
 import Table from 'components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getUserRequests } from '../../../actions/request';
+import { Link } from 'react-router-dom';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -90,9 +91,12 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             request.title,
             request.institute,
             getRequestStatus(request.status),
-            <Button color='primary' variant='contained'>
-              Open
-            </Button>,
+            <Link to={`/user/request/${request._id}`}>
+              <Button color='primary' variant='contained'>
+                Open
+              </Button>
+              ,
+            </Link>,
           ],
         ];
       }
@@ -112,9 +116,12 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             request.name,
             request.title,
             request.institute,
-            <Button color='primary' variant='contained'>
-              Open
-            </Button>,
+            <Link to={`/user/request/${request._id}`}>
+              <Button color='primary' variant='contained'>
+                Open
+              </Button>
+              ,
+            </Link>,
           ],
         ];
       }
@@ -134,9 +141,12 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             request.name,
             request.title,
             request.institute,
-            <Button color='primary' variant='contained'>
-              Open
-            </Button>,
+            <Link to={`/user/request/${request._id}`}>
+              <Button color='primary' variant='contained'>
+                Open
+              </Button>
+              ,
+            </Link>,
           ],
         ];
       }

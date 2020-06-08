@@ -1,4 +1,8 @@
-import { ALL_REQUESTS_LOADED_FOR_USER, REQUEST_ERROR } from '../actions/types';
+import {
+  ALL_REQUESTS_LOADED_FOR_USER,
+  REQUEST_ERROR,
+  REQUEST_LOADED,
+} from '../actions/types';
 
 const initialState = {
   request: null,
@@ -16,6 +20,13 @@ export default function (state = initialState, action) {
         loading: false,
         errors: null,
         requests: payload,
+      };
+    case REQUEST_LOADED:
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        request: payload,
       };
     case REQUEST_ERROR:
       return {

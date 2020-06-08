@@ -1,6 +1,10 @@
 import axios from 'axios';
 import { setAlert } from './alert';
-import { ALL_REQUESTS_LOADED_FOR_USER, REQUEST_ERROR } from './types';
+import {
+  ALL_REQUESTS_LOADED_FOR_USER,
+  REQUEST_ERROR,
+  REQUEST_LOADED,
+} from './types';
 
 // //Create fund request
 // export const createRequest = (
@@ -44,6 +48,23 @@ export const getUserRequests = () => async (dispatch) => {
 
     dispatch({
       type: ALL_REQUESTS_LOADED_FOR_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get request by id
+export const getRequest = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/requests/${id}`);
+
+    dispatch({
+      type: REQUEST_LOADED,
       payload: res.data,
     });
   } catch (err) {

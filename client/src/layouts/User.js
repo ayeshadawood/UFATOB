@@ -10,6 +10,7 @@ import CreateProfile from '../views/User/ProfileForms/CreateProfile';
 import EditProfile from '../views/User/ProfileForms/EditProfile';
 import AddExperience from '../views/User/ProfileForms/AddExperience';
 import AddEducation from '../views/User/ProfileForms/AddEducation';
+import Request from '../views/User/Requests/Request';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/UserRoutes';
@@ -39,6 +40,7 @@ const switchRoutes = (
     <Route path='/user/edit-profile' component={EditProfile} />
     <Route path='/user/add-experience' component={AddExperience} />
     <Route path='/user/add-education' component={AddEducation} />
+    <Route path='/user/request/:id' component={Request} />
     <Redirect from='/user' to='/user/dashboard' />
   </Switch>
 );
