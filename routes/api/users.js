@@ -7,6 +7,8 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
+const Blockchain = require('../../models/Blockchain');
+// const originalBlockChain = require('./blockchain-original');
 
 // @route   POST /api/users
 // @desc    Register a user
@@ -56,6 +58,22 @@ router.post(
 
       await user.save();
 
+      const blockchain = new Blockchain({
+        user: user.id,
+        currentNodeUrl: 'http://localhost:5000',
+        chain: [
+          {
+            index: 0,
+            timeStamp: Date.now(),
+            nonce: '100',
+            hash: '0',
+            previousBlockHash: '0',
+          },
+        ],
+      });
+
+      await blockchain.save();
+
       const payload = {
         user: {
           id: user.id,
@@ -72,6 +90,7 @@ router.post(
         }
       );
     } catch (err) {
+      console.log(err);
       return res.status(500).send('Server Error');
     }
   }
