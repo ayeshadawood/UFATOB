@@ -9,6 +9,7 @@ import Sidebar from 'components/Sidebar/Sidebar.js';
 import CreateProfile from '../views/University/ProfileForms/CreateProfile';
 import EditProfile from '../views/University/ProfileForms/EditProfile';
 import CreateRequest from '../views/University/MyRequests/CreateRequest';
+import Request from '../views/University/MyRequests/Request';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/UniversityRoutes';
@@ -37,6 +38,7 @@ const switchRoutes = (
     <Route path='/university/create-profile' component={CreateProfile} />
     <Route path='/university/edit-profile' component={EditProfile} />
     <Route path='/university/create-request' component={CreateRequest} />
+    <Route path='/university/request/:id' component={Request} />
     <Redirect from='/university' to='/university/dashboard' />
   </Switch>
 );

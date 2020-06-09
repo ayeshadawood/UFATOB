@@ -39,34 +39,14 @@ const CreateRequest = ({ createRequest, history }) => {
 
   const [formData, setFormData] = useState({
     title: '',
-    name: '',
-    fatherName: '',
-    cnic: '',
-    dateOfBirth: getCurrentDate(),
     institute: '',
     campus: '',
-    registrationNumber: '',
-    degreeProgram: '',
     department: '',
-    semester: '',
     description: '',
-    status: '0',
+    status: '1',
   });
 
-  const {
-    title,
-    name,
-    fatherName,
-    cnic,
-    dateOfBirth,
-    institute,
-    campus,
-    registrationNumber,
-    degreeProgram,
-    department,
-    semester,
-    description,
-  } = formData;
+  const { title, institute, campus, department, description } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -99,55 +79,6 @@ const CreateRequest = ({ createRequest, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='name'
-              value={name}
-              onChange={(e) => onChange(e)}
-              label='Name'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='fatherName'
-              value={fatherName}
-              onChange={(e) => onChange(e)}
-              label='Father name'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='cnic'
-              value={cnic}
-              onChange={(e) => onChange(e)}
-              label='CNIC'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='dateOfBirth'
-              value={dateOfBirth}
-              onChange={(e) => onChange(e)}
-              label='Date of birth'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-              type='date'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
               name='institute'
               value={institute}
               onChange={(e) => onChange(e)}
@@ -172,30 +103,6 @@ const CreateRequest = ({ createRequest, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='registrationNumber'
-              value={registrationNumber}
-              onChange={(e) => onChange(e)}
-              label='Registration number'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='degreeProgram'
-              value={degreeProgram}
-              onChange={(e) => onChange(e)}
-              label='Degree program'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
               name='department'
               value={department}
               onChange={(e) => onChange(e)}
@@ -204,19 +111,6 @@ const CreateRequest = ({ createRequest, history }) => {
               fullWidth={true}
               className={classes.input}
               margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='semester'
-              value={semester}
-              onChange={(e) => onChange(e)}
-              label='Semester'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-              type='number'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>

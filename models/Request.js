@@ -11,7 +11,6 @@ const RequestSchema = mongoose.Schema({
   },
   name: {
     type: String,
-    required: true,
   },
   fatherName: {
     type: String,

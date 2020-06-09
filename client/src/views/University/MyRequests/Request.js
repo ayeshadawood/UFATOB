@@ -87,30 +87,6 @@ const Request = ({ request: { request, loading }, getRequest, match }) => {
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <div className={classes.row}>
-                  <strong>Name:</strong>{' '}
-                  {!loading && request !== null ? request.name : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Father name:</strong>{' '}
-                  {!loading && request !== null ? request.fatherName : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>CNIC:</strong>{' '}
-                  {!loading && request !== null ? request.cnic : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Date of birth:</strong>{' '}
-                  {!loading && request !== null ? request.dateOfBirth : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
                   <strong>Institute:</strong>{' '}
                   {!loading && request !== null ? request.institute : ''}
                 </div>
@@ -123,28 +99,8 @@ const Request = ({ request: { request, loading }, getRequest, match }) => {
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <div className={classes.row}>
-                  <strong>Registration number:</strong>{' '}
-                  {!loading && request !== null
-                    ? request.registrationNumber
-                    : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Degree program:</strong>{' '}
-                  {!loading && request !== null ? request.degreeProgram : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
                   <strong>Department:</strong>{' '}
                   {!loading && request !== null ? request.department : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Semester:</strong>{' '}
-                  {!loading && request !== null ? request.semester : ''}
                 </div>
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>

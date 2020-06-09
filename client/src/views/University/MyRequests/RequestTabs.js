@@ -91,7 +91,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             request.title,
             request.institute,
             getRequestStatus(request.status),
-            <Link to={`/user/request/${request._id}`}>
+            <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -113,10 +113,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           ...res,
           [
             sNo,
-            request.name,
             request.title,
             request.institute,
-            <Link to={`/user/request/${request._id}`}>
+            <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -138,10 +137,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           ...res,
           [
             sNo,
-            request.name,
             request.title,
             request.institute,
-            <Link to={`/user/request/${request._id}`}>
+            <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -192,7 +190,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Title', 'University', 'Actions']}
+              tableHead={['S.No.', 'Title', 'University', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getAcceptedRequests() : []
               }
@@ -201,7 +199,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Title', 'University', 'Actions']}
+              tableHead={['S.No.', 'Title', 'University', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getRejectedRequests() : []
               }

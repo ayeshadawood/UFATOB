@@ -12,7 +12,6 @@ router.post(
   [
     auth,
     check('title', 'Title is required').not().isEmpty(),
-    check('name', 'Name is required').not().isEmpty(),
     check('institute', 'Institute is required').not().isEmpty(),
     check('department', 'Department is required').not().isEmpty(),
     check('description', 'Description is required').not().isEmpty(),

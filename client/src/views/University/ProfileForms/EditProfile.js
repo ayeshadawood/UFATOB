@@ -1,15 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {
-  TextField,
-  Button,
-  Grid,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-} from '@material-ui/core';
+import { TextField, Button, Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { createProfile, getCurrentProfile } from '../../../actions/profile';
