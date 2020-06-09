@@ -38,11 +38,9 @@ const EditProfile = ({
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
-    status: '',
-    company: '',
     website: '',
     location: '',
-    skills: '',
+    contactNo: '',
     bio: '',
     facebook: '',
     twitter: '',
@@ -52,11 +50,9 @@ const EditProfile = ({
   });
 
   const {
-    status,
-    company,
     website,
     location,
-    skills,
+    contactNo,
     bio,
     facebook,
     twitter,
@@ -71,19 +67,17 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history, true);
+    createProfile(formData, history, 1, true);
   };
 
   useEffect(() => {
     if (profile === null) getCurrentProfile();
 
     setFormData({
-      status: !loading && profile.status ? profile.status : '',
-      company: !loading && profile.company ? profile.company : '',
       website: !loading && profile.website ? profile.website : '',
       location: !loading && profile.location ? profile.location : '',
       bio: !loading && profile.bio ? profile.bio : '',
-      skills: !loading && profile.skills ? profile.skills.join(',') : '',
+      contactNo: !loading && profile.contactNo ? profile.contactNo : '',
       facebook: !loading && profile.social ? profile.social.facebook : '',
       twitter: !loading && profile.social ? profile.social.twitter : '',
       linkedin: !loading && profile.social ? profile.social.linkedin : '',
@@ -102,43 +96,6 @@ const EditProfile = ({
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
-          <Grid item xs={12} sm={12} md={12}>
-            <FormControl
-              variant='outlined'
-              className={classes.formControl}
-              margin='dense'
-            >
-              <InputLabel id='status'>Status</InputLabel>
-              <Select
-                labelId='status'
-                label='Status'
-                name='status'
-                value={status}
-                onChange={(e) => onChange(e)}
-              >
-                <MenuItem value=''>
-                  <em>Please select your professional status</em>
-                </MenuItem>
-                <MenuItem value='Developer'>Developer</MenuItem>
-                <MenuItem value='Student'>Student</MenuItem>
-                <MenuItem value='Instructor'>Instructor</MenuItem>
-                <MenuItem value='Intern'>Intern</MenuItem>
-                <MenuItem value='Other'>Other</MenuItem>
-              </Select>
-            </FormControl>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='company'
-              value={company}
-              onChange={(e) => onChange(e)}
-              label='Company'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
               name='website'
@@ -165,10 +122,10 @@ const EditProfile = ({
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='skills'
-              value={skills}
+              name='contactNo'
+              value={contactNo}
               onChange={(e) => onChange(e)}
-              label='Skills'
+              label='Contact no'
               variant='outlined'
               fullWidth={true}
               className={classes.input}

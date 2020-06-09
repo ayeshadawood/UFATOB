@@ -50,7 +50,7 @@ const CreateRequest = ({ createRequest, history }) => {
     department: '',
     semester: '',
     description: '',
-    status: '0',
+    status: '1',
   });
 
   const {

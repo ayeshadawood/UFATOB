@@ -7,9 +7,7 @@ import { connect } from 'react-redux';
 import { getCurrentProfile, deleteProfile } from '../../../actions/profile';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import DashboardActions from './DashboardActions';
-import Experience from './Experience';
-import Education from './Education';
+import ProfileDetails from './ProfileDetails';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
@@ -51,16 +49,22 @@ const Dashboard = ({
             <i className='fas fa-user'></i> Welcome {user && user.name}
           </Typography>
           <GridContainer>
-            <DashboardActions />
-            {profile !== null && (
-              <Fragment>
-                <Experience
-                  classes={classes}
-                  experiences={profile.experience}
-                />
-                <Education classes={classes} education={profile.education} />
-              </Fragment>
-            )}
+            <GridItem xs={12} sm={12} md={12}>
+              <Link to='/university/edit-profile'>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  style={{ margin: '10px 0', marginRight: '10px' }}
+                >
+                  <i
+                    className='fas fa-user-circle'
+                    style={{ marginRight: '5px' }}
+                  ></i>{' '}
+                  Edit profile
+                </Button>
+              </Link>
+            </GridItem>
+            {profile !== null && <ProfileDetails profile={profile} />}
             <GridItem xs={12} sm={12} md={12}>
               <Button
                 color='primary'

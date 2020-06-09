@@ -16,53 +16,53 @@
 
 */
 // @material-ui/icons
-import Dashboard from "@material-ui/icons/Dashboard";
-import Person from "@material-ui/icons/Person";
-import LibraryBooks from "@material-ui/icons/LibraryBooks";
-import BubbleChart from "@material-ui/icons/BubbleChart";
-import LocationOn from "@material-ui/icons/LocationOn";
-import Notifications from "@material-ui/icons/Notifications";
-import Unarchive from "@material-ui/icons/Unarchive";
-import Language from "@material-ui/icons/Language";
+import Dashboard from '@material-ui/icons/Dashboard';
+import Person from '@material-ui/icons/Person';
+import LibraryBooks from '@material-ui/icons/LibraryBooks';
+import BubbleChart from '@material-ui/icons/BubbleChart';
+import LocationOn from '@material-ui/icons/LocationOn';
+import Notifications from '@material-ui/icons/Notifications';
+import Unarchive from '@material-ui/icons/Unarchive';
+import Language from '@material-ui/icons/Language';
 // core components/views for Admin layout
-import DashboardPage from "views/University/Dashboard/Dashboard";
-import UserProfile from "views/University/Profile/Profile";
-import TableList from "views/TableList/TableList.js";
-import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
-import NotificationsPage from "views/Notifications/Notifications.js";
-import UniversitiesList from "views/HEC/Universities/UniversitiesList";
+import DashboardPage from 'views/University/Dashboard/Dashboard';
+import UserProfile from 'views/University/Profile/Profile';
+import TableList from 'views/TableList/TableList.js';
+import Typography from 'views/Typography/Typography.js';
+import Icons from 'views/Icons/Icons.js';
+import Maps from 'views/Maps/Maps.js';
+import NotificationsPage from 'views/Notifications/Notifications.js';
+import UniversitiesList from 'views/HEC/Universities/UniversitiesList';
 // import AddInstitution from "views/HEC/UniversitiesForms/AddInstitution";
-import RequestsList from "views/University/Requests/RequestsList";
-import ComplaintsList from "views/HEC/Complaints/ComplaintsList";
-import MyRequests from "views/University/MyRequests/RequestsList";
+// import RequestsList from "views/University/Requests/RequestsList";
+import ComplaintsList from 'views/HEC/Complaints/ComplaintsList';
+// import MyRequests from 'views/University/MyRequests/RequestsList';
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 // import RTLPage from "views/RTLPage/RTLPage.js";
 
 const dashboardRoutes = [
   {
-    path: "/dashboard",
-    name: "Dashboard",
+    path: '/dashboard',
+    name: 'Dashboard',
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
+    layout: '/admin',
   },
-  {
-    path: "/requests",
-    name: "Requests",
-    icon: Dashboard,
-    component: RequestsList,
-    layout: "/admin",
-  },
-  {
-    path: "/my-requests",
-    name: "My Requests",
-    icon: Dashboard,
-    component: MyRequests,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/requests",
+  //   name: "Requests",
+  //   icon: Dashboard,
+  //   component: RequestsList,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: '/my-requests',
+  //   name: 'My Requests',
+  //   icon: Dashboard,
+  //   component: MyRequests,
+  //   layout: '/admin',
+  // },
   // {
   //   path: "/complaints",
   //   name: "Complaints",
@@ -85,18 +85,18 @@ const dashboardRoutes = [
   //   layout: "/admin",
   // },
   {
-    path: "/blockchain",
-    name: "Blockchain",
+    path: '/blockchain',
+    name: 'Blockchain',
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin",
+    layout: '/admin',
   },
   {
-    path: "/user",
-    name: "Manage Account",
+    path: '/user',
+    name: 'Manage Account',
     icon: Person,
     component: UserProfile,
-    layout: "/admin",
+    layout: '/admin',
   },
   // {
   //   path: "/table",

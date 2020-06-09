@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createProfile } from '../../../actions/profile';
+import { createRequest } from '../../../actions/request';
 import { withRouter } from 'react-router-dom';
 
 const styles = {
@@ -21,31 +21,51 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CreateProfile = ({ createProfile, history }) => {
+const CreateRequest = ({ createRequest, history }) => {
   const classes = useStyles();
 
+  const getCurrentDate = () => {
+    let d = new Date(Date.now());
+    d = new Date(Date.now() + d.getTimezoneOffset() * 60000);
+
+    const date = d.getDate();
+    const month = d.getMonth() + 1;
+    const year = d.getFullYear();
+
+    return `${year}-${month < 10 ? '0' : ''}${month}-${
+      date < 10 ? '0' : ''
+    }${date}`;
+  };
+
   const [formData, setFormData] = useState({
-    website: '',
-    location: '',
-    contactNo: '',
-    bio: '',
-    facebook: '',
-    twitter: '',
-    linkedin: '',
-    instagram: '',
-    youtube: '',
+    title: '',
+    name: '',
+    fatherName: '',
+    cnic: '',
+    dateOfBirth: getCurrentDate(),
+    institute: '',
+    campus: '',
+    registrationNumber: '',
+    degreeProgram: '',
+    department: '',
+    semester: '',
+    description: '',
+    status: '0',
   });
 
   const {
-    website,
-    location,
-    contactNo,
-    bio,
-    facebook,
-    twitter,
-    linkedin,
-    instagram,
-    youtube,
+    title,
+    name,
+    fatherName,
+    cnic,
+    dateOfBirth,
+    institute,
+    campus,
+    registrationNumber,
+    degreeProgram,
+    department,
+    semester,
+    description,
   } = formData;
 
   const onChange = (e) => {
@@ -54,23 +74,23 @@ const CreateProfile = ({ createProfile, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history, 1);
+    createRequest(formData, history);
   };
 
   return (
     <Fragment>
       <Typography variant='h5' className={classes.heading}>
         <i className='fas fa-user'></i> Fill in the following information to
-        create your profile
+        create a request
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='website'
-              value={website}
+              name='title'
+              value={title}
               onChange={(e) => onChange(e)}
-              label='Website'
+              label='Title'
               variant='outlined'
               fullWidth={true}
               className={classes.input}
@@ -79,10 +99,10 @@ const CreateProfile = ({ createProfile, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='location'
-              value={location}
+              name='name'
+              value={name}
               onChange={(e) => onChange(e)}
-              label='Location'
+              label='Name'
               variant='outlined'
               fullWidth={true}
               className={classes.input}
@@ -91,10 +111,10 @@ const CreateProfile = ({ createProfile, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='contactNo'
-              value={contactNo}
+              name='fatherName'
+              value={fatherName}
               onChange={(e) => onChange(e)}
-              label='Contact no'
+              label='Father name'
               variant='outlined'
               fullWidth={true}
               className={classes.input}
@@ -103,76 +123,114 @@ const CreateProfile = ({ createProfile, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='bio'
-              value={bio}
+              name='cnic'
+              value={cnic}
               onChange={(e) => onChange(e)}
-              label='Bio'
+              label='CNIC'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='dateOfBirth'
+              value={dateOfBirth}
+              onChange={(e) => onChange(e)}
+              label='Date of birth'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              type='date'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='institute'
+              value={institute}
+              onChange={(e) => onChange(e)}
+              label='Institute'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='campus'
+              value={campus}
+              onChange={(e) => onChange(e)}
+              label='Campus'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='registrationNumber'
+              value={registrationNumber}
+              onChange={(e) => onChange(e)}
+              label='Registration number'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='degreeProgram'
+              value={degreeProgram}
+              onChange={(e) => onChange(e)}
+              label='Degree program'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='department'
+              value={department}
+              onChange={(e) => onChange(e)}
+              label='Department'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='semester'
+              value={semester}
+              onChange={(e) => onChange(e)}
+              label='Semester'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              type='number'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='description'
+              value={description}
+              onChange={(e) => onChange(e)}
+              label='Description'
               variant='outlined'
               fullWidth={true}
               className={classes.input}
               margin='dense'
               multiline
               rows={5}
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='facebook'
-              value={facebook}
-              onChange={(e) => onChange(e)}
-              label='Facebook'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='youtube'
-              value={youtube}
-              onChange={(e) => onChange(e)}
-              label='Youtube'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='twitter'
-              value={twitter}
-              onChange={(e) => onChange(e)}
-              label='Twitter'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='instagram'
-              value={instagram}
-              onChange={(e) => onChange(e)}
-              label='Instagram'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name='linkedin'
-              value={linkedin}
-              onChange={(e) => onChange(e)}
-              label='Linkedin'
-              variant='outlined'
-              fullWidth={true}
-              className={classes.input}
-              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -191,9 +249,9 @@ const CreateProfile = ({ createProfile, history }) => {
   );
 };
 
-CreateProfile.propTypes = {
-  createProfile: PropTypes.func.isRequired,
+CreateRequest.propTypes = {
+  createRequest: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createProfile })(withRouter(CreateProfile));
+export default connect(null, { createRequest })(withRouter(CreateRequest));

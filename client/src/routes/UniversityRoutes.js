@@ -3,8 +3,8 @@ import Person from '@material-ui/icons/Person';
 
 import Dashboard from '../views/University/Dashboard/Dashboard';
 import UserProfile from 'views/University/Profile/Profile';
-import RequestsList from 'views/University/Requests/RequestsList';
-import MyRequests from 'views/University/MyRequests/RequestsList';
+import RequestsList from '../views/University/Requests/RequestsList';
+import MyRequests from '../views/University/MyRequests/Requests';
 import Settings from '../views/University/Settings/Settings';
 
 const dashboardRoutes = [
@@ -36,13 +36,6 @@ const dashboardRoutes = [
     component: MyRequests,
     layout: '/university',
   },
-  // {
-  //   path: '/account',
-  //   name: 'Manage Account',
-  //   icon: Person,
-  //   component: UserProfile,
-  //   layout: '/university',
-  // },
   {
     path: '/settings',
     name: 'Settings',
