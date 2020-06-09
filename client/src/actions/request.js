@@ -5,6 +5,8 @@ import {
   REQUEST_ERROR,
   REQUEST_LOADED,
   REQUEST_CREATED,
+  ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
+  REQUEST_FORWARDED,
 } from './types';
 
 //Create fund request
@@ -51,6 +53,23 @@ export const getUserRequests = () => async (dispatch) => {
   }
 };
 
+// Get all requests for university
+export const getUniversityRequests = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/requests/university');
+
+    dispatch({
+      type: ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
 // Get request by id
 export const getRequest = (id) => async (dispatch) => {
   try {
@@ -60,6 +79,27 @@ export const getRequest = (id) => async (dispatch) => {
       type: REQUEST_LOADED,
       payload: res.data,
     });
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Forwared request to HEC
+export const forwardRequest = (id) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/requests/forward/${id}`);
+
+    dispatch({
+      type: REQUEST_FORWARDED,
+      payload: res.data,
+    });
+
+    console.log(res.data);
+
+    dispatch(setAlert('Request forwarded', 'success'));
   } catch (err) {
     dispatch({
       type: REQUEST_ERROR,

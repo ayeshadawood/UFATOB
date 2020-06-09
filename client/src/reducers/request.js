@@ -3,6 +3,8 @@ import {
   REQUEST_ERROR,
   REQUEST_LOADED,
   REQUEST_CREATED,
+  ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
+  REQUEST_FORWARDED,
 } from '../actions/types';
 
 const initialState = {
@@ -16,11 +18,26 @@ export default function (state = initialState, action) {
   const { type, payload } = action;
   switch (type) {
     case ALL_REQUESTS_LOADED_FOR_USER:
+    case ALL_REQUESTS_LOADED_FOR_UNIVERSITY:
       return {
         ...state,
         loading: false,
         errors: null,
         requests: payload,
+      };
+    case REQUEST_FORWARDED:
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        requests: [
+          ...state.requests.map((request) => {
+            if (request._id === payload._id) {
+              request.status = payload.status;
+            }
+            return request;
+          }),
+        ],
       };
     case REQUEST_LOADED:
       return {

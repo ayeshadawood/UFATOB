@@ -69,19 +69,23 @@ router.post(
   }
 );
 
-// // @route   GET api/request
-// // @desc    Show all fund requests for uni and hec portal
-// // @access  Public
-// router.get('/', async (req, res) => {
-//   try {
-//     const requests = await Request.find().sort({ date: -1 });
-
-//     res.json(requests);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send('Server Error');
-//   }
-// });
+// @route   GET api/requests/university
+// @desc    Get all fund requests for university
+// @access  Public
+router.get('/university', auth, async (req, res) => {
+  try {
+    const requests = await Request.find({
+      user: { $ne: req.user.id },
+      status: { $lt: 2 },
+    }).sort({
+      date: -1,
+    });
+    res.json(requests);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
 
 // @route   GET /api/requests/user
 // @desc    Get all requests of user
@@ -101,6 +105,26 @@ router.get('/user', auth, async (req, res) => {
 router.get('/:id', auth, async (req, res) => {
   try {
     const request = await Request.findById(req.params.id);
+    res.json(request);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/requests/forward/:id
+// @desc    Forward a request to HEC
+// @access  Private
+router.put('/forward/:id', auth, async (req, res) => {
+  try {
+    const request = await Request.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 1,
+        },
+      },
+      { new: true }
+    );
     res.json(request);
   } catch (err) {
     res.status(500).send('Server Error');
