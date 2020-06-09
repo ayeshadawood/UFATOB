@@ -8,13 +8,13 @@ import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/icons/Menu';
 import Button from 'components/CustomButtons/Button.js';
-import UserNavbarLinks from './UserNavbarLinks';
+import UniversityNavbarLinks from './UniversityNavbarLinks';
 
 import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
 
 const useStyles = makeStyles(styles);
 
-export default function UserNavbar(props) {
+export default function UniversityNavbar(props) {
   const classes = useStyles();
 
   function makeBrand() {
@@ -43,7 +43,7 @@ export default function UserNavbar(props) {
           </Button>
         </div>
         <Hidden smDown implementation='css'>
-          <UserNavbarLinks />
+          <UniversityNavbarLinks />
         </Hidden>
         <Hidden mdUp implementation='css'>
           <IconButton
@@ -59,7 +59,7 @@ export default function UserNavbar(props) {
   );
 }
 
-UserNavbar.propTypes = {
+UniversityNavbar.propTypes = {
   color: PropTypes.oneOf(['primary', 'info', 'success', 'warning', 'danger']),
   rtlActive: PropTypes.bool,
   handleDrawerToggle: PropTypes.func,

@@ -32,6 +32,8 @@ const Login = ({ login, auth: { loading, isAuthenticated, user } }) => {
 
   if (!loading && isAuthenticated && user !== null && user.type === 0) {
     return <Redirect to='/hec' />;
+  } else if (!loading && isAuthenticated && user !== null && user.type === 1) {
+    return <Redirect to='/university' />;
   } else if (!loading && isAuthenticated && user !== null && user.type === 2) {
     return <Redirect to='/user' />;
   }

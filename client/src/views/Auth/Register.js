@@ -15,7 +15,7 @@ const useStyles = makeStyles(styles);
 const Register = ({
   register,
   setAlert,
-  auth: { loading, isAuthenticated },
+  auth: { loading, isAuthenticated, user },
 }) => {
   const classes = useStyles();
 
@@ -38,11 +38,16 @@ const Register = ({
     if (password !== password1) {
       setAlert('Passwords do not match', 'error');
     } else {
-      register(name, email, password, 2);
+      // Use this for registering a normal user
+      // register(name, email, password, 2);
+      // Use this for registering a university
+      register(name, email, password, 1);
     }
   };
 
-  if (!loading && isAuthenticated) {
+  if (!loading && isAuthenticated && user !== null && user.type === 1) {
+    return <Redirect to='/university' />;
+  } else if (!loading && isAuthenticated && user !== null && user.type === 2) {
     return <Redirect to='/user' />;
   }
 

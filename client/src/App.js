@@ -31,10 +31,10 @@ const App = () => {
       <Router history={hist}>
         <Switch>
           <PrivateRoute path='/hec' component={HEC} />
+          <PrivateRoute path='/university' component={University} />
           <PrivateRoute path='/user' component={User} />
           <Route path='/' component={Auth} />
           <Route path='/admin' component={Admin} />
-          <Route path='/university' component={University} />
           <Route path='/rtl' component={RTL} />
         </Switch>
       </Router>
