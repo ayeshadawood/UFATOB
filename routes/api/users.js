@@ -8,9 +8,10 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Blockchain = require('../../models/Blockchain');
+const { connectDB } = require('../../config/db');
 
 // @route   POST /api/users
-// @desc    Register a user
+// @desc    Register admin/university
 // @access  Public
 router.post(
   '/',
@@ -29,9 +30,11 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { name, email, password, type } = req.body;
+    const { name, email, password, type, university } = req.body;
 
     try {
+      await connectDB('HEC');
+
       let user = await User.findOne({ email });
       if (user) {
         return res
@@ -45,33 +48,40 @@ router.post(
         d: 'mm',
       });
 
-      user = new User({
+      const userFields = {
         name,
         email,
         type,
         avatar,
-      });
+      };
+
+      if (university) userFields.university = university;
+
+      user = new User(userFields);
 
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
 
       await user.save();
 
-      const blockchain = new Blockchain({
-        user: user.id,
-        currentNodeUrl: 'http://localhost:5000',
-        chain: [
-          {
-            index: 0,
-            timeStamp: Date.now(),
-            nonce: '100',
-            hash: '0',
-            previousBlockHash: '0',
-          },
-        ],
-      });
+      if (type < 2) {
+        await connectDB(`${user.id}`);
 
-      await blockchain.save();
+        const blockchain = new Blockchain({
+          currentNodeUrl: user.id,
+          chain: [
+            {
+              index: 0,
+              timeStamp: Date.now(),
+              nonce: '100',
+              hash: '0',
+              previousBlockHash: '0',
+            },
+          ],
+        });
+
+        await blockchain.save();
+      }
 
       const payload = {
         user: {

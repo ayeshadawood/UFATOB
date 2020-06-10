@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost:27017/HEC",
+  "mongoURI": "mongodb://localhost:27017/<dbname>",
   "jwtSecret": "Lobi14h3Ru"
 }

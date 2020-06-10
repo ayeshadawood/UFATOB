@@ -1,10 +1,6 @@
 const express = require('express');
-const connectDB = require('./config/db');
 
 const app = express();
-
-// Connecting database
-connectDB();
 
 // Init middleware
 app.use(express.json({ limit: '1mb' }));

@@ -2,16 +2,18 @@ const mongoose = require('mongoose');
 const config = require('config');
 const db = config.get('mongoURI');
 
-const connectDB = async () => {
+const getCustomMongoURI = (databaseName) => {
+  return db.replace('<dbname>', databaseName);
+};
+
+const connectDB = async (databaseName) => {
   try {
-    await mongoose.connect(db, {
+    await mongoose.connect(getCustomMongoURI(databaseName), {
       useNewUrlParser: true,
       useCreateIndex: true,
       useFindAndModify: false,
       useUnifiedTopology: true,
     });
-
-    console.log('MongoDB Connected');
   } catch (err) {
     console.error(err.message);
   }
@@ -33,4 +35,4 @@ const dropDb = async () => {
   }
 };
 
-module.exports = connectDB;
+module.exports = { connectDB };

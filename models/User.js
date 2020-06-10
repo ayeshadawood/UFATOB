@@ -20,6 +20,10 @@ const UserSchema = mongoose.Schema({
   avatar: {
     type: String,
   },
+  university: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
+  },
 });
 
 module.exports = User = mongoose.model('user', UserSchema);

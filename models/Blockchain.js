@@ -1,10 +1,6 @@
 const mongoose = require('mongoose');
 
 const BlockchainSchema = mongoose.Schema({
-  user: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'user',
-  },
   chain: [
     {
       index: {
