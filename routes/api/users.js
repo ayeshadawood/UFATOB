@@ -8,7 +8,6 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Blockchain = require('../../models/Blockchain');
-// const originalBlockChain = require('./blockchain-original');
 
 // @route   POST /api/users
 // @desc    Register a user

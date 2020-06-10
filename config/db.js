@@ -14,6 +14,20 @@ const connectDB = async () => {
     console.log('MongoDB Connected');
   } catch (err) {
     console.error(err.message);
+  }
+};
+
+const dropDb = async () => {
+  try {
+    await mongoose.connect(
+      db,
+      { useNewUrlParser: true, useUnifiedTopology: true },
+      () => mongoose.connection.db.dropDatabase()
+    );
+
+    console.log('MongoDB database dropped');
+  } catch (err) {
+    console.error(err.message);
 
     process.exit(1);
   }
