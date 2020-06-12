@@ -33,7 +33,7 @@ router.post(
     const { name, email, password, type, university } = req.body;
 
     try {
-      await connectDB('HEC');
+      await connectDB(config.get('defaultMongoDatabase'));
 
       let user = await User.findOne({ email });
       if (user) {
@@ -99,7 +99,6 @@ router.post(
         }
       );
     } catch (err) {
-      console.log(err);
       return res.status(500).send('Server Error');
     }
   }
@@ -126,6 +125,8 @@ router.put(
     const { password } = req.body;
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const user = await User.findById(req.user.id);
 
       const salt = await bcrypt.genSalt(10);
@@ -154,6 +155,8 @@ router.put(
     const { name } = req.body;
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const user = await User.findById(req.user.id);
 
       user.name = name;
@@ -181,6 +184,8 @@ router.put(
     const { image } = req.body;
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const user = await User.findById(req.user.id);
       user.avatar = image;
 
@@ -197,7 +202,10 @@ router.put(
 // @access  Private
 router.put('/profile-picture/remove', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const user = await User.findById(req.user.id);
+
     user.avatar = gravatar.url(user.email, {
       s: '200',
       r: 'pg',
@@ -207,7 +215,6 @@ router.put('/profile-picture/remove', auth, async (req, res) => {
     await user.save();
     res.json(user);
   } catch (err) {
-    console.error(err);
     return res.status(500).send('Server Error');
   }
 });

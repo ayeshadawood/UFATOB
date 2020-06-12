@@ -5,12 +5,16 @@ const Blockchain = require('../../models/Blockchain');
 const { v1 } = require('uuid');
 const { check, validationResult } = require('express-validator');
 const { proofOfWork, hashBlock } = require('../../utils/blockchain');
+const { connectDB } = require('../../config/db');
+const config = require('config');
 
 // @route   GET api/blockchain
 // @desc    Get blockchain for user
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
+    await connectDB(config.get(req.user.id));
+
     const blockchain = await Blockchain.findOne({ user: req.user.id });
     res.json(blockchain);
   } catch (err) {
@@ -38,6 +42,8 @@ router.post(
     const { amount, sender, reciever } = req.body;
 
     try {
+      await connectDB(config.get(req.user.id));
+
       let blockchain = await Blockchain.findOne({ user: req.user.id });
 
       blockchain.pendingTransactions.push({
@@ -61,6 +67,8 @@ router.post(
 // @access  Private
 router.put('/mine', auth, async (req, res) => {
   try {
+    await connectDB(config.get(req.user.id));
+
     let blockchain = await Blockchain.findOne({ user: req.user.id });
 
     const lastBlock = blockchain.chain[blockchain.chain.length - 1];

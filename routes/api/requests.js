@@ -3,6 +3,8 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Request = require('../../models/Request');
+const { connectDB } = require('../../config/db');
+const config = require('config');
 
 // @route   POST /api/requests
 // @desc    Create a request for fund
@@ -44,7 +46,7 @@ router.post(
     const requestFields = {};
     requestFields.user = req.user.id;
     requestFields.title = title;
-    requestFields.name = name;
+    if (name) requestFields.name = name;
     if (fatherName) requestFields.fatherName = fatherName;
     if (cnic) requestFields.cnic = cnic;
     if (dateOfBirth) requestFields.dateOfBirth = dateOfBirth;
@@ -59,6 +61,8 @@ router.post(
     requestFields.status = status;
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const request = new Request(requestFields);
 
       await request.save();
@@ -74,6 +78,8 @@ router.post(
 // @access  Public
 router.get('/university', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const requests = await Request.find({
       user: { $ne: req.user.id },
       status: { $lt: 2 },
@@ -92,6 +98,8 @@ router.get('/university', auth, async (req, res) => {
 // @access  Private
 router.get('/user', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const requests = await Request.find({ user: req.user.id });
     res.json(requests);
   } catch (err) {
@@ -104,6 +112,8 @@ router.get('/user', auth, async (req, res) => {
 // @access  Private
 router.get('/:id', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const request = await Request.findById(req.params.id);
     res.json(request);
   } catch (err) {
@@ -116,6 +126,8 @@ router.get('/:id', auth, async (req, res) => {
 // @access  Private
 router.put('/forward/:id', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const request = await Request.findOneAndUpdate(
       { _id: req.params.id },
       {

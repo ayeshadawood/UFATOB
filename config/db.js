@@ -19,20 +19,16 @@ const connectDB = async (databaseName) => {
   }
 };
 
-const dropDb = async () => {
+const dropDB = async (databaseName) => {
   try {
     await mongoose.connect(
-      db,
+      getCustomMongoURI(databaseName),
       { useNewUrlParser: true, useUnifiedTopology: true },
       () => mongoose.connection.db.dropDatabase()
     );
-
-    console.log('MongoDB database dropped');
   } catch (err) {
     console.error(err.message);
-
-    process.exit(1);
   }
 };
 
-module.exports = { connectDB };
+module.exports = { connectDB, dropDB };

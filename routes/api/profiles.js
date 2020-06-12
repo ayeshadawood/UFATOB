@@ -1,16 +1,19 @@
 const express = require('express');
 const router = express.Router();
-
 const auth = require('../../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const Profile = require('../../models/Profile');
 const User = require('../../models/User');
+const { connectDB, dropDB } = require('../../config/db');
+const config = require('config');
 
-// @route   GET api/user-profiles/me
+// @route   GET api/profiles/me
 // @desc    Get current user profile
 // @access  Private
 router.get('/me', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const profile = await Profile.findOne({
       user: req.user.id,
     }).populate('users', ['name', 'avatar']);
@@ -25,7 +28,7 @@ router.get('/me', auth, async (req, res) => {
   }
 });
 
-// @route   POST api/user-profiles
+// @route   POST api/profiles
 // @desc    Create or edit user profile
 // @access  Private
 router.post('/', auth, async (req, res) => {
@@ -49,7 +52,6 @@ router.post('/', auth, async (req, res) => {
     contactNo,
   } = req.body;
 
-  // Get fields
   const profileFields = {};
   profileFields.user = req.user.id;
   if (company) profileFields.company = company;
@@ -63,7 +65,6 @@ router.post('/', auth, async (req, res) => {
     profileFields.skills = skills.split(',').map((skill) => skill.trim());
   }
 
-  //Social object;
   profileFields.social = {};
   if (youtube) profileFields.social.youtube = youtube;
   if (twitter) profileFields.social.twitter = twitter;
@@ -72,6 +73,8 @@ router.post('/', auth, async (req, res) => {
   if (instagram) profileFields.social.instagram = instagram;
 
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     let profile = await Profile.findOne({ user: req.user.id });
 
     if (profile) {
@@ -97,9 +100,9 @@ router.post('/', auth, async (req, res) => {
 // // @access  Public
 // router.get('/', async (req, res) => {
 //   try {
-//     const user-profiles = await Profile.find().populate('user', ['name', 'avatar']);
+//     const profiles = await Profile.find().populate('user', ['name', 'avatar']);
 
-//     res.json(user-profiles);
+//     res.json(profiles);
 //   } catch (err) {
 //     console.error(err.message);
 //     res.status(500).send('Server Error');
@@ -134,10 +137,13 @@ router.post('/', auth, async (req, res) => {
 // @access  Private
 router.delete('/', auth, async (req, res) => {
   try {
-    //removing Profile
+    await connectDB(config.get('defaultMongoDatabase'));
+
     await Profile.findOneAndRemove({ user: req.user.id });
-    //removing User
+
     await User.findOneAndRemove({ _id: req.user.id });
+
+    await dropDB(`${req.user.id}`);
 
     res.json({ msg: 'User Removed' });
   } catch (err) {
@@ -157,13 +163,11 @@ router.put(
     check('from', 'From date is Required').not().isEmpty(),
   ],
   async (req, res) => {
-    // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    //getting details
     const {
       title,
       company,
@@ -185,6 +189,8 @@ router.put(
     };
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const profile = await Profile.findOne({ user: req.user.id });
       profile.experience.unshift(newExp);
 
@@ -208,13 +214,11 @@ router.put(
     check('from', 'From date is Required').not().isEmpty(),
   ],
   async (req, res) => {
-    // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
 
-    //getting details
     const {
       school,
       degree,
@@ -236,6 +240,8 @@ router.put(
     };
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       const profile = await Profile.findOne({ user: req.user.id });
 
       profile.education.unshift(newEdu);
@@ -248,14 +254,15 @@ router.put(
   }
 );
 
-// @route   Delete api/user-profiles/experience/:exp_id
+// @route   Delete api/profiles/experience/:exp_id
 // @desc    Delete Profile experience
 // @access  Private
 router.delete('/experience/:exp_id', auth, async (req, res) => {
   try {
-    //getting Profile
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const profile = await Profile.findOne({ user: req.user.id });
-    //getting experience index
+
     const removeIndex = profile.experience
       .map((item) => item.id)
       .indexOf(req.params.exp_id);
@@ -269,14 +276,15 @@ router.delete('/experience/:exp_id', auth, async (req, res) => {
   }
 });
 
-// @route   Delete api/user-profiles/education/:edu_id
+// @route   Delete api/profiles/education/:edu_id
 // @desc    Delete Profile education
 // @access  Private
 router.delete('/education/:edu_id', auth, async (req, res) => {
   try {
-    //getting Profile
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const profile = await Profile.findOne({ user: req.user.id });
-    //getting experience index
+
     const removeIndex = profile.education
       .map((item) => item.id)
       .indexOf(req.params.edu_id);

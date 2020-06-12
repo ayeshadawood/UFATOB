@@ -6,12 +6,15 @@ const config = require('config');
 const { check, validationResult } = require('express-validator');
 const auth = require('../../middleware/auth');
 const User = require('../../models/User');
+const { connectDB } = require('../../config/db');
 
 // @route   GET api/auth/me
 // @desc    Get current logged in user
 // @access  Public
 router.get('/me', auth, async (req, res) => {
   try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
   } catch (err) {
@@ -37,6 +40,8 @@ router.post(
     const { email, password } = req.body;
 
     try {
+      await connectDB(config.get('defaultMongoDatabase'));
+
       let user = await User.findOne({ email });
       if (!user) {
         return res.status(400).json({ msg: 'Invalid Credentials' });
