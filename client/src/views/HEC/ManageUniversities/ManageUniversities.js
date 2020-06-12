@@ -1,7 +1,6 @@
-import React, { Fragment } from 'react';
-// @material-ui/core components
+import React, { Fragment, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-// core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
 import Table from 'components/Table/Table.js';
@@ -12,6 +11,12 @@ import { Button } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {
+  getAllUniversities,
+  deleteUniversity,
+} from '../../../actions/university';
+import Moment from 'react-moment';
 
 const styles = {
   cardCategoryWhite: {
@@ -45,47 +50,84 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const ManageUniversities = () => {
+const ManageUniversities = ({
+  university: { loading, universities },
+  getAllUniversities,
+  deleteUniversity,
+}) => {
   const classes = useStyles();
+
+  const getUniversities = () => {
+    let res = [];
+    let sNo = 1;
+    universities.forEach((university) => {
+      res = [
+        ...res,
+        [
+          sNo,
+          university.name,
+          university.email,
+          <Moment format='DD-MMM-YYYY'>{university.date}</Moment>,
+          <IconButton onClick={() => deleteUniversity(university._id)}>
+            <Close />
+          </IconButton>,
+        ],
+      ];
+      sNo++;
+    });
+    return res;
+  };
+
+  useEffect(() => {
+    getAllUniversities();
+  }, [getAllUniversities]);
+
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Link to='/hec/create-university'>
-          <Button color='primary' variant='contained'>
-            <i className='fas fa-building' style={{ marginRight: '5px' }}></i>
-            Add new university
-          </Button>
-        </Link>
-      </GridItem>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card>
-          <CardHeader color='primary'>
-            <h4 className={classes.cardTitleWhite}>Manage Universities</h4>
-            <p className={classes.cardCategoryWhite}>
-              Below is a list of all the registered universities
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Email', 'Created at', 'Actions']}
-              tableData={[
-                [
-                  '1',
-                  'Comsats',
-                  'comsats@gmail.com',
-                  '12-JUN-2020',
-                  <IconButton>
-                    <Close />
-                  </IconButton>,
-                ],
-              ]}
-            />
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <Fragment>
+      <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Link to='/hec/create-university'>
+            <Button color='primary' variant='contained'>
+              <i className='fas fa-building' style={{ marginRight: '5px' }}></i>
+              Add new university
+            </Button>
+          </Link>
+        </GridItem>
+        <GridItem xs={12} sm={12} md={12}>
+          <Card>
+            <CardHeader color='primary'>
+              <h4 className={classes.cardTitleWhite}>Manage Universities</h4>
+              <p className={classes.cardCategoryWhite}>
+                Below is a list of all the registered universities
+              </p>
+            </CardHeader>
+            <CardBody>
+              <Table
+                tableHeaderColor='primary'
+                tableHead={['S.No.', 'Name', 'Email', 'Created at', 'Actions']}
+                tableData={
+                  !loading && universities.length > 0 ? getUniversities() : []
+                }
+              />
+            </CardBody>
+          </Card>
+        </GridItem>
+      </GridContainer>
+    </Fragment>
   );
 };
 
-export default ManageUniversities;
+ManageUniversities.propTypes = {
+  university: PropTypes.object.isRequired,
+  getAllUniversities: PropTypes.func.isRequired,
+  deleteUniversity: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  university: state.university,
+});
+
+export default connect(mapStateToProps, {
+  getAllUniversities,
+  deleteUniversity,
+})(ManageUniversities);

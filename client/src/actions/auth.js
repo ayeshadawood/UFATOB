@@ -42,12 +42,9 @@ export const register = (formData, history) => async (dispatch) => {
   try {
     const res = await axios.post('/api/users', formData, config);
 
-    dispatch({
-      type: REGISTER_SUCCESS,
-      payload: {
-        token: res.data.token,
-      },
-    });
+    dispatch({ type: REGISTER_SUCCESS });
+
+    dispatch(setAlert('University created', 'success'));
 
     history.goBack();
   } catch (err) {

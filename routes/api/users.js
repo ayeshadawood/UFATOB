@@ -8,10 +8,43 @@ const { check, validationResult } = require('express-validator');
 const User = require('../../models/User');
 const auth = require('../../middleware/auth');
 const Blockchain = require('../../models/Blockchain');
-const { connectDB } = require('../../config/db');
+const { connectDB, dropDB } = require('../../config/db');
+
+// @route   GET /api/users/university
+// @desc    Get all universities
+// @access  Private
+router.get('/university', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const universities = await User.find({ type: 1 }).select('-password');
+    res.json(universities);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   DELETE /api/users/university/:id
+// @desc    Delete a university
+// @access  Private
+router.delete('/university/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    await Profile.findOneAndRemove({ user: req.params.id });
+
+    await User.findOneAndRemove({ _id: req.params.id });
+
+    await dropDB(`${req.params.id}`);
+
+    res.json({ msg: 'University Removed' });
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
 
 // @route   POST /api/users
-// @desc    Register admin/university
+// @desc    Register a user
 // @access  Public
 router.post(
   '/',
@@ -83,21 +116,7 @@ router.post(
         await blockchain.save();
       }
 
-      const payload = {
-        user: {
-          id: user.id,
-        },
-      };
-
-      jwt.sign(
-        payload,
-        config.get('jwtSecret'),
-        { expiresIn: 3600 },
-        (err, token) => {
-          if (err) throw err;
-          res.json({ token });
-        }
-      );
+      res.json({ msg: 'User created' });
     } catch (err) {
       return res.status(500).send('Server Error');
     }

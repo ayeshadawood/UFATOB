@@ -31,7 +31,6 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         loading: false,
       };
-    case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
       localStorage.setItem('token', payload.token);
       return {
@@ -71,6 +70,7 @@ export default function (state = initialState, action) {
         user: { ...state.user, name: payload },
       };
     case PASSWORD_UPDATED:
+    case REGISTER_SUCCESS:
     default:
       return state;
   }
