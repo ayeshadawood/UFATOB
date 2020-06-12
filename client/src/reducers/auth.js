@@ -41,6 +41,10 @@ export default function (state = initialState, action) {
         loading: false,
       };
     case REGISTER_FAILED:
+      return {
+        ...state,
+        loading: false,
+      };
     case AUTH_ERROR:
     case LOGIN_FAILED:
     case LOGOUT:

@@ -10,8 +10,10 @@ import Navbar from 'components/Navbars/Navbar.js';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
 import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
+import CreateUniversity from '../views/HEC/ManageUniversities/CreateUniversity';
+import CustomAlert from '../components/CustomAlert/CustomAlert';
 
-import routes from 'HecRoutes';
+import routes from '../routes/HecRoutes.js';
 
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
 
@@ -34,6 +36,7 @@ const switchRoutes = (
       }
       return null;
     })}
+    <Route path='/hec/create-university' component={CreateUniversity} />
     <Redirect from='/hec' to='/hec/dashboard' />
   </Switch>
 );
@@ -113,7 +116,10 @@ export default function Admin({ ...rest }) {
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
-            <div className={classes.container}>{switchRoutes}</div>
+            <div className={classes.container}>
+              <CustomAlert />
+              {switchRoutes}
+            </div>
           </div>
         ) : (
           <div className={classes.map}>{switchRoutes}</div>
