@@ -32,19 +32,27 @@ export const loadUser = () => async (dispatch) => {
 };
 
 // Register user
-export const register = (formData, history) => async (dispatch) => {
+export const register = (formData, history, university = '') => async (
+  dispatch
+) => {
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
 
+  formData = { ...formData, university };
+
   try {
-    const res = await axios.post('/api/users', formData, config);
+    await axios.post('/api/users', formData, config);
 
     dispatch({ type: REGISTER_SUCCESS });
 
-    dispatch(setAlert('University created', 'success'));
+    if (formData.type == 1) {
+      dispatch(setAlert('University created', 'success'));
+    } else {
+      dispatch(setAlert('Student created', 'success'));
+    }
 
     history.goBack();
   } catch (err) {

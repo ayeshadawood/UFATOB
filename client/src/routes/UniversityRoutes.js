@@ -6,6 +6,7 @@ import UserProfile from 'views/University/Profile/Profile';
 import Requests from '../views/University/Requests/Requests';
 import MyRequests from '../views/University/MyRequests/Requests';
 import Settings from '../views/University/Settings/Settings';
+import ManageStudents from '../views/University/ManageStudents/ManageStudents';
 
 const dashboardRoutes = [
   {
@@ -41,6 +42,13 @@ const dashboardRoutes = [
     name: 'Settings',
     icon: DashboardIcon,
     component: Settings,
+    layout: '/university',
+  },
+  {
+    path: '/manage-students',
+    name: 'Manage Students',
+    icon: DashboardIcon,
+    component: ManageStudents,
     layout: '/university',
   },
 ];

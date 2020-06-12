@@ -24,6 +24,23 @@ router.get('/university', auth, async (req, res) => {
   }
 });
 
+// @route   GET /api/users/student
+// @desc    Get all students of university
+// @access  Private
+router.get('/student', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const students = await User.find({
+      type: 2,
+      university: req.user.id,
+    }).select('-password');
+    res.json(students);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
 // @route   DELETE /api/users/university/:id
 // @desc    Delete a university
 // @access  Private
@@ -38,6 +55,23 @@ router.delete('/university/:id', auth, async (req, res) => {
     await dropDB(`${req.params.id}`);
 
     res.json({ msg: 'University Removed' });
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   DELETE /api/users/student/:id
+// @desc    Delete a student
+// @access  Private
+router.delete('/student/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    await Profile.findOneAndRemove({ user: req.params.id });
+
+    await User.findOneAndRemove({ _id: req.params.id });
+
+    res.json({ msg: 'Student Removed' });
   } catch (err) {
     return res.status(500).send('Server Error');
   }

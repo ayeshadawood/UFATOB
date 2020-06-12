@@ -21,14 +21,14 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CreateUniversity = ({ register, history }) => {
+const CreateStudent = ({ register, history, auth: { user } }) => {
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '111111',
-    type: '1',
+    type: '2',
   });
 
   const { name, email } = formData;
@@ -39,14 +39,14 @@ const CreateUniversity = ({ register, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    register(formData, history);
+    register(formData, history, user._id);
   };
 
   return (
     <Fragment>
       <Typography variant='h5' className={classes.heading}>
-        <i className='fas fa-building'></i> Fill in the following information to
-        create a university
+        <i className='fas fa-user'></i> Fill in the following information to
+        create a student
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
@@ -90,9 +90,16 @@ const CreateUniversity = ({ register, history }) => {
   );
 };
 
-CreateUniversity.propTypes = {
+CreateStudent.propTypes = {
   register: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default connect(null, { register })(withRouter(CreateUniversity));
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { register })(
+  withRouter(CreateStudent)
+);
