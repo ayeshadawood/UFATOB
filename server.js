@@ -12,9 +12,9 @@ app.use('/api/users', require('./routes/api/users'));
 app.use('/api/auth', require('./routes/api/auth'));
 app.use('/api/profiles', require('./routes/api/profiles'));
 app.use('/api/requests', require('./routes/api/requests'));
+app.use('/api/complaints', require('./routes/api/complaints'));
 // app.use('/api/blockchain', require('./routes/api/blockchain'));
 // app.use('/api/posts', require('./routes/api/posts'));
-// app.use('/api/complaint', require('./routes/api/complaint'));
 // app.use('/api/scrapper', require('./routes/api/scrapper'));
 // app.use('/api/eventScrapper', require('./routes/api/eventScrapper'));
 

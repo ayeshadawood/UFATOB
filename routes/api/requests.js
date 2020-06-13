@@ -98,9 +98,8 @@ router.get('/user', auth, async (req, res) => {
   try {
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const requests = await Request.find({
-      user: req.user.id,
-    }).populate('institute', ['name', 'avatar']);
+    const requests = await Request.find({ user: req.user.id });
+
     res.json(requests);
   } catch (err) {
     res.status(500).send('Server Error');

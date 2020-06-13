@@ -12,6 +12,8 @@ import AddExperience from '../views/User/ProfileForms/AddExperience';
 import AddEducation from '../views/User/ProfileForms/AddEducation';
 import Request from '../views/User/Requests/Request';
 import CreateRequest from '../views/User/Requests/CreateRequest';
+import CreateComplaint from '../views/User/Complaints/CreateComplaint';
+import Complaint from '../views/User/Complaints/Complaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/UserRoutes';
@@ -42,7 +44,9 @@ const switchRoutes = (
     <Route path='/user/add-experience' component={AddExperience} />
     <Route path='/user/add-education' component={AddEducation} />
     <Route path='/user/create-request' component={CreateRequest} />
+    <Route path='/user/create-complaint' component={CreateComplaint} />
     <Route path='/user/request/:id' component={Request} />
+    <Route path='/user/complaint/:id' component={Complaint} />
     <Redirect from='/user' to='/user/dashboard' />
   </Switch>
 );
