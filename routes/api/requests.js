@@ -14,7 +14,6 @@ router.post(
   [
     auth,
     check('title', 'Title is required').not().isEmpty(),
-    check('institute', 'Institute is required').not().isEmpty(),
     check('department', 'Department is required').not().isEmpty(),
     check('description', 'Description is required').not().isEmpty(),
     check('status', 'Status is required').not().isEmpty(),
@@ -49,7 +48,7 @@ router.post(
     if (fatherName) requestFields.fatherName = fatherName;
     if (cnic) requestFields.cnic = cnic;
     if (dateOfBirth) requestFields.dateOfBirth = dateOfBirth;
-    requestFields.institute = institute;
+    if (institute) requestFields.institute = institute;
     if (registrationNumber)
       requestFields.registrationNumber = registrationNumber;
     if (degreeProgram) requestFields.degreeProgram = degreeProgram;
@@ -78,12 +77,7 @@ router.get('/university', auth, async (req, res) => {
   try {
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const requests = await Request.find({
-      user: { $ne: req.user.id },
-      status: { $lt: 2 },
-    }).sort({
-      date: -1,
-    });
+    const requests = await Request.find({ institute: req.user.id });
     res.json(requests);
   } catch (err) {
     console.error(err.message);
@@ -99,7 +93,6 @@ router.get('/user', auth, async (req, res) => {
     await connectDB(config.get('defaultMongoDatabase'));
 
     const requests = await Request.find({ user: req.user.id });
-
     res.json(requests);
   } catch (err) {
     res.status(500).send('Server Error');

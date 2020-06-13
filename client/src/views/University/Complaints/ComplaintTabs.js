@@ -10,7 +10,10 @@ import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import Table from 'components/Table/Table.js';
 import { connect } from 'react-redux';
-import { getUserRequests } from '../../../actions/request';
+import {
+  getUniversityComplaints,
+  forwardComplaint,
+} from '../../../actions/complaint';
 import { Link } from 'react-router-dom';
 
 function TabPanel(props) {
@@ -54,7 +57,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
+const ComplaintTabs = ({
+  complaint: { complaints, loading },
+  getUniversityComplaints,
+  forwardComplaint,
+}) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -68,27 +75,50 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     setValue(index);
   };
 
-  const getRequestStatus = (status) => {
-    switch (status) {
-      case 1:
-        return 'Forwarded to HEC';
-      default:
-        return '';
-    }
-  };
-
-  const getPendingRequests = () => {
+  const getQueuedComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status < 2) {
+    complaints.forEach((complaint) => {
+      if (complaint.status === 0) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            getRequestStatus(request.status),
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            <Fragment>
+              <Link to={`/university/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+              </Link>
+              <Button
+                color='primary'
+                variant='contained'
+                onClick={() => forwardComplaint(complaint._id)}
+                style={{ backgroundColor: 'green', marginLeft: '5px' }}
+              >
+                Forward
+              </Button>
+            </Fragment>,
+          ],
+        ];
+      }
+      sNo++;
+    });
+    return res;
+  };
+
+  const getForwardedComplaints = () => {
+    let res = [];
+    let sNo = 1;
+    complaints.forEach((complaint) => {
+      if (complaint.status === 1) {
+        res = [
+          ...res,
+          [
+            sNo,
+            complaint.title,
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -102,17 +132,17 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     return res;
   };
 
-  const getAcceptedRequests = () => {
+  const getAcceptedComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status === 2) {
+    complaints.forEach((complaint) => {
+      if (complaint.status === 2) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -126,17 +156,17 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     return res;
   };
 
-  const getRejectedRequests = () => {
+  const getRejectedComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status === 3) {
+    complaints.forEach((complaint) => {
+      if (complaint.status === 3) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -151,8 +181,8 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
   };
 
   useEffect(() => {
-    getUserRequests();
-  }, [getUserRequests]);
+    getUniversityComplaints();
+  }, [getUniversityComplaints]);
 
   return (
     <Fragment>
@@ -166,9 +196,10 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             variant='fullWidth'
             aria-label='full width tabs example'
           >
-            <Tab label='Pending' {...a11yProps(0)} />
-            <Tab label='Accepted' {...a11yProps(1)} />
-            <Tab label='Rejected' {...a11yProps(2)} />
+            <Tab label='Queue' {...a11yProps(0)} />
+            <Tab label='Forwarded' {...a11yProps(1)} />
+            <Tab label='Accepted' {...a11yProps(2)} />
+            <Tab label='Rejected' {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -179,9 +210,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Status', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getPendingRequests() : []
+                !loading && complaints.length > 0 ? getQueuedComplaints() : []
               }
             />
           </TabPanel>
@@ -190,7 +221,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getAcceptedRequests() : []
+                !loading && complaints.length > 0
+                  ? getForwardedComplaints()
+                  : []
               }
             />
           </TabPanel>
@@ -199,7 +232,16 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getRejectedRequests() : []
+                !loading && complaints.length > 0 ? getAcceptedComplaints() : []
+              }
+            />
+          </TabPanel>
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <Table
+              tableHeaderColor='primary'
+              tableHead={['S.No.', 'Title', 'Actions']}
+              tableData={
+                !loading && complaints.length > 0 ? getRejectedComplaints() : []
               }
             />
           </TabPanel>
@@ -209,13 +251,17 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
   );
 };
 
-RequestTabs.propTypes = {
-  request: PropTypes.object.isRequired,
-  getUserRequests: PropTypes.func.isRequired,
+ComplaintTabs.propTypes = {
+  complaint: PropTypes.object.isRequired,
+  getUniversityComplaints: PropTypes.func.isRequired,
+  forwardComplaint: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  request: state.request,
+  complaint: state.complaint,
 });
 
-export default connect(mapStateToProps, { getUserRequests })(RequestTabs);
+export default connect(mapStateToProps, {
+  getUniversityComplaints,
+  forwardComplaint,
+})(ComplaintTabs);

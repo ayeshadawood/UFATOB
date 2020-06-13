@@ -10,7 +10,7 @@ import Box from '@material-ui/core/Box';
 import { Button } from '@material-ui/core';
 import Table from 'components/Table/Table.js';
 import { connect } from 'react-redux';
-import { getUserRequests } from '../../../actions/request';
+import { getUserComplaints } from '../../../actions/complaint';
 import { Link } from 'react-router-dom';
 
 function TabPanel(props) {
@@ -54,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
+const ComplaintTabs = ({
+  complaint: { complaints, loading },
+  getUserComplaints,
+}) => {
   const classes = useStyles();
   const theme = useTheme();
 
@@ -68,8 +71,10 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     setValue(index);
   };
 
-  const getRequestStatus = (status) => {
+  const getComplaintStatus = (status) => {
     switch (status) {
+      case 0:
+        return 'Forwarded to University';
       case 1:
         return 'Forwarded to HEC';
       default:
@@ -77,18 +82,18 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     }
   };
 
-  const getPendingRequests = () => {
+  const getPendingComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status < 2) {
+    complaints.forEach((complaint) => {
+      if (complaint.status < 2) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            getRequestStatus(request.status),
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            getComplaintStatus(complaint.status),
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -102,17 +107,17 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     return res;
   };
 
-  const getAcceptedRequests = () => {
+  const getConsideredComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status === 2) {
+    complaints.forEach((complaint) => {
+      if (complaint.status === 2) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -126,17 +131,17 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     return res;
   };
 
-  const getRejectedRequests = () => {
+  const getNotConsideredComplaints = () => {
     let res = [];
     let sNo = 1;
-    requests.forEach((request) => {
-      if (request.status === 3) {
+    complaints.forEach((complaint) => {
+      if (complaint.status === 3) {
         res = [
           ...res,
           [
             sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
+            complaint.title,
+            <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
               </Button>
@@ -151,8 +156,8 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
   };
 
   useEffect(() => {
-    getUserRequests();
-  }, [getUserRequests]);
+    getUserComplaints();
+  }, [getUserComplaints]);
 
   return (
     <Fragment>
@@ -167,8 +172,8 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             aria-label='full width tabs example'
           >
             <Tab label='Pending' {...a11yProps(0)} />
-            <Tab label='Accepted' {...a11yProps(1)} />
-            <Tab label='Rejected' {...a11yProps(2)} />
+            <Tab label='Considered' {...a11yProps(1)} />
+            <Tab label='Not considered' {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -181,7 +186,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Status', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getPendingRequests() : []
+                !loading && complaints.length > 0 ? getPendingComplaints() : []
               }
             />
           </TabPanel>
@@ -190,7 +195,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getAcceptedRequests() : []
+                !loading && complaints.length > 0
+                  ? getConsideredComplaints()
+                  : []
               }
             />
           </TabPanel>
@@ -199,7 +206,9 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && requests.length > 0 ? getRejectedRequests() : []
+                !loading && complaints.length > 0
+                  ? getNotConsideredComplaints()
+                  : []
               }
             />
           </TabPanel>
@@ -209,13 +218,13 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
   );
 };
 
-RequestTabs.propTypes = {
-  request: PropTypes.object.isRequired,
-  getUserRequests: PropTypes.func.isRequired,
+ComplaintTabs.propTypes = {
+  complaint: PropTypes.object.isRequired,
+  getUserComplaints: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  request: state.request,
+  complaint: state.complaint,
 });
 
-export default connect(mapStateToProps, { getUserRequests })(RequestTabs);
+export default connect(mapStateToProps, { getUserComplaints })(ComplaintTabs);

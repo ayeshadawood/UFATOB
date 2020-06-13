@@ -31,7 +31,7 @@ export const createRequest = (formData, history, institute = '') => async (
 
     dispatch(setAlert('Request Created', 'success'));
 
-    history.push('/user/requests');
+    history.goBack();
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -101,8 +101,6 @@ export const forwardRequest = (id) => async (dispatch) => {
       type: REQUEST_FORWARDED,
       payload: res.data,
     });
-
-    console.log(res.data);
 
     dispatch(setAlert('Request forwarded', 'success'));
   } catch (err) {

@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { createRequest } from '../../../actions/request';
+import { createComplaint } from '../../../actions/complaint';
 import { withRouter } from 'react-router-dom';
 
 const styles = {
@@ -21,30 +21,19 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-const CreateRequest = ({ createRequest, history }) => {
+const CreateComplaint = ({ createComplaint, history }) => {
   const classes = useStyles();
-
-  const getCurrentDate = () => {
-    let d = new Date(Date.now());
-    d = new Date(Date.now() + d.getTimezoneOffset() * 60000);
-
-    const date = d.getDate();
-    const month = d.getMonth() + 1;
-    const year = d.getFullYear();
-
-    return `${year}-${month < 10 ? '0' : ''}${month}-${
-      date < 10 ? '0' : ''
-    }${date}`;
-  };
 
   const [formData, setFormData] = useState({
     title: '',
-    department: '',
+    name: '',
+    email: '',
+    contactNo: '',
     description: '',
     status: '1',
   });
 
-  const { title, department, description } = formData;
+  const { title, name, email, contactNo, description } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -52,14 +41,14 @@ const CreateRequest = ({ createRequest, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createRequest(formData, history);
+    createComplaint(formData, history);
   };
 
   return (
     <Fragment>
       <Typography variant='h5' className={classes.heading}>
         <i className='fas fa-user'></i> Fill in the following information to
-        create a request
+        create a complaint
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
@@ -77,10 +66,34 @@ const CreateRequest = ({ createRequest, history }) => {
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name='department'
-              value={department}
+              name='name'
+              value={name}
               onChange={(e) => onChange(e)}
-              label='Department'
+              label='Name'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='email'
+              value={email}
+              onChange={(e) => onChange(e)}
+              label='Email'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='contactNo'
+              value={contactNo}
+              onChange={(e) => onChange(e)}
+              label='Contact no'
               variant='outlined'
               fullWidth={true}
               className={classes.input}
@@ -117,9 +130,9 @@ const CreateRequest = ({ createRequest, history }) => {
   );
 };
 
-CreateRequest.propTypes = {
-  createRequest: PropTypes.func.isRequired,
+CreateComplaint.propTypes = {
+  createComplaint: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createRequest })(withRouter(CreateRequest));
+export default connect(null, { createComplaint })(withRouter(CreateComplaint));

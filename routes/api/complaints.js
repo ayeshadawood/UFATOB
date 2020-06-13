@@ -87,6 +87,20 @@ router.get('/user', auth, async (req, res) => {
   }
 });
 
+// @route   GET api/complaints/university
+// @desc    Get  all complaints of university
+// @access  Private
+router.get('/university', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const complaints = await Complaint.find({ university: req.user.id });
+    res.json(complaints);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   GET api/complaints/:id
 // @desc    Get complaint by id
 // @access  Private
@@ -95,6 +109,28 @@ router.get('/:id', auth, async (req, res) => {
     await connectDB(config.get('defaultMongoDatabase'));
 
     const complaint = await Complaint.findById(req.params.id);
+    res.json(complaint);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/complaints/forward/:id
+// @desc    Forward a complaint to HEC
+// @access  Private
+router.put('/forward/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const complaint = await Complaint.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 1,
+        },
+      },
+      { new: true }
+    );
     res.json(complaint);
   } catch (err) {
     res.status(500).send('Server Error');

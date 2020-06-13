@@ -5,8 +5,8 @@ import {
   COMPLAINT_ERROR,
   COMPLAINT_LOADED,
   COMPLAINT_CREATED,
-  // ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
-  // REQUEST_FORWARDED,
+  ALL_COMPLAINTS_LOADED_FOR_UNIVERSITY,
+  COMPLAINT_FORWARDED,
 } from './types';
 
 // Create complaint
@@ -31,7 +31,7 @@ export const createComplaint = (formData, history, university = '') => async (
 
     dispatch(setAlert('Complaint Created', 'success'));
 
-    history.push('/user/complaints');
+    history.goBack();
   } catch (err) {
     const errors = err.response.data.errors;
 
@@ -58,22 +58,22 @@ export const getUserComplaints = () => async (dispatch) => {
   }
 };
 
-// // Get all requests for university
-// export const getUniversityRequests = () => async (dispatch) => {
-//   try {
-//     const res = await axios.get('/api/requests/university');
+// Get all complaints for university
+export const getUniversityComplaints = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/complaints/university');
 
-//     dispatch({
-//       type: ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     dispatch({
-//       type: COMPLAINT_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     });
-//   }
-// };
+    dispatch({
+      type: ALL_COMPLAINTS_LOADED_FOR_UNIVERSITY,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: COMPLAINT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // Get complaint by id
 export const getComplaint = (id) => async (dispatch) => {
@@ -92,23 +92,21 @@ export const getComplaint = (id) => async (dispatch) => {
   }
 };
 
-// // Forwared request to HEC
-// export const forwardRequest = (id) => async (dispatch) => {
-//   try {
-//     const res = await axios.put(`/api/requests/forward/${id}`);
+// Forwared complaint to HEC
+export const forwardComplaint = (id) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/complaints/forward/${id}`);
 
-//     dispatch({
-//       type: REQUEST_FORWARDED,
-//       payload: res.data,
-//     });
+    dispatch({
+      type: COMPLAINT_FORWARDED,
+      payload: res.data,
+    });
 
-//     console.log(res.data);
-
-//     dispatch(setAlert('Request forwarded', 'success'));
-//   } catch (err) {
-//     dispatch({
-//       type: COMPLAINT_ERROR,
-//       payload: { msg: err.response.statusText, status: err.response.status },
-//     });
-//   }
-// };
+    dispatch(setAlert('Complaint forwarded', 'success'));
+  } catch (err) {
+    dispatch({
+      type: COMPLAINT_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};

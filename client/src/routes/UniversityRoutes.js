@@ -4,7 +4,9 @@ import Person from '@material-ui/icons/Person';
 import Dashboard from '../views/University/Dashboard/Dashboard';
 import UserProfile from 'views/University/Profile/Profile';
 import Requests from '../views/University/Requests/Requests';
+import Complaints from '../views/University/Complaints/Complaints';
 import MyRequests from '../views/University/MyRequests/Requests';
+import MyComplaints from '../views/University/MyComplaints/Complaints';
 import Settings from '../views/University/Settings/Settings';
 import ManageStudents from '../views/University/ManageStudents/ManageStudents';
 
@@ -25,9 +27,16 @@ const dashboardRoutes = [
   },
   {
     path: '/requests',
-    name: 'Requests',
+    name: 'Manage Requests',
     icon: DashboardIcon,
     component: Requests,
+    layout: '/university',
+  },
+  {
+    path: '/complaints',
+    name: 'Manage Complaints',
+    icon: DashboardIcon,
+    component: Complaints,
     layout: '/university',
   },
   {
@@ -38,10 +47,10 @@ const dashboardRoutes = [
     layout: '/university',
   },
   {
-    path: '/settings',
-    name: 'Settings',
+    path: '/my-complaints',
+    name: 'My Complaints',
     icon: DashboardIcon,
-    component: Settings,
+    component: MyComplaints,
     layout: '/university',
   },
   {
@@ -49,6 +58,13 @@ const dashboardRoutes = [
     name: 'Manage Students',
     icon: DashboardIcon,
     component: ManageStudents,
+    layout: '/university',
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    icon: DashboardIcon,
+    component: Settings,
     layout: '/university',
   },
 ];

@@ -79,13 +79,12 @@ const RequestTabs = ({
     let res = [];
     let sNo = 1;
     requests.forEach((request) => {
-      if (request.status < 1) {
+      if (request.status === 0) {
         res = [
           ...res,
           [
             sNo,
             request.title,
-            request.institute,
             <Fragment>
               <Link to={`/university/request/${request._id}`}>
                 <Button color='primary' variant='contained'>
@@ -104,6 +103,7 @@ const RequestTabs = ({
           ],
         ];
       }
+      sNo++;
     });
     return res;
   };
@@ -117,9 +117,7 @@ const RequestTabs = ({
           ...res,
           [
             sNo,
-            request.name,
             request.title,
-            request.institute,
             <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -129,6 +127,55 @@ const RequestTabs = ({
           ],
         ];
       }
+      sNo++;
+    });
+    return res;
+  };
+
+  const getAcceptedRequests = () => {
+    let res = [];
+    let sNo = 1;
+    requests.forEach((request) => {
+      if (request.status === 2) {
+        res = [
+          ...res,
+          [
+            sNo,
+            request.title,
+            <Link to={`/university/request/${request._id}`}>
+              <Button color='primary' variant='contained'>
+                Open
+              </Button>
+              ,
+            </Link>,
+          ],
+        ];
+      }
+      sNo++;
+    });
+    return res;
+  };
+
+  const getRejectedRequests = () => {
+    let res = [];
+    let sNo = 1;
+    requests.forEach((request) => {
+      if (request.status === 3) {
+        res = [
+          ...res,
+          [
+            sNo,
+            request.title,
+            <Link to={`/university/request/${request._id}`}>
+              <Button color='primary' variant='contained'>
+                Open
+              </Button>
+              ,
+            </Link>,
+          ],
+        ];
+      }
+      sNo++;
     });
     return res;
   };
@@ -151,6 +198,8 @@ const RequestTabs = ({
           >
             <Tab label='Queue' {...a11yProps(0)} />
             <Tab label='Forwarded' {...a11yProps(1)} />
+            <Tab label='Accepted' {...a11yProps(2)} />
+            <Tab label='Rejected' {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -161,7 +210,7 @@ const RequestTabs = ({
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Institute', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getQueuedRequests() : []
               }
@@ -170,9 +219,27 @@ const RequestTabs = ({
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Title', 'University', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getForwardedRequests() : []
+              }
+            />
+          </TabPanel>
+          <TabPanel value={value} index={2} dir={theme.direction}>
+            <Table
+              tableHeaderColor='primary'
+              tableHead={['S.No.', 'Title', 'Actions']}
+              tableData={
+                !loading && requests.length > 0 ? getAcceptedRequests() : []
+              }
+            />
+          </TabPanel>
+          <TabPanel value={value} index={3} dir={theme.direction}>
+            <Table
+              tableHeaderColor='primary'
+              tableHead={['S.No.', 'Title', 'Actions']}
+              tableData={
+                !loading && requests.length > 0 ? getRejectedRequests() : []
               }
             />
           </TabPanel>

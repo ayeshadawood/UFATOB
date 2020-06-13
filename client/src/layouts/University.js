@@ -10,7 +10,9 @@ import CreateProfile from '../views/University/ProfileForms/CreateProfile';
 import EditProfile from '../views/University/ProfileForms/EditProfile';
 import CreateRequest from '../views/University/MyRequests/CreateRequest';
 import Request from '../views/University/MyRequests/Request';
+import Complaint from '../views/University/MyComplaints/Complaint';
 import CreateStudent from '../views/University/ManageStudents/CreateStudent';
+import CreateComplaint from '../views/University/MyComplaints/CreateComplaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/UniversityRoutes';
@@ -40,7 +42,9 @@ const switchRoutes = (
     <Route path='/university/edit-profile' component={EditProfile} />
     <Route path='/university/create-request' component={CreateRequest} />
     <Route path='/university/create-student' component={CreateStudent} />
+    <Route path='/university/create-complaint' component={CreateComplaint} />
     <Route path='/university/request/:id' component={Request} />
+    <Route path='/university/complaint/:id' component={Complaint} />
     <Redirect from='/university' to='/university/dashboard' />
   </Switch>
 );
