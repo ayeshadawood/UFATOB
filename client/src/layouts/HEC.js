@@ -9,6 +9,7 @@ import Sidebar from 'components/Sidebar/Sidebar.js';
 import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 import CreateUniversity from '../views/HEC/ManageUniversities/CreateUniversity';
 import Request from '../views/HEC/Requests/Request';
+import Complaint from '../views/HEC/Complaints/Complaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/HecRoutes.js';
@@ -36,6 +37,7 @@ const switchRoutes = (
     })}
     <Route path='/hec/create-university' component={CreateUniversity} />
     <Route path='/hec/request/:id' component={Request} />
+    <Route path='/hec/complaint/:id' component={Complaint} />
     <Redirect from='/hec' to='/hec/dashboard' />
   </Switch>
 );

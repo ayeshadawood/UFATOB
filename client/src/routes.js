@@ -35,7 +35,7 @@ import NotificationsPage from 'views/Notifications/Notifications.js';
 import UniversitiesList from 'views/HEC/Universities/UniversitiesList';
 // import AddInstitution from "views/HEC/UniversitiesForms/AddInstitution";
 // import RequestsList from "views/University/Requests/RequestsList";
-import ComplaintsList from 'views/HEC/Complaints/ComplaintsList';
+// import ComplaintsList from 'views/HEC/Complaints/ComplaintsList';
 // import MyRequests from 'views/University/MyRequests/RequestsList';
 // import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout

@@ -5,6 +5,9 @@ import {
   COMPLAINT_CREATED,
   ALL_COMPLAINTS_LOADED_FOR_UNIVERSITY,
   COMPLAINT_FORWARDED,
+  COMPLAINT_CONSIDERED,
+  COMPLAINT_NOT_CONSIDERED,
+  ALL_COMPLAINTS_LOADED_FOR_HEC,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +22,7 @@ export default function (state = initialState, action) {
   switch (type) {
     case ALL_COMPLAINTS_LOADED_FOR_USER:
     case ALL_COMPLAINTS_LOADED_FOR_UNIVERSITY:
+    case ALL_COMPLAINTS_LOADED_FOR_HEC:
       return {
         ...state,
         loading: false,
@@ -26,6 +30,8 @@ export default function (state = initialState, action) {
         complaints: payload,
       };
     case COMPLAINT_FORWARDED:
+    case COMPLAINT_CONSIDERED:
+    case COMPLAINT_NOT_CONSIDERED:
       return {
         ...state,
         loading: false,

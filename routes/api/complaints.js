@@ -101,6 +101,20 @@ router.get('/university', auth, async (req, res) => {
   }
 });
 
+// @route   GET api/complaints/hec
+// @desc    Get  all complaints of hec
+// @access  Private
+router.get('/hec', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const complaints = await Complaint.find({ status: { $gte: 1 } });
+    res.json(complaints);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   GET api/complaints/:id
 // @desc    Get complaint by id
 // @access  Private
@@ -127,6 +141,50 @@ router.put('/forward/:id', auth, async (req, res) => {
       {
         $set: {
           status: 1,
+        },
+      },
+      { new: true }
+    );
+    res.json(complaint);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/complaints/consider/:id
+// @desc    Consider a complaint
+// @access  Private
+router.put('/consider/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const complaint = await Complaint.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 2,
+        },
+      },
+      { new: true }
+    );
+    res.json(complaint);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/complaints/not-consider/:id
+// @desc    Not consider a complaint
+// @access  Private
+router.put('/not-consider/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const complaint = await Complaint.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 3,
         },
       },
       { new: true }
