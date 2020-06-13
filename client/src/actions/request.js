@@ -10,13 +10,18 @@ import {
 } from './types';
 
 //Create fund request
-export const createRequest = (formData, history) => async (dispatch) => {
+export const createRequest = (formData, history, institute = '') => async (
+  dispatch
+) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  formData = { ...formData, institute };
+
   try {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
     const res = await axios.post('/api/requests', formData, config);
 
     dispatch({

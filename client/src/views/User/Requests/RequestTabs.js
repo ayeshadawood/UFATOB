@@ -89,7 +89,6 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           [
             sNo,
             request.title,
-            request.institute,
             getRequestStatus(request.status),
             <Link to={`/user/request/${request._id}`}>
               <Button color='primary' variant='contained'>
@@ -100,6 +99,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           ],
         ];
       }
+      sNo++;
     });
     return res;
   };
@@ -115,7 +115,6 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             sNo,
             request.name,
             request.title,
-            request.institute,
             <Link to={`/user/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -125,6 +124,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           ],
         ];
       }
+      sNo++;
     });
     return res;
   };
@@ -140,7 +140,6 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
             sNo,
             request.name,
             request.title,
-            request.institute,
             <Link to={`/user/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -150,6 +149,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           ],
         ];
       }
+      sNo++;
     });
     return res;
   };
@@ -183,7 +183,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Institute', 'Status', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Status', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getPendingRequests() : []
               }
@@ -192,7 +192,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Title', 'University', 'Actions']}
+              tableHead={['S.No.', 'Name', 'Title', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getAcceptedRequests() : []
               }
@@ -201,7 +201,7 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Name', 'Title', 'University', 'Actions']}
+              tableHead={['S.No.', 'Name', 'Title', 'Actions']}
               tableData={
                 !loading && requests.length > 0 ? getRejectedRequests() : []
               }

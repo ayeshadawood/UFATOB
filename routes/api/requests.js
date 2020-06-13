@@ -33,7 +33,6 @@ router.post(
       cnic,
       dateOfBirth,
       institute,
-      campus,
       registrationNumber,
       degreeProgram,
       department,
@@ -51,7 +50,6 @@ router.post(
     if (cnic) requestFields.cnic = cnic;
     if (dateOfBirth) requestFields.dateOfBirth = dateOfBirth;
     requestFields.institute = institute;
-    if (campus) requestFields.campus = campus;
     if (registrationNumber)
       requestFields.registrationNumber = registrationNumber;
     if (degreeProgram) requestFields.degreeProgram = degreeProgram;
@@ -100,7 +98,9 @@ router.get('/user', auth, async (req, res) => {
   try {
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const requests = await Request.find({ user: req.user.id });
+    const requests = await Request.find({
+      user: req.user.id,
+    }).populate('institute', ['name', 'avatar']);
     res.json(requests);
   } catch (err) {
     res.status(500).send('Server Error');

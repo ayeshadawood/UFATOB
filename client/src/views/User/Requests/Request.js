@@ -111,18 +111,6 @@ const Request = ({ request: { request, loading }, getRequest, match }) => {
               </GridItem>
               <GridItem xs={12} sm={12} md={12}>
                 <div className={classes.row}>
-                  <strong>Institute:</strong>{' '}
-                  {!loading && request !== null ? request.institute : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Campus:</strong>{' '}
-                  {!loading && request !== null ? request.campus : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
                   <strong>Registration number:</strong>{' '}
                   {!loading && request !== null
                     ? request.registrationNumber

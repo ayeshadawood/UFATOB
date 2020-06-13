@@ -22,11 +22,8 @@ const RequestSchema = mongoose.Schema({
     type: String,
   },
   institute: {
-    type: String,
-    required: true,
-  },
-  campus: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
   },
   registrationNumber: {
     type: String,

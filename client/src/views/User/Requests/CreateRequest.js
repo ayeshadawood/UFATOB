@@ -1,27 +1,27 @@
-import React, { Fragment, useState } from "react";
-import PropTypes from "prop-types";
-import { makeStyles } from "@material-ui/core/styles";
-import { TextField, Button, Grid } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import { connect } from "react-redux";
-import { createRequest } from "../../../actions/request";
-import { withRouter } from "react-router-dom";
+import React, { Fragment, useState } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import { TextField, Button, Grid } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
+import { connect } from 'react-redux';
+import { createRequest } from '../../../actions/request';
+import { withRouter } from 'react-router-dom';
 
 const styles = {
   heading: {
-    marginBottom: "16px",
+    marginBottom: '16px',
   },
   input: {
-    margin: "10px 0",
+    margin: '10px 0',
   },
   formControl: {
-    width: "100%",
+    width: '100%',
   },
 };
 
 const useStyles = makeStyles(styles);
 
-const CreateRequest = ({ createRequest, history }) => {
+const CreateRequest = ({ createRequest, history, auth: { user } }) => {
   const classes = useStyles();
 
   const getCurrentDate = () => {
@@ -32,25 +32,23 @@ const CreateRequest = ({ createRequest, history }) => {
     const month = d.getMonth() + 1;
     const year = d.getFullYear();
 
-    return `${year}-${month < 10 ? "0" : ""}${month}-${
-      date < 10 ? "0" : ""
+    return `${year}-${month < 10 ? '0' : ''}${month}-${
+      date < 10 ? '0' : ''
     }${date}`;
   };
 
   const [formData, setFormData] = useState({
-    title: "",
-    name: "",
-    fatherName: "",
-    cnic: "",
+    title: '',
+    name: '',
+    fatherName: '',
+    cnic: '',
     dateOfBirth: getCurrentDate(),
-    institute: "",
-    campus: "",
-    registrationNumber: "",
-    degreeProgram: "",
-    department: "",
-    semester: "",
-    description: "",
-    status: "0",
+    registrationNumber: '',
+    degreeProgram: '',
+    department: '',
+    semester: '',
+    description: '',
+    status: '0',
   });
 
   const {
@@ -59,8 +57,6 @@ const CreateRequest = ({ createRequest, history }) => {
     fatherName,
     cnic,
     dateOfBirth,
-    institute,
-    campus,
     registrationNumber,
     degreeProgram,
     department,
@@ -74,171 +70,147 @@ const CreateRequest = ({ createRequest, history }) => {
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createRequest(formData, history);
+    createRequest(formData, history, user.university);
   };
 
   return (
     <Fragment>
-      <Typography variant="h5" className={classes.heading}>
-        <i className="fas fa-user"></i> Fill in the following information to
+      <Typography variant='h5' className={classes.heading}>
+        <i className='fas fa-user'></i> Fill in the following information to
         create a request
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="title"
+              name='title'
               value={title}
               onChange={(e) => onChange(e)}
-              label="Title"
-              variant="outlined"
+              label='Title'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="name"
+              name='name'
               value={name}
               onChange={(e) => onChange(e)}
-              label="Name"
-              variant="outlined"
+              label='Name'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="fatherName"
+              name='fatherName'
               value={fatherName}
               onChange={(e) => onChange(e)}
-              label="Father name"
-              variant="outlined"
+              label='Father name'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="cnic"
+              name='cnic'
               value={cnic}
               onChange={(e) => onChange(e)}
-              label="CNIC"
-              variant="outlined"
+              label='CNIC'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="dateOfBirth"
+              name='dateOfBirth'
               value={dateOfBirth}
               onChange={(e) => onChange(e)}
-              label="Date of birth"
-              variant="outlined"
+              label='Date of birth'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
-              type="date"
+              margin='dense'
+              type='date'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="institute"
-              value={institute}
-              onChange={(e) => onChange(e)}
-              label="Institute"
-              variant="outlined"
-              fullWidth={true}
-              className={classes.input}
-              margin="dense"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name="campus"
-              value={campus}
-              onChange={(e) => onChange(e)}
-              label="Campus"
-              variant="outlined"
-              fullWidth={true}
-              className={classes.input}
-              margin="dense"
-            />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <TextField
-              name="registrationNumber"
+              name='registrationNumber'
               value={registrationNumber}
               onChange={(e) => onChange(e)}
-              label="Registration number"
-              variant="outlined"
+              label='Registration number'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="degreeProgram"
+              name='degreeProgram'
               value={degreeProgram}
               onChange={(e) => onChange(e)}
-              label="Degree program"
-              variant="outlined"
+              label='Degree program'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="department"
+              name='department'
               value={department}
               onChange={(e) => onChange(e)}
-              label="Department"
-              variant="outlined"
+              label='Department'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="semester"
+              name='semester'
               value={semester}
               onChange={(e) => onChange(e)}
-              label="Semester"
-              variant="outlined"
+              label='Semester'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
-              type="number"
+              margin='dense'
+              type='number'
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
-              name="description"
+              name='description'
               value={description}
               onChange={(e) => onChange(e)}
-              label="Description"
-              variant="outlined"
+              label='Description'
+              variant='outlined'
               fullWidth={true}
               className={classes.input}
-              margin="dense"
+              margin='dense'
               multiline
               rows={5}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <Button
-              color="primary"
-              variant="contained"
+              color='primary'
+              variant='contained'
               fullWidth={true}
-              type="submit"
+              type='submit'
             >
               Submit
             </Button>
@@ -252,6 +224,13 @@ const CreateRequest = ({ createRequest, history }) => {
 CreateRequest.propTypes = {
   createRequest: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default connect(null, { createRequest })(withRouter(CreateRequest));
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { createRequest })(
+  withRouter(CreateRequest)
+);
