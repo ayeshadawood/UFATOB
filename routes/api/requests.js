@@ -70,6 +70,21 @@ router.post(
   }
 );
 
+// @route   GET api/requests/hec
+// @desc    Get all fund requests for hec
+// @access  Public
+router.get('/hec', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const requests = await Request.find({ status: { $gte: 1 } });
+    res.json(requests);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server Error');
+  }
+});
+
 // @route   GET api/requests/university
 // @desc    Get all fund requests for university
 // @access  Public
@@ -125,6 +140,50 @@ router.put('/forward/:id', auth, async (req, res) => {
       {
         $set: {
           status: 1,
+        },
+      },
+      { new: true }
+    );
+    res.json(request);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/requests/accept/:id
+// @desc    Accept a request
+// @access  Private
+router.put('/accept/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const request = await Request.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 2,
+        },
+      },
+      { new: true }
+    );
+    res.json(request);
+  } catch (err) {
+    res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT api/requests/reject/:id
+// @desc    Reject a request
+// @access  Private
+router.put('/reject/:id', auth, async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const request = await Request.findOneAndUpdate(
+      { _id: req.params.id },
+      {
+        $set: {
+          status: 3,
         },
       },
       { new: true }

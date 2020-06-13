@@ -2,12 +2,13 @@ import Dashboard from '@material-ui/icons/Dashboard';
 
 import DashboardPage from 'views/HEC/Dashboard/Dashboard';
 import UniversitiesList from 'views/HEC/Universities/UniversitiesList';
-import RequestsList from 'views/HEC/Requests/RequestsList';
+// import RequestsList from 'views/HEC/Requests/RequestsList';
 import ComplaintsList from 'views/HEC/Complaints/ComplaintsList';
 import Blockchain from 'views/HEC/Blockchain/Blockchain';
 import NetworkNodes from 'views/HEC/ManageNetworkNodes/NetworkNodes';
 import ViewContracts from 'views/HEC/ViewContracts/ViewContracts';
 import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversities';
+import Requests from '../views/HEC/Requests/Requests';
 
 const HecRoutes = [
   {
@@ -25,36 +26,15 @@ const HecRoutes = [
     layout: '/hec',
   },
   {
-    path: '/manage-nodes',
-    name: 'Manage network nodes',
-    icon: Dashboard,
-    component: NetworkNodes,
-    layout: '/hec',
-  },
-  {
-    path: '/view-contracts',
-    name: 'View contracts',
-    icon: Dashboard,
-    component: ViewContracts,
-    layout: '/hec',
-  },
-  // {
-  //   path: "/universities",
-  //   name: "Universities",
-  //   icon: Dashboard,
-  //   component: UniversitiesList,
-  //   layout: "/hec",
-  // },
-  {
     path: '/requests',
-    name: 'Requests',
+    name: 'Manage Requests',
     icon: Dashboard,
-    component: RequestsList,
+    component: Requests,
     layout: '/hec',
   },
   {
     path: '/complaints',
-    name: 'Complaints',
+    name: 'Manage Complaints',
     icon: Dashboard,
     component: ComplaintsList,
     layout: '/hec',

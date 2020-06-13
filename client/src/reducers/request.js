@@ -5,6 +5,9 @@ import {
   REQUEST_CREATED,
   ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
   REQUEST_FORWARDED,
+  ALL_REQUESTS_LOADED_FOR_HEC,
+  REQUEST_ACCEPTED,
+  REQUEST_REJECTED,
 } from '../actions/types';
 
 const initialState = {
@@ -19,6 +22,7 @@ export default function (state = initialState, action) {
   switch (type) {
     case ALL_REQUESTS_LOADED_FOR_USER:
     case ALL_REQUESTS_LOADED_FOR_UNIVERSITY:
+    case ALL_REQUESTS_LOADED_FOR_HEC:
       return {
         ...state,
         loading: false,
@@ -26,6 +30,8 @@ export default function (state = initialState, action) {
         requests: payload,
       };
     case REQUEST_FORWARDED:
+    case REQUEST_ACCEPTED:
+    case REQUEST_REJECTED:
       return {
         ...state,
         loading: false,

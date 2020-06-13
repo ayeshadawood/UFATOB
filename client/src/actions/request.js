@@ -7,6 +7,9 @@ import {
   REQUEST_CREATED,
   ALL_REQUESTS_LOADED_FOR_UNIVERSITY,
   REQUEST_FORWARDED,
+  ALL_REQUESTS_LOADED_FOR_HEC,
+  REQUEST_ACCEPTED,
+  REQUEST_REJECTED,
 } from './types';
 
 //Create fund request
@@ -48,6 +51,23 @@ export const getUserRequests = () => async (dispatch) => {
 
     dispatch({
       type: ALL_REQUESTS_LOADED_FOR_USER,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Get all requests for hec
+export const getHecRequests = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/requests/hec');
+
+    dispatch({
+      type: ALL_REQUESTS_LOADED_FOR_HEC,
       payload: res.data,
     });
   } catch (err) {
@@ -103,6 +123,44 @@ export const forwardRequest = (id) => async (dispatch) => {
     });
 
     dispatch(setAlert('Request forwarded', 'success'));
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Accept a request
+export const acceptRequest = (id) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/requests/accept/${id}`);
+
+    dispatch({
+      type: REQUEST_ACCEPTED,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Request accepted', 'success'));
+  } catch (err) {
+    dispatch({
+      type: REQUEST_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Reject a request
+export const rejectRequest = (id) => async (dispatch) => {
+  try {
+    const res = await axios.put(`/api/requests/reject/${id}`);
+
+    dispatch({
+      type: REQUEST_REJECTED,
+      payload: res.data,
+    });
+
+    dispatch(setAlert('Request rejected', 'success'));
   } catch (err) {
     dispatch({
       type: REQUEST_ERROR,
