@@ -6,6 +6,7 @@ import request from './request';
 import university from './university';
 import student from './student';
 import complaint from './complaint';
+import blockchain from './blockchain';
 
 export default combineReducers({
   alert,
@@ -15,4 +16,5 @@ export default combineReducers({
   university,
   student,
   complaint,
+  blockchain,
 });

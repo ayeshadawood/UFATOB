@@ -21,7 +21,7 @@ const HecRoutes = [
     layout: '/hec',
   },
   {
-    path: '/blockchain',
+    path: '/blockchains',
     name: 'Blockchain',
     icon: Dashboard,
     component: Blockchain,

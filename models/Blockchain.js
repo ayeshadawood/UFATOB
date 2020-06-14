@@ -25,10 +25,14 @@ const BlockchainSchema = mongoose.Schema({
           transactionId: {
             type: String,
           },
+          timeStamp: {
+            type: Date,
+            default: Date.now(),
+          },
         },
       ],
       nonce: {
-        type: String,
+        type: Number,
       },
       hash: {
         type: String,
@@ -52,10 +56,15 @@ const BlockchainSchema = mongoose.Schema({
       transactionId: {
         type: String,
       },
+      timeStamp: {
+        type: Date,
+        default: Date.now(),
+      },
     },
   ],
   currentNodeUrl: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'user',
   },
 });
 

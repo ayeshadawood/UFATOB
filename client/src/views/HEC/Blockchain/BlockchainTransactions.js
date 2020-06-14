@@ -9,43 +9,33 @@ import CardHeader from 'components/Card/CardHeader.js';
 import CardBody from 'components/Card/CardBody.js';
 import { Button } from '@material-ui/core';
 import { connect } from 'react-redux';
-import { getAllBlockchains } from '../../../actions/blockchain';
+import { getAllTransactions } from '../../../actions/blockchain';
 import { Link } from 'react-router-dom';
+import Moment from 'react-moment';
 
 import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
 
 const Blockchain = ({
-  blockchain: { loading, blockchains },
-  getAllBlockchains,
+  blockchain: { loading, transactions },
+  getAllTransactions,
+  match,
 }) => {
   const classes = useStyles();
 
-  const getStatus = (status) => {
-    if (status) {
-      return 'Valid';
-    } else {
-      return 'Invalid';
-    }
-  };
-
-  const getBlockchains = () => {
+  const getTransactions = () => {
     let res = [];
     let sNo = 1;
-    blockchains.forEach((blockchain) => {
+    transactions.forEach((transaction) => {
       res = [
         ...res,
         [
           sNo,
-          blockchain.currentNodeUrl.name,
-          blockchain.currentNodeUrl.email,
-          getStatus(blockchain.validChain),
-          <Link to={`/hec/blockchain/${blockchain.currentNodeUrl.id}`}>
-            <Button color='primary' variant='contained'>
-              View
-            </Button>
-          </Link>,
+          transaction.sender.name,
+          transaction.reciever.name,
+          `Rs. ${transaction.amount}`,
+          <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
         ],
       ];
       sNo++;
@@ -54,8 +44,8 @@ const Blockchain = ({
   };
 
   useEffect(() => {
-    getAllBlockchains();
-  }, [getAllBlockchains]);
+    getAllTransactions(match.params.id);
+  }, [getAllTransactions, match.params.id]);
 
   return (
     <Fragment>
@@ -63,9 +53,9 @@ const Blockchain = ({
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color='primary'>
-              <h4 className={classes.cardTitleWhite}>Blockchains</h4>
+              <h4 className={classes.cardTitleWhite}>Blockchain</h4>
               <p className={classes.cardCategoryWhite}>
-                Below is a list of all the network nodes and their chain status
+                Below is a list of all the transactions in the current chain
               </p>
             </CardHeader>
             <CardBody>
@@ -73,13 +63,13 @@ const Blockchain = ({
                 tableHeaderColor='primary'
                 tableHead={[
                   'S.No.',
-                  'Name',
-                  'Email',
-                  'Chain status',
-                  'Actions',
+                  'Sender',
+                  'Reciever',
+                  'Amount',
+                  'Created at',
                 ]}
                 tableData={
-                  !loading && blockchains.length > 0 ? getBlockchains() : []
+                  !loading && transactions.length > 0 ? getTransactions() : []
                 }
               />
             </CardBody>
@@ -92,11 +82,11 @@ const Blockchain = ({
 
 Blockchain.propTypes = {
   blockchain: PropTypes.object.isRequired,
-  getAllBlockchains: PropTypes.func.isRequired,
+  getAllTransactions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   blockchain: state.blockchain,
 });
 
-export default connect(mapStateToProps, { getAllBlockchains })(Blockchain);
+export default connect(mapStateToProps, { getAllTransactions })(Blockchain);

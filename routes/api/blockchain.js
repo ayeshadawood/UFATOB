@@ -4,16 +4,106 @@ const auth = require('../../middleware/auth');
 const Blockchain = require('../../models/Blockchain');
 const { v1 } = require('uuid');
 const { check, validationResult } = require('express-validator');
-const { proofOfWork, hashBlock } = require('../../utils/blockchain');
+const {
+  proofOfWork,
+  chainIsValid,
+  hashBlock,
+} = require('../../utils/blockchain');
 const { connectDB } = require('../../config/db');
 const config = require('config');
 
+// @route   GET api/blockchain/transactions/:id
+// @desc    Get all transactions of a blockchain of user
+// @access  Private
+router.get('/transactions/:id', auth, async (req, res) => {
+  let result = [];
+
+  try {
+    await connectDB(`${req.params.id}`);
+
+    const blockchains = await Blockchain.find();
+    const chain = blockchains[0].chain;
+
+    for (let i = 0; i < chain.length; i++) {
+      const block = chain[i];
+
+      for (let j = 0; j < block.transactions.length; j++) {
+        const transaction = block.transactions[j];
+
+        await connectDB(config.get('defaultMongoDatabase'));
+
+        const sender = await User.findById(transaction.sender).select('name');
+
+        const reciever = await User.findById(transaction.reciever).select(
+          'name'
+        );
+        result = [
+          ...result,
+          {
+            amount: transaction.amount,
+            sender,
+            reciever,
+            timeStamp: transaction.timeStamp,
+          },
+        ];
+      }
+    }
+
+    res.json(result);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
 // @route   GET api/blockchain
-// @desc    Get blockchain for user
+// @desc    Get all blockchains with validity
 // @access  Private
 router.get('/', auth, async (req, res) => {
+  let result = [];
+
   try {
-    await connectDB(`${req.user.id}`);
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const users = await User.find({ type: { $lte: 1 } });
+
+    for (let i = 0; i < users.length; i++) {
+      let user = users[i];
+
+      await connectDB(`${user._id}`);
+
+      const blockchains = await Blockchain.find();
+
+      const validChain = chainIsValid(blockchains[0].chain);
+
+      await connectDB(config.get('defaultMongoDatabase'));
+
+      user = await User.findById(blockchains[0].currentNodeUrl);
+
+      result = [
+        ...result,
+        {
+          currentNodeUrl: {
+            id: blockchains[0].currentNodeUrl,
+            name: user.name,
+            email: user.email,
+          },
+          validChain,
+        },
+      ];
+    }
+
+    res.json(result);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/blockchain/:id
+// @desc    Get blockchain by user id
+// @access  Private
+router.get('/:id', auth, async (req, res) => {
+  try {
+    await connectDB(`${req.params.id}`);
 
     const blockchains = await Blockchain.find();
     res.json(blockchains[0]);

@@ -10,6 +10,7 @@ import CreateUniversity from '../views/HEC/ManageUniversities/CreateUniversity';
 import Request from '../views/HEC/Requests/Request';
 import Complaint from '../views/HEC/Complaints/Complaint';
 import Settings from '../views/HEC/Settings/Settings';
+import BlockchainTransactions from '../views/HEC/Blockchain/BlockchainTransactions';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/HecRoutes.js';
@@ -39,6 +40,7 @@ const switchRoutes = (
     <Route path='/hec/settings' component={Settings} />
     <Route path='/hec/request/:id' component={Request} />
     <Route path='/hec/complaint/:id' component={Complaint} />
+    <Route path='/hec/blockchain/:id' component={BlockchainTransactions} />
     <Redirect from='/hec' to='/hec/dashboard' />
   </Switch>
 );

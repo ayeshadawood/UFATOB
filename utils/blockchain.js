@@ -8,6 +8,46 @@ const hashBlock = (previousBlockHash, currentBlockData, nonce) => {
   return hash;
 };
 
+const chainIsValid = (chain) => {
+  let validChain = true;
+
+  for (var i = 1; i < chain.length; i++) {
+    const currentBlock = chain[i];
+    const prevBlock = chain[i - 1];
+
+    const blockHash = hashBlock(
+      prevBlock['hash'],
+      {
+        transactions: currentBlock['transactions'],
+        index: currentBlock['index'],
+      },
+      currentBlock['nonce']
+    );
+
+    if (blockHash.substring(0, 4) !== '0000') validChain = false;
+
+    if (currentBlock['previousBlockHash'] !== prevBlock['hash'])
+      validChain = false;
+  }
+
+  const genesisBlock = chain[0];
+
+  const correctNonce = genesisBlock['nonce'] === 100;
+  const correctHash = genesisBlock['hash'] === '0';
+  const correctPreviousHash = genesisBlock['previousBlockHash'] === '0';
+  const correctTransactions = genesisBlock['transactions'].length === 0;
+
+  if (
+    !correctNonce ||
+    !correctHash ||
+    !correctPreviousHash ||
+    !correctTransactions
+  )
+    validChain = false;
+
+  return validChain;
+};
+
 const proofOfWork = (previousBlockHash, currentBlockData) => {
   let nonce = 0;
   let hash = hashBlock(previousBlockHash, currentBlockData, nonce);
@@ -18,4 +58,4 @@ const proofOfWork = (previousBlockHash, currentBlockData) => {
   return nonce;
 };
 
-module.exports = { proofOfWork, hashBlock };
+module.exports = { proofOfWork, chainIsValid, hashBlock };
