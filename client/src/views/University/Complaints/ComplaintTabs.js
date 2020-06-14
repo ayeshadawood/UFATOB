@@ -132,7 +132,7 @@ const ComplaintTabs = ({
     return res;
   };
 
-  const getAcceptedComplaints = () => {
+  const getConsideredComplaints = () => {
     let res = [];
     let sNo = 1;
     complaints.forEach((complaint) => {
@@ -156,7 +156,7 @@ const ComplaintTabs = ({
     return res;
   };
 
-  const getRejectedComplaints = () => {
+  const getNotConsideredComplaints = () => {
     let res = [];
     let sNo = 1;
     complaints.forEach((complaint) => {
@@ -198,8 +198,8 @@ const ComplaintTabs = ({
           >
             <Tab label='Queue' {...a11yProps(0)} />
             <Tab label='Forwarded' {...a11yProps(1)} />
-            <Tab label='Accepted' {...a11yProps(2)} />
-            <Tab label='Rejected' {...a11yProps(3)} />
+            <Tab label='Considered' {...a11yProps(2)} />
+            <Tab label='Not considered' {...a11yProps(3)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
@@ -232,7 +232,9 @@ const ComplaintTabs = ({
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && complaints.length > 0 ? getAcceptedComplaints() : []
+                !loading && complaints.length > 0
+                  ? getConsideredComplaints()
+                  : []
               }
             />
           </TabPanel>
@@ -241,7 +243,9 @@ const ComplaintTabs = ({
               tableHeaderColor='primary'
               tableHead={['S.No.', 'Title', 'Actions']}
               tableData={
-                !loading && complaints.length > 0 ? getRejectedComplaints() : []
+                !loading && complaints.length > 0
+                  ? getNotConsideredComplaints()
+                  : []
               }
             />
           </TabPanel>

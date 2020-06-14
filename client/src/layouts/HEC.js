@@ -3,13 +3,13 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Navbar from 'components/Navbars/Navbar.js';
+import Navbar from '../components/Navbars/HECNavbar';
 import Footer from 'components/Footer/Footer.js';
 import Sidebar from 'components/Sidebar/Sidebar.js';
-import FixedPlugin from 'components/FixedPlugin/FixedPlugin.js';
 import CreateUniversity from '../views/HEC/ManageUniversities/CreateUniversity';
 import Request from '../views/HEC/Requests/Request';
 import Complaint from '../views/HEC/Complaints/Complaint';
+import Settings from '../views/HEC/Settings/Settings';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import routes from '../routes/HecRoutes.js';
@@ -36,6 +36,7 @@ const switchRoutes = (
       return null;
     })}
     <Route path='/hec/create-university' component={CreateUniversity} />
+    <Route path='/hec/settings' component={Settings} />
     <Route path='/hec/request/:id' component={Request} />
     <Route path='/hec/complaint/:id' component={Complaint} />
     <Redirect from='/hec' to='/hec/dashboard' />

@@ -10,6 +10,7 @@ import ViewContracts from 'views/HEC/ViewContracts/ViewContracts';
 import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversities';
 import Requests from '../views/HEC/Requests/Requests';
 import Complaints from '../views/HEC/Complaints/Complaints';
+import Settings from '../views/HEC/Settings/Settings';
 
 const HecRoutes = [
   {
@@ -45,6 +46,13 @@ const HecRoutes = [
     name: 'Manage Universities',
     icon: Dashboard,
     component: ManageUniversities,
+    layout: '/hec',
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    icon: Dashboard,
+    component: Settings,
     layout: '/hec',
   },
 ];

@@ -121,7 +121,10 @@ router.get('/:id', auth, async (req, res) => {
   try {
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const request = await Request.findById(req.params.id);
+    const request = await Request.findById(req.params.id).populate(
+      'institute',
+      ['name']
+    );
     res.json(request);
   } catch (err) {
     res.status(500).send('Server Error');
