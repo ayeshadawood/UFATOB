@@ -48,10 +48,12 @@ const BlockchainSchema = mongoose.Schema({
         type: Number,
       },
       sender: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
       },
       reciever: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'user',
       },
       transactionId: {
         type: String,

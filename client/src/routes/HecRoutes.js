@@ -11,6 +11,7 @@ import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversiti
 import Requests from '../views/HEC/Requests/Requests';
 import Complaints from '../views/HEC/Complaints/Complaints';
 import Settings from '../views/HEC/Settings/Settings';
+import Transactions from '../views/HEC/Transactions/Transactions';
 
 const HecRoutes = [
   {
@@ -25,6 +26,13 @@ const HecRoutes = [
     name: 'Blockchain',
     icon: Dashboard,
     component: Blockchain,
+    layout: '/hec',
+  },
+  {
+    path: '/transactions',
+    name: 'Manage Transactions',
+    icon: Dashboard,
+    component: Transactions,
     layout: '/hec',
   },
   {

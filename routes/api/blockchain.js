@@ -24,19 +24,20 @@ router.get('/transactions/:id', auth, async (req, res) => {
     const blockchains = await Blockchain.find();
     const chain = blockchains[0].chain;
 
+    await connectDB(config.get('defaultMongoDatabase'));
+
     for (let i = 0; i < chain.length; i++) {
       const block = chain[i];
 
       for (let j = 0; j < block.transactions.length; j++) {
         const transaction = block.transactions[j];
 
-        await connectDB(config.get('defaultMongoDatabase'));
-
         const sender = await User.findById(transaction.sender).select('name');
 
         const reciever = await User.findById(transaction.reciever).select(
           'name'
         );
+
         result = [
           ...result,
           {
@@ -46,6 +47,127 @@ router.get('/transactions/:id', auth, async (req, res) => {
             timeStamp: transaction.timeStamp,
           },
         ];
+      }
+    }
+
+    res.json(result);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   GET api/blockchain/my-transactions
+// @desc    Get all transactions for current user
+// @access  Private
+router.get('/my-transactions', auth, async (req, res) => {
+  let result = [];
+
+  try {
+    await connectDB(`${req.user.id}`);
+
+    const blockchains = await Blockchain.find();
+    const chain = blockchains[0].chain;
+    const pending = blockchains[0].pendingTransactions;
+
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const user = await User.findById(req.user.id).select('type');
+
+    // Getting all the verified transactions
+    for (let i = 0; i < chain.length; i++) {
+      const block = chain[i];
+
+      for (let j = 0; j < block.transactions.length; j++) {
+        const transaction = block.transactions[j];
+
+        if (user.type === 0) {
+          const sender = await User.findById(transaction.sender).select('name');
+
+          const reciever = await User.findById(transaction.reciever).select(
+            'name'
+          );
+
+          result = [
+            ...result,
+            {
+              amount: transaction.amount,
+              sender,
+              reciever,
+              timeStamp: transaction.timeStamp,
+              status: 1,
+            },
+          ];
+        } else {
+          if (
+            user._id.toString() === transaction.sender.toString() ||
+            user._id.toString() === transaction.reciever.toString()
+          ) {
+            const sender = await User.findById(transaction.sender).select(
+              'name'
+            );
+
+            const reciever = await User.findById(transaction.reciever).select(
+              'name'
+            );
+
+            result = [
+              ...result,
+              {
+                amount: transaction.amount,
+                sender,
+                reciever,
+                timeStamp: transaction.timeStamp,
+                status: 1,
+              },
+            ];
+          } else continue;
+        }
+      }
+    }
+
+    // Getting all the pending transactions
+    for (let i = 0; i < pending.length; i++) {
+      const transaction = pending[i];
+
+      if (user.type === 0) {
+        const sender = await User.findById(transaction.sender).select('name');
+
+        const reciever = await User.findById(transaction.reciever).select(
+          'name'
+        );
+
+        result = [
+          ...result,
+          {
+            amount: transaction.amount,
+            sender,
+            reciever,
+            timeStamp: transaction.timeStamp,
+            status: 0,
+          },
+        ];
+      } else {
+        if (
+          user._id.toString() === transaction.sender.toString() ||
+          user._id.toString() === transaction.reciever.toString()
+        ) {
+          const sender = await User.findById(transaction.sender).select('name');
+
+          const reciever = await User.findById(transaction.reciever).select(
+            'name'
+          );
+
+          result = [
+            ...result,
+            {
+              amount: transaction.amount,
+              sender,
+              reciever,
+              timeStamp: transaction.timeStamp,
+              status: 0,
+            },
+          ];
+        } else continue;
       }
     }
 
