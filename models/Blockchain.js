@@ -15,10 +15,12 @@ const BlockchainSchema = mongoose.Schema({
             type: Number,
           },
           sender: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
           },
           reciever: {
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user',
           },
           transactionId: {
             type: String,
@@ -55,13 +57,6 @@ const BlockchainSchema = mongoose.Schema({
   currentNodeUrl: {
     type: String,
   },
-  networkNodes: [
-    {
-      url: {
-        type: String,
-      },
-    },
-  ],
 });
 
 module.exports = Blockchain = mongoose.model('blockchain', BlockchainSchema);

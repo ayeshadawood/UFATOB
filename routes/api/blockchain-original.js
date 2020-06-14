@@ -1,6 +1,6 @@
-const sha256 = require("sha256");
+const sha256 = require('sha256');
 const currentNodeUrl = process.argv[3];
-const uuid = require("uuid/v1");
+const uuid = require('uuid/v1');
 
 function Blockchain() {
   this.chain = [];
@@ -11,7 +11,7 @@ function Blockchain() {
   this.networkNodes = [];
 
   //genesis block
-  this.creatNewBlock(100, "0", "0");
+  this.creatNewBlock(100, '0', '0');
 }
 
 Blockchain.prototype.creatNewBlock = function (nonce, previousBlockHash, hash) {
@@ -42,7 +42,7 @@ Blockchain.prototype.createNewTransaction = function (
     amount: amount,
     sender: sender,
     receiver: receiver,
-    transactionId: uuid().split("-").join(""),
+    transactionId: uuid().split('-').join(''),
   };
   return newTransaction;
 };
@@ -51,7 +51,7 @@ Blockchain.prototype.addTransactionToPendingTransactions = function (
   transactionObj
 ) {
   this.pendingTransactions.push(transactionObj);
-  return this.getLastBlock()["index"] + 1;
+  return this.getLastBlock()['index'] + 1;
 };
 
 Blockchain.prototype.hashBlock = function (
@@ -72,7 +72,7 @@ Blockchain.prototype.proofOfWork = function (
 ) {
   let nonce = 0;
   let hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
-  while (hash.substring(0, 4) !== "0000") {
+  while (hash.substring(0, 4) !== '0000') {
     nonce++;
     hash = this.hashBlock(previousBlockHash, currentBlockData, nonce);
   }
@@ -85,27 +85,27 @@ Blockchain.prototype.chainIsValid = function (blockchain) {
     const currentBlock = blockchain[i];
     const prevBlock = blockchain[i - 1];
     const blockHash = this.hashBlock(
-      prevBlock["hash"],
+      prevBlock['hash'],
       {
-        transactions: currentBlock["transactions"],
-        index: currentBlock["index"],
+        transactions: currentBlock['transactions'],
+        index: currentBlock['index'],
       },
-      currentBlock["nonce"]
+      currentBlock['nonce']
     );
     // console.log("previous block has is: " + prevBlock["hash"]);
     // console.log("transaction data is :" + currentBlock["transactions"]);
     // console.log("current index is " + currentBlock["index"]);
     // console.log("nonce is " + currentBlock["nonce"]);
     // console.log("Hash calculated is :" + blockHash);
-    if (blockHash.substring(0, 4) !== "0000") validChain = false;
-    if (currentBlock["previousBlockHash"] !== prevBlock["hash"])
+    if (blockHash.substring(0, 4) !== '0000') validChain = false;
+    if (currentBlock['previousBlockHash'] !== prevBlock['hash'])
       validChain = false;
   }
-  const genesisBlock = blockchain["0"];
-  const correctNonce = genesisBlock["nonce"] === 100;
-  const correctHash = genesisBlock["hash"] === "0";
-  const correctPreviousHash = genesisBlock["previousBlockHash"] === "0";
-  const correctTransactions = genesisBlock["transactions"].length === 0;
+  const genesisBlock = blockchain['0'];
+  const correctNonce = genesisBlock['nonce'] === 100;
+  const correctHash = genesisBlock['hash'] === '0';
+  const correctPreviousHash = genesisBlock['previousBlockHash'] === '0';
+  const correctTransactions = genesisBlock['transactions'].length === 0;
 
   if (
     !correctNonce ||

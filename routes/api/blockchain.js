@@ -13,10 +13,10 @@ const config = require('config');
 // @access  Private
 router.get('/', auth, async (req, res) => {
   try {
-    await connectDB(config.get(req.user.id));
+    await connectDB(`${req.user.id}`);
 
-    const blockchain = await Blockchain.findOne({ user: req.user.id });
-    res.json(blockchain);
+    const blockchains = await Blockchain.find();
+    res.json(blockchains[0]);
   } catch (err) {
     return res.status(500).send('Server Error');
   }
@@ -30,7 +30,6 @@ router.post(
   [
     auth,
     check('amount', 'Amount is required').isInt(),
-    check('sender', 'Sender is required').not().isEmpty(),
     check('reciever', 'Reciever is required').not().isEmpty(),
   ],
   async (req, res) => {
@@ -39,22 +38,47 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { amount, sender, reciever } = req.body;
+    const { amount, reciever } = req.body;
 
     try {
-      await connectDB(config.get(req.user.id));
+      // Updating the blockchain of the current user
+      await connectDB(`${req.user.id}`);
 
-      let blockchain = await Blockchain.findOne({ user: req.user.id });
-
-      blockchain.pendingTransactions.push({
+      const blockchains = await Blockchain.find();
+      blockchains[0].pendingTransactions.push({
         amount,
-        sender,
+        sender: req.user.id,
         reciever,
         transactionId: v1().split('-').join(''),
       });
 
-      await blockchain.save();
-      res.json(blockchain);
+      await blockchains[0].save();
+
+      // Updating the blockchain for the rest of the users
+      await connectDB(config.get('defaultMongoDatabase'));
+
+      const users = await User.find({
+        _id: { $ne: req.user.id },
+        type: { $lte: 1 },
+      }).select('_id');
+
+      for (let i = 0; i < users.length; i++) {
+        const user = users[i];
+        await connectDB(`${user.id}`);
+
+        const blockchains = await Blockchain.find();
+        blockchains[0].pendingTransactions.push({
+          amount,
+          sender: req.user.id,
+          reciever,
+          transactionId: v1().split('-').join(''),
+        });
+
+        await blockchains[0].save();
+      }
+
+      // Return the blockchain of the current user
+      res.send(blockchains[0]);
     } catch (err) {
       console.log(err);
       return res.status(500).send('Server Error');
@@ -67,15 +91,16 @@ router.post(
 // @access  Private
 router.put('/mine', auth, async (req, res) => {
   try {
-    await connectDB(config.get(req.user.id));
+    // Creating the new block for the current user
+    await connectDB(`${req.user.id}`);
 
-    let blockchain = await Blockchain.findOne({ user: req.user.id });
+    const blockchains = await Blockchain.find();
 
-    const lastBlock = blockchain.chain[blockchain.chain.length - 1];
+    const lastBlock = blockchains[0].chain[blockchains[0].chain.length - 1];
     const previousBlockHash = lastBlock['hash'];
 
     const currentBlockData = {
-      transactions: blockchain.pendingTransactions,
+      transactions: blockchains[0].pendingTransactions,
       index: lastBlock['index'] + 1,
     };
 
@@ -83,19 +108,43 @@ router.put('/mine', auth, async (req, res) => {
 
     const hash = hashBlock(previousBlockHash, currentBlockData, nonce);
 
-    blockchain.chain.push({
+    const newBlock = {
       index: lastBlock['index'] + 1,
       timeStamp: Date.now(),
-      transactions: blockchain.pendingTransactions,
+      transactions: blockchains[0].pendingTransactions,
       nonce,
       hash,
       previousBlockHash,
-    });
+    };
 
-    blockchain.pendingTransactions = [];
+    blockchains[0].chain.push(newBlock);
 
-    await blockchain.save();
-    res.json(blockchain);
+    blockchains[0].pendingTransactions = [];
+
+    await blockchains[0].save();
+
+    // Adding the newly created block in the blockchain of the rest of the users
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const users = await User.find({
+      _id: { $ne: req.user.id },
+      type: { $lte: 1 },
+    }).select('_id');
+
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+      await connectDB(`${user.id}`);
+
+      const blockchains = await Blockchain.find();
+
+      blockchains[0].chain.push(newBlock);
+
+      blockchains[0].pendingTransactions = [];
+
+      await blockchains[0].save();
+    }
+
+    res.json(blockchains[0]);
   } catch (err) {
     console.log(err);
     return res.status(500).send('Server Error');

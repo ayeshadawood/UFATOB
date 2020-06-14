@@ -131,21 +131,44 @@ router.post(
 
       await user.save();
 
+      // If the user is not a student then create their blockchain
       if (type < 2) {
-        await connectDB(`${user.id}`);
+        let blockchain;
 
-        const blockchain = new Blockchain({
-          currentNodeUrl: user.id,
-          chain: [
-            {
-              index: 0,
-              timeStamp: Date.now(),
-              nonce: '100',
-              hash: '0',
-              previousBlockHash: '0',
-            },
-          ],
-        });
+        if (type < 1) {
+          // If the user being registered is HEC admin
+          await connectDB(`${user.id}`);
+
+          blockchain = new Blockchain({
+            currentNodeUrl: user.id,
+            chain: [
+              {
+                index: 0,
+                timeStamp: Date.now(),
+                nonce: '100',
+                hash: '0',
+                previousBlockHash: '0',
+              },
+            ],
+          });
+        } else {
+          // If the user being registered is a university
+          await connectDB(config.get('defaultMongoDatabase'));
+
+          const users = await User.find({ type: 0 });
+
+          await connectDB(`${users[0]._id}`);
+
+          const blockchains = await Blockchain.find();
+
+          await connectDB(`${user.id}`);
+
+          blockchain = new Blockchain({
+            currentNodeUrl: user.id,
+            chain: blockchains[0].chain,
+            pendingTransactions: blockchains[0].pendingTransactions,
+          });
+        }
 
         await blockchain.save();
       }
