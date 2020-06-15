@@ -290,7 +290,7 @@ router.post(
       }
 
       // Return the blockchain of the current user
-      res.send(blockchains[0]);
+      res.send({ msg: 'Transaction created' });
     } catch (err) {
       console.log(err);
       return res.status(500).send('Server Error');

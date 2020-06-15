@@ -46,6 +46,11 @@ export default function Transactions() {
 
   return (
     <Fragment>
+      <Link to='/hec/create-transaction'>
+        <Button color='primary' variant='contained'>
+          Create new transaction
+        </Button>
+      </Link>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
           <Card>

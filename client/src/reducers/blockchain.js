@@ -3,6 +3,7 @@ import {
   BLOCKCHAIN_ERROR,
   ALL_TRANSACTIONS_LOADED,
   ALL_TRANSACTIONS_LOADED_FOR_USER,
+  TRANSACTION_CREATED,
 } from '../actions/types';
 
 const initialState = {
@@ -44,6 +45,7 @@ export default function (state = initialState, action) {
         loading: false,
         errors: payload,
       };
+    case TRANSACTION_CREATED:
     default:
       return state;
   }

@@ -12,6 +12,7 @@ import Complaint from '../views/HEC/Complaints/Complaint';
 import Settings from '../views/HEC/Settings/Settings';
 import BlockchainTransactions from '../views/HEC/Blockchain/BlockchainTransactions';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
+import CreateTransaction from '../views/HEC/Transactions/CreateTransaction';
 
 import routes from '../routes/HecRoutes.js';
 
@@ -37,6 +38,7 @@ const switchRoutes = (
       return null;
     })}
     <Route path='/hec/create-university' component={CreateUniversity} />
+    <Route path='/hec/create-transaction' component={CreateTransaction} />
     <Route path='/hec/settings' component={Settings} />
     <Route path='/hec/request/:id' component={Request} />
     <Route path='/hec/complaint/:id' component={Complaint} />
