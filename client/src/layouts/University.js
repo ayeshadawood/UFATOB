@@ -14,6 +14,8 @@ import Complaint from '../views/University/MyComplaints/Complaint';
 import CreateStudent from '../views/University/ManageStudents/CreateStudent';
 import CreateComplaint from '../views/University/MyComplaints/CreateComplaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
+import CreateTransaction from '../views/University/Transactions/CreateTransaction';
+import BlockchainTransactions from '../views/University/Blockchain/BlockchainTransactions';
 
 import routes from '../routes/UniversityRoutes';
 
@@ -43,8 +45,16 @@ const switchRoutes = (
     <Route path='/university/create-request' component={CreateRequest} />
     <Route path='/university/create-student' component={CreateStudent} />
     <Route path='/university/create-complaint' component={CreateComplaint} />
+    <Route
+      path='/university/create-transaction'
+      component={CreateTransaction}
+    />
     <Route path='/university/request/:id' component={Request} />
     <Route path='/university/complaint/:id' component={Complaint} />
+    <Route
+      path='/university/blockchain/:id'
+      component={BlockchainTransactions}
+    />
     <Redirect from='/university' to='/university/dashboard' />
   </Switch>
 );

@@ -9,6 +9,8 @@ import MyRequests from '../views/University/MyRequests/Requests';
 import MyComplaints from '../views/University/MyComplaints/Complaints';
 import Settings from '../views/University/Settings/Settings';
 import ManageStudents from '../views/University/ManageStudents/ManageStudents';
+import Transactions from '../views/University/Transactions/Transactions';
+import Blockchain from '../views/University/Blockchain/Blockchain';
 
 const dashboardRoutes = [
   {
@@ -19,10 +21,17 @@ const dashboardRoutes = [
     layout: '/university',
   },
   {
-    path: '/blockchain',
-    name: 'Blockchain',
+    path: '/blockchains',
+    name: 'Blockchains',
     icon: DashboardIcon,
-    component: Dashboard,
+    component: Blockchain,
+    layout: '/university',
+  },
+  {
+    path: '/transactions',
+    name: 'Manage Transactions',
+    icon: DashboardIcon,
+    component: Transactions,
     layout: '/university',
   },
   {

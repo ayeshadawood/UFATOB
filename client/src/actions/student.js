@@ -2,7 +2,7 @@ import axios from 'axios';
 import { ALL_STUDENTS_LOADED, STUDENT_ERROR, STUDENT_REMOVED } from './types';
 import { setAlert } from './alert';
 
-// Get all universities
+// Get all students
 export const getAllStudents = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/users/student');
@@ -19,7 +19,7 @@ export const getAllStudents = () => async (dispatch) => {
   }
 };
 
-// Delete a university
+// Delete a student
 export const deleteStudent = (id) => async (dispatch) => {
   try {
     await axios.delete(`/api/users/student/${id}`);
