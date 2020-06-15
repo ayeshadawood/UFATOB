@@ -1,4 +1,5 @@
 import React, { Fragment } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
@@ -8,6 +9,8 @@ import CardBody from 'components/Card/CardBody.js';
 import TransactionTabs from './TransactionTabs';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { verfiyAllTransactions } from '../../../actions/blockchain';
 
 const styles = {
   cardCategoryWhite: {
@@ -41,17 +44,27 @@ const styles = {
 
 const useStyles = makeStyles(styles);
 
-export default function Transactions() {
+const Transactions = ({ verfiyAllTransactions }) => {
   const classes = useStyles();
 
   return (
     <Fragment>
-      <Link to='/hec/create-transaction'>
-        <Button color='primary' variant='contained'>
-          Create new transaction
-        </Button>
-      </Link>
       <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <Link to='/hec/create-transaction'>
+            <Button color='primary' variant='contained'>
+              Create new transaction
+            </Button>
+          </Link>
+          <Button
+            color='primary'
+            variant='contained'
+            style={{ backgroundColor: 'green', marginLeft: '5px' }}
+            onClick={() => verfiyAllTransactions()}
+          >
+            Verify all transactions
+          </Button>
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card>
             <CardHeader color='primary'>
@@ -68,4 +81,10 @@ export default function Transactions() {
       </GridContainer>
     </Fragment>
   );
-}
+};
+
+Transactions.propTypes = {
+  verfiyAllTransactions: PropTypes.func.isRequired,
+};
+
+export default connect(null, { verfiyAllTransactions })(Transactions);

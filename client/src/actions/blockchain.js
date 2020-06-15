@@ -5,6 +5,8 @@ import {
   ALL_TRANSACTIONS_LOADED,
   ALL_TRANSACTIONS_LOADED_FOR_USER,
   TRANSACTION_CREATED,
+  ALL_TRANSACTIONS_VERIFIED,
+  BLOCKCHAIN_FIXED,
 } from './types';
 import { setAlert } from './alert';
 
@@ -79,5 +81,41 @@ export const createTransaction = (formData, history) => async (dispatch) => {
     const errors = err.response.data.errors;
 
     errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
+  }
+};
+
+// Verfiy all transactions
+export const verfiyAllTransactions = () => async (dispatch) => {
+  try {
+    await axios.put('/api/blockchain/mine');
+
+    dispatch({ type: ALL_TRANSACTIONS_VERIFIED });
+
+    dispatch(setAlert('All transactions verified', 'success'));
+
+    dispatch(getAllTransactionsForUser());
+  } catch (err) {
+    dispatch({
+      type: BLOCKCHAIN_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
+
+// Fix a blockchain
+export const fixBlockchain = (id) => async (dispatch) => {
+  try {
+    await axios.put(`/api/blockchain/consensus/${id}`);
+
+    dispatch({ type: BLOCKCHAIN_FIXED });
+
+    dispatch(setAlert('Blockchain fixed', 'success'));
+
+    dispatch(getAllBlockchains());
+  } catch (err) {
+    dispatch({
+      type: BLOCKCHAIN_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
   }
 };

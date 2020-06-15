@@ -63,7 +63,9 @@ router.get('/my-transactions', auth, async (req, res) => {
   let result = [];
 
   try {
-    let user = await User.findById(req.user.id).select('type');
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    let user = await User.findById(req.user.id);
 
     if (user.type < 2) {
       await connectDB(`${req.user.id}`);
@@ -364,7 +366,56 @@ router.put('/mine', auth, async (req, res) => {
       await blockchains[0].save();
     }
 
-    res.json(blockchains[0]);
+    res.json({ msg: 'All transactions verified' });
+  } catch (err) {
+    console.log(err);
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST api/blockchain/consensus/:id
+// @desc    Fix a blockchain for a user
+// @access  Private
+router.put('/consensus/:id', auth, async (req, res) => {
+  try {
+    // Getting the blockchain of the user
+    await connectDB(`${req.params.id}`);
+
+    let blockchains = await Blockchain.find();
+    const userBlockchain = blockchains[0];
+
+    let validBlockChain;
+
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const users = await User.find({
+      _id: { $ne: req.params.id },
+      type: { $lte: 1 },
+    });
+
+    // Searching for the valid blockchain
+    for (let i = 0; i < users.length; i++) {
+      const user = users[i];
+
+      await connectDB(`${user.id}`);
+
+      blockchains = await Blockchain.find();
+
+      // If the blockchain of current user is valid then break the loop
+      if (chainIsValid(blockchains[0].chain)) {
+        validBlockChain = blockchains[0];
+        break;
+      }
+    }
+
+    await connectDB(`${req.params.id}`);
+
+    // Setting the valid chain to the user chain
+    userBlockchain.chain = validBlockChain.chain;
+
+    await userBlockchain.save();
+
+    res.json({ msg: 'Blockchain fixed' });
   } catch (err) {
     console.log(err);
     return res.status(500).send('Server Error');
