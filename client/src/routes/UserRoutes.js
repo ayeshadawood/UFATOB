@@ -4,6 +4,7 @@ import Dashboard from '../views/User/Dashboard/Dashboard';
 import Requests from '../views/User/Requests/Requests';
 import Complaints from '../views/User/Complaints/Complaints';
 import Settings from '../views/User/Settings/Settings';
+import Transactions from '../views/User/Transactions/Transactions';
 
 const UserRoutes = [
   {
@@ -11,6 +12,13 @@ const UserRoutes = [
     name: 'Dashboard',
     icon: DashboardIcon,
     component: Dashboard,
+    layout: '/user',
+  },
+  {
+    path: '/transactions',
+    name: 'My Transactions',
+    icon: DashboardIcon,
+    component: Transactions,
     layout: '/user',
   },
   {

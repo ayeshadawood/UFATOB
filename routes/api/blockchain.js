@@ -63,7 +63,14 @@ router.get('/my-transactions', auth, async (req, res) => {
   let result = [];
 
   try {
-    await connectDB(`${req.user.id}`);
+    let user = await User.findById(req.user.id).select('type');
+
+    if (user.type < 2) {
+      await connectDB(`${req.user.id}`);
+    } else {
+      user = await User.findOne({ type: 0 });
+      await connectDB(`${user.id}`);
+    }
 
     const blockchains = await Blockchain.find();
     const chain = blockchains[0].chain;
@@ -71,7 +78,7 @@ router.get('/my-transactions', auth, async (req, res) => {
 
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const user = await User.findById(req.user.id).select('type');
+    user = await User.findById(req.user.id).select('type');
 
     // Getting all the verified transactions
     for (let i = 0; i < chain.length; i++) {
@@ -173,6 +180,7 @@ router.get('/my-transactions', auth, async (req, res) => {
 
     res.json(result);
   } catch (err) {
+    console.log(err);
     return res.status(500).send('Server Error');
   }
 });
