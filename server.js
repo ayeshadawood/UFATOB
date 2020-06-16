@@ -14,8 +14,8 @@ app.use('/api/profiles', require('./routes/api/profiles'));
 app.use('/api/requests', require('./routes/api/requests'));
 app.use('/api/complaints', require('./routes/api/complaints'));
 app.use('/api/blockchain', require('./routes/api/blockchain'));
+app.use('/api/scrapper', require('./routes/api/scrapper'));
 // app.use('/api/posts', require('./routes/api/posts'));
-// app.use('/api/scrapper', require('./routes/api/scrapper'));
 // app.use('/api/eventScrapper', require('./routes/api/eventScrapper'));
 
 const PORT = process.env.PORT || 5000;
