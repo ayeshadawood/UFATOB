@@ -1,22 +1,22 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-// import './Homepage.styles.css';
+import './Homepage.styles.css';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 
 const Homepage = ({ classes }) => {
   return (
     <Fragment>
-      <div className={classes.logo}>LOGO</div>
+      <div className='logo'>LOGO</div>
       <div className='carusel'>
         <Carousel autoPlay infiniteLoop showThumbs={false}>
-          <div>
+          <div style={{ height: '360px' }}>
             <img src='https://www.stevensegallery.com/1287/724' />
           </div>
-          <div>
+          <div style={{ height: '360px' }}>
             <img src='https://www.stevensegallery.com/640/360' />
           </div>
-          <div>
+          <div style={{ height: '360px' }}>
             <img src='https://www.stevensegallery.com/640/360' />
           </div>
         </Carousel>
