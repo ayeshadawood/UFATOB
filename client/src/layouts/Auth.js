@@ -7,6 +7,7 @@ import Navbar from '../components/Navbars/AuthNavbar';
 import Footer from 'components/Footer/Footer.js';
 import Login from '../views/Auth/Login';
 import Register from '../views/Auth/Register';
+import Homepage from '../views/Auth/Homepage.js';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import styles from '../assets/jss/material-dashboard-react/layouts/authStyle';
@@ -17,6 +18,7 @@ const switchRoutes = (
   <Switch>
     <Route path='/login' component={Login} />
     <Route path='/register' component={Register} />
+    <Route path='/homepage' component={Homepage} />
     <Redirect from='/' to='/login' />
   </Switch>
 );
@@ -52,6 +54,7 @@ const Auth = () => {
             <div className={classes.container}>
               <CustomAlert />
               {switchRoutes}
+              {/* <Homepage classes={classes} /> */}
             </div>
           </div>
           <Footer />

@@ -41,6 +41,10 @@ const appStyle = (theme) => ({
     marginRight: 'auto',
     fontWeight: 'bold',
   },
+  logo: {
+    fontSize: '56px',
+    marginBottom: '30px',
+  },
 });
 
 export default appStyle;
