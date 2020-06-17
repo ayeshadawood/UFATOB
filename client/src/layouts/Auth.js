@@ -11,6 +11,7 @@ import Homepage from '../views/Auth/Homepage.js';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import styles from '../assets/jss/material-dashboard-react/layouts/authStyle';
+import spikes from 'assets/images/spikes.png';
 
 let ps;
 
@@ -47,17 +48,20 @@ const Auth = () => {
 
   return (
     <Fragment>
-      <div className={classes.wrapper}>
-        <Navbar />
+      <div
+        className={classes.wrapper}
+        style={{ background: 'url(' + spikes + ')' }}
+      >
+        {/* <Navbar /> */}
         <div className={classes.mainPanel} ref={mainPanel}>
           <div className={classes.content}>
             <div className={classes.container}>
               <CustomAlert />
-              {switchRoutes}
-              {/* <Homepage classes={classes} /> */}
+              {/* {switchRoutes} */}
+              <Homepage classes={classes} />
             </div>
           </div>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </div>
     </Fragment>

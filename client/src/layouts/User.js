@@ -19,6 +19,7 @@ import CustomAlert from '../components/CustomAlert/CustomAlert';
 import routes from '../routes/UserRoutes';
 
 import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
+import spikes from 'assets/images/spikes.png';
 
 import bgImage from 'assets/img/sidebar-2.jpg';
 import logo from 'assets/img/reactlogo.png';
@@ -89,7 +90,10 @@ export default function Admin({ ...rest }) {
   }, [mainPanel]);
 
   return (
-    <div className={classes.wrapper}>
+    <div
+      className={classes.wrapper}
+      style={{ background: 'url(' + spikes + ')' }}
+    >
       <Sidebar
         routes={routes}
         logoText={'UFATOB'}
