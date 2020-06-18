@@ -16,6 +16,11 @@ import CreateComplaint from '../views/University/MyComplaints/CreateComplaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 import CreateTransaction from '../views/University/Transactions/CreateTransaction';
 import BlockchainTransactions from '../views/University/Blockchain/BlockchainTransactions';
+import CreateGroup from '../views/University/DiscussionForum/CreateGroup';
+import EditGroup from '../views/University/DiscussionForum/EditGroup';
+import Group from '../views/University/DiscussionForum/Group';
+import Post from '../views/University/DiscussionForum/Post';
+import Profile from '../views/University/Profile/Profile';
 
 import routes from '../routes/UniversityRoutes';
 
@@ -50,12 +55,17 @@ const switchRoutes = (
       path='/university/create-transaction'
       component={CreateTransaction}
     />
+    <Route path='/university/create-group' component={CreateGroup} />
     <Route path='/university/request/:id' component={Request} />
     <Route path='/university/complaint/:id' component={Complaint} />
     <Route
       path='/university/blockchain/:id'
       component={BlockchainTransactions}
     />
+    <Route path='/university/edit-group/:id' component={EditGroup} />
+    <Route path='/university/group/:id' component={Group} />
+    <Route path='/university/post/:id' component={Post} />
+    <Route path='/university/profile/:id' component={Profile} />
     <Redirect from='/university' to='/university/dashboard' />
   </Switch>
 );

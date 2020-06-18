@@ -11,6 +11,7 @@ import Settings from '../views/University/Settings/Settings';
 import ManageStudents from '../views/University/ManageStudents/ManageStudents';
 import Transactions from '../views/University/Transactions/Transactions';
 import Blockchain from '../views/University/Blockchain/Blockchain';
+import Groups from '../views/University/DiscussionForum/Groups';
 
 const dashboardRoutes = [
   {
@@ -67,6 +68,13 @@ const dashboardRoutes = [
     name: 'Manage Students',
     icon: DashboardIcon,
     component: ManageStudents,
+    layout: '/university',
+  },
+  {
+    path: '/discussion-forum',
+    name: 'Discussion forum',
+    icon: DashboardIcon,
+    component: Groups,
     layout: '/university',
   },
   {
