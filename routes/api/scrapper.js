@@ -1,16 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const puppeteer = require('puppeteer');
-//For Scrapping
-const request = require('request-promise');
 const cheerio = require('cheerio');
-//Hec Announcement page Url
-const url = 'https://www.hec.gov.pk/english/HECAnnouncements/';
-const scrapeResults = [];
 const Scrapper = require('../../models/Scrapper');
 const { connectDB } = require('../../config/db');
 const config = require('config');
 
+// @route   GET /api/scrapper
+// @desc    Get scraped announcements and events from HEC
+// @access  Private
+router.get('/', async (req, res) => {
+  try {
+    await connectDB(config.get('defaultMongoDatabase'));
+
+    const scrappers = await Scrapper.find();
+    res.json(scrappers[0]);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   POST /api/scrapper
+// @desc    Scrape announcements and events from HEC
+// @access  Private
 router.post('/', async (req, res) => {
   let currentAnnouncements = [];
   let pastAnnouncements = [];
@@ -55,7 +67,6 @@ router.post('/', async (req, res) => {
     $ = await cheerio.load(response);
 
     // Getting upcoming events
-    // #ctl00_ctl42_g_adf41684_9264_4b86_8a2c_e45c00613a15_csr > div.table-responsive > div
     $(
       '#ctl00_ctl42_g_adf41684_9264_4b86_8a2c_e45c00613a15_csr > div.table-responsive > div'
     ).each((index, element) => {
@@ -85,51 +96,37 @@ router.post('/', async (req, res) => {
       pastEvents = [...pastEvents, { title, url, description }];
     });
 
-    // await page.goto('https://www.hec.gov.pk/english/news/Pages/HECEvents.aspx');
-    // await page.waitFor(5000);
-
     await browser.close();
 
     await connectDB(config.get('defaultMongoDatabase'));
 
-    const scrapper = new Scrapper({
-      currentAnnouncements,
-      pastAnnouncements,
-      upcomingEvents,
-      pastEvents,
-    });
+    let scrappers = await Scrapper.find();
+    let scrapper;
+
+    if (scrappers.length === 0) {
+      scrapper = new Scrapper({
+        currentAnnouncements,
+        pastAnnouncements,
+        upcomingEvents,
+        pastEvents,
+      });
+    } else {
+      scrapper = await Scrapper.findOneAndUpdate(
+        { _id: scrappers[0]._id },
+        {
+          $set: {
+            currentAnnouncements,
+            pastAnnouncements,
+            upcomingEvents,
+            pastEvents,
+          },
+        },
+        { new: true }
+      );
+    }
 
     await scrapper.save();
 
-    // const response = await request.get(url);
-    // const $ = await cheerio.load(response);
-
-    // //console.log("Current Announcements:");
-    // $('#WebPartWPQ11 table a').each((index, element) => {
-    //   const heading = 'currentAnnouncement';
-    //   const title = $(element).html();
-    //   const url = $(element).attr('href');
-    //   const scrapeResult = { heading, title, url };
-    //   scrapeResults.push(scrapeResult);
-    // });
-
-    // //console.log("\nPast Announcements:");
-    // $('#WebPartWPQ9 table a').each((index, element) => {
-    //   const heading = 'laterAnnouncement';
-    //   const title = $(element).html();
-    //   const url = $(element).attr('href');
-    //   const scrapeResult = { heading, title, url };
-    //   scrapeResults.push(scrapeResult);
-    // });
-
-    // // console.log("\nTwitter Announcements:");
-    // // $(".panel-body a").each((index, element) => {
-    // //   console.log($(element).html());
-    // //   console.log($(element).attr("href"));
-    // // });
-    // // console.log(res);
-
-    // console.log(scrapeResults);
     res.json({ msg: 'Data scraped from HEC' });
   } catch (err) {
     return res.status(500).send('Server Error');

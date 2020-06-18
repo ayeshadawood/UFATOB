@@ -1,10 +1,11 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { Carousel } from 'react-responsive-carousel';
 import { Grid, TextField, Button, InputAdornment } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { login } from '../../actions/auth';
+import { getAllScrappedData } from '../../actions/scrapper';
 import { Redirect } from 'react-router-dom';
 import { AlternateEmail, VpnKey } from '@material-ui/icons';
 
@@ -20,6 +21,8 @@ const Homepage = ({
   classes,
   auth: { loading, isAuthenticated, user },
   login,
+  getAllScrappedData,
+  scrapper: { scrappedData },
 }) => {
   const [formData, setFormData] = useState({
     email: '',
@@ -36,6 +39,10 @@ const Homepage = ({
     e.preventDefault();
     login(email, password);
   };
+
+  useEffect(() => {
+    getAllScrappedData();
+  }, [getAllScrappedData]);
 
   if (!loading && isAuthenticated && user !== null && user.type === 0) {
     return <Redirect to='/hec' />;
@@ -83,7 +90,20 @@ const Homepage = ({
             <div className={classes.importantHeading}>
               Current announcements
             </div>
-            <a href=''>
+            {scrappedData !== null &&
+              scrappedData.currentAnnouncements.length > 0 &&
+              scrappedData.currentAnnouncements.map((currentAnnouncement) => (
+                <a href={currentAnnouncement.url} target='_blank'>
+                  <div
+                    className={classes.title}
+                    style={{ marginBottom: '15px' }}
+                  >
+                    {currentAnnouncement.title}
+                  </div>
+                </a>
+              ))}
+
+            {/* <a href=''>
               <div className={classes.title}>Title of announcment</div>
               <p className={classes.desc}>
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -99,13 +119,41 @@ const Homepage = ({
                 iusto debitis natus eveniet beatae sunt qui rerum aspernatur
                 facilis nisi
               </p>
-            </a>
+            </a> */}
 
             <div className={classes.importantHeading}>Past announcements</div>
+            {scrappedData !== null &&
+              scrappedData.pastAnnouncements.length > 0 &&
+              scrappedData.pastAnnouncements.map((pastAnnouncement) => (
+                <a href={pastAnnouncement.url} target='_blank'>
+                  <div
+                    className={classes.title}
+                    style={{ marginBottom: '15px' }}
+                  >
+                    {pastAnnouncement.title}
+                  </div>
+                </a>
+              ))}
 
             <div className={classes.importantHeading}>Upcoming events</div>
+            {scrappedData !== null &&
+              scrappedData.upcomingEvents.length > 0 &&
+              scrappedData.upcomingEvents.map((upcomingEvent) => (
+                <a href={upcomingEvent.url} target='_blank'>
+                  <div className={classes.title}>{upcomingEvent.title}</div>
+                  <p className={classes.desc}>{upcomingEvent.description}</p>
+                </a>
+              ))}
 
             <div className={classes.importantHeading}>Past events</div>
+            {scrappedData !== null &&
+              scrappedData.pastEvents.length > 0 &&
+              scrappedData.pastEvents.map((pastEvent) => (
+                <a href={pastEvent.url} target='_blank'>
+                  <div className={classes.title}>{pastEvent.title}</div>
+                  <p className={classes.desc}>{pastEvent.description}</p>
+                </a>
+              ))}
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={4}>
@@ -186,10 +234,14 @@ const Homepage = ({
 Homepage.propTypes = {
   login: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
+  getAllScrappedData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   auth: state.auth,
+  scrapper: state.scrapper,
 });
 
-export default connect(mapStateToProps, { login })(Homepage);
+export default connect(mapStateToProps, { login, getAllScrappedData })(
+  Homepage
+);

@@ -7,6 +7,7 @@ import university from './university';
 import student from './student';
 import complaint from './complaint';
 import blockchain from './blockchain';
+import scrapper from './scrapper';
 
 export default combineReducers({
   alert,
@@ -17,4 +18,5 @@ export default combineReducers({
   student,
   complaint,
   blockchain,
+  scrapper,
 });
