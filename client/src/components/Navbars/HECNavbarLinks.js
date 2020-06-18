@@ -20,7 +20,7 @@ import styles from 'assets/jss/material-dashboard-react/components/headerLinksSt
 
 const useStyles = makeStyles(styles);
 
-const HECNavbarLinks = ({ logout }) => {
+const HECNavbarLinks = ({ logout, auth: { loading, user } }) => {
   const classes = useStyles();
 
   const [openProfile, setOpenProfile] = useState(null);
@@ -77,12 +77,18 @@ const HECNavbarLinks = ({ logout }) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role='menu'>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
+                    <Link
+                      to={`/hec/profile/${
+                        !loading && user !== null ? user._id : ''
+                      }`}
                     >
-                      Profile
-                    </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItem}
+                      >
+                        Profile
+                      </MenuItem>
+                    </Link>
                     <Link to='/hec/settings'>
                       <MenuItem
                         onClick={handleCloseProfile}
@@ -111,6 +117,11 @@ const HECNavbarLinks = ({ logout }) => {
 
 HECNavbarLinks.propTypes = {
   logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default connect(null, { logout })(HECNavbarLinks);
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(HECNavbarLinks);

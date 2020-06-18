@@ -35,7 +35,7 @@ const PostItem = ({
           }}
         >
           <Link
-            to={`/profile/${user._id}`}
+            to={`/hec/profile/${user._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img

@@ -29,23 +29,22 @@ export const getCurrentProfile = () => async (dispatch) => {
   }
 };
 
-// // Get profile by id
-// export const getProfileById = (id) => async (dispatch) => {
-//   try {
-//     const res = await axios.get(`/api/profiles/${id}`);
+// Get profile by id
+export const getProfileById = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/profiles/${id}`);
 
-//     dispatch({
-//       type: PROFILE_LOADED,
-//       payload: res.data,
-//     });
-//   } catch (err) {
-//     dispatch({
-//       type: PROFILE_ERROR,
-//     });
-
-//     dispatch(setAlert('Error occured while loading profile', 'danger'));
-//   }
-// };
+    dispatch({
+      type: PROFILE_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // Create/Update profile
 export const createProfile = (formData, history, type, edit = false) => async (

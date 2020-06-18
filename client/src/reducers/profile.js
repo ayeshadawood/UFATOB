@@ -12,7 +12,7 @@ import {
 const initialState = {
   profile: null,
   loading: true,
-  error: null,
+  errors: null,
 };
 
 export default function (state = initialState, action) {
@@ -28,14 +28,13 @@ export default function (state = initialState, action) {
         ...state,
         profile: payload,
         loading: false,
-        error: null,
+        errors: null,
       };
     case PROFILE_ERROR:
       return {
         ...state,
-        profile: null,
         loading: false,
-        error: payload,
+        errors: payload,
       };
     case CLEAR_PROFILE:
     case PROFILE_DELETED:
@@ -43,7 +42,7 @@ export default function (state = initialState, action) {
         ...state,
         profile: null,
         loading: false,
-        error: null,
+        errors: null,
       };
     default:
       return state;

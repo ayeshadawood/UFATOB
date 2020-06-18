@@ -17,6 +17,7 @@ import CreateGroup from '../views/HEC/DiscussionForum/CreateGroup';
 import EditGroup from '../views/HEC/DiscussionForum/EditGroup';
 import Group from '../views/HEC/DiscussionForum/Group';
 import Post from '../views/HEC/DiscussionForum/Post';
+import Profile from '../views/HEC/Profile/Profile';
 
 import routes from '../routes/HecRoutes.js';
 
@@ -52,6 +53,7 @@ const switchRoutes = (
     <Route path='/hec/edit-group/:id' component={EditGroup} />
     <Route path='/hec/group/:id' component={Group} />
     <Route path='/hec/post/:id' component={Post} />
+    <Route path='/hec/profile/:id' component={Profile} />
     <Redirect from='/hec' to='/hec/dashboard' />
   </Switch>
 );
