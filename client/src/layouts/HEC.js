@@ -13,6 +13,10 @@ import Settings from '../views/HEC/Settings/Settings';
 import BlockchainTransactions from '../views/HEC/Blockchain/BlockchainTransactions';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 import CreateTransaction from '../views/HEC/Transactions/CreateTransaction';
+import CreateGroup from '../views/HEC/DiscussionForum/CreateGroup';
+import EditGroup from '../views/HEC/DiscussionForum/EditGroup';
+import Group from '../views/HEC/DiscussionForum/Group';
+import Post from '../views/HEC/DiscussionForum/Post';
 
 import routes from '../routes/HecRoutes.js';
 
@@ -40,10 +44,14 @@ const switchRoutes = (
     })}
     <Route path='/hec/create-university' component={CreateUniversity} />
     <Route path='/hec/create-transaction' component={CreateTransaction} />
+    <Route path='/hec/create-group' component={CreateGroup} />
     <Route path='/hec/settings' component={Settings} />
     <Route path='/hec/request/:id' component={Request} />
     <Route path='/hec/complaint/:id' component={Complaint} />
     <Route path='/hec/blockchain/:id' component={BlockchainTransactions} />
+    <Route path='/hec/edit-group/:id' component={EditGroup} />
+    <Route path='/hec/group/:id' component={Group} />
+    <Route path='/hec/post/:id' component={Post} />
     <Redirect from='/hec' to='/hec/dashboard' />
   </Switch>
 );

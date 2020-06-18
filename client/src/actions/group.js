@@ -83,12 +83,12 @@ export const createGroup = (formData, history) => async (dispatch) => {
 
     dispatch(setAlert('Group created', 'success'));
 
-    history.push('/my-groups');
+    history.goBack();
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
 
     dispatch({
@@ -154,12 +154,12 @@ export const updateGroup = (formData, id, history) => async (dispatch) => {
 
     dispatch(setAlert('Group updated', 'success'));
 
-    history.push('/my-groups');
+    history.goBack();
   } catch (err) {
     const errors = err.response.data.errors;
 
     if (err.response.data.errors) {
-      errors.forEach((error) => dispatch(setAlert(error.msg, 'danger')));
+      errors.forEach((error) => dispatch(setAlert(error.msg, 'error')));
     }
 
     dispatch({

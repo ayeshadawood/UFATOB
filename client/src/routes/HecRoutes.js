@@ -12,6 +12,7 @@ import Requests from '../views/HEC/Requests/Requests';
 import Complaints from '../views/HEC/Complaints/Complaints';
 import Settings from '../views/HEC/Settings/Settings';
 import Transactions from '../views/HEC/Transactions/Transactions';
+import Groups from '../views/HEC/DiscussionForum/Groups';
 
 const HecRoutes = [
   {
@@ -54,6 +55,13 @@ const HecRoutes = [
     name: 'Manage Universities',
     icon: Dashboard,
     component: ManageUniversities,
+    layout: '/hec',
+  },
+  {
+    path: '/discussion-forum',
+    name: 'Discussion forum',
+    icon: Dashboard,
+    component: Groups,
     layout: '/hec',
   },
   {
