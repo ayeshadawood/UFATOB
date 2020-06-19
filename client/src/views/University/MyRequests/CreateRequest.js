@@ -24,19 +24,6 @@ const useStyles = makeStyles(styles);
 const CreateRequest = ({ createRequest, history }) => {
   const classes = useStyles();
 
-  const getCurrentDate = () => {
-    let d = new Date(Date.now());
-    d = new Date(Date.now() + d.getTimezoneOffset() * 60000);
-
-    const date = d.getDate();
-    const month = d.getMonth() + 1;
-    const year = d.getFullYear();
-
-    return `${year}-${month < 10 ? '0' : ''}${month}-${
-      date < 10 ? '0' : ''
-    }${date}`;
-  };
-
   const [formData, setFormData] = useState({
     title: '',
     department: '',

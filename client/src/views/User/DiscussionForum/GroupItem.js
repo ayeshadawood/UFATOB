@@ -52,7 +52,6 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
               <Button
                 color='primary'
                 variant='contained'
-                onClick={() => sendJoinRequest(group._id)}
                 style={{ marginRight: '5px', backgroundColor: 'red' }}
                 onClick={() => deleteGroup(group._id)}
               >

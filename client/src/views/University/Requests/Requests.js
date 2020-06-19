@@ -6,8 +6,6 @@ import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import RequestTabs from './RequestTabs';
-import { Button } from '@material-ui/core';
-import { Link } from 'react-router-dom';
 
 const styles = {
   cardCategoryWhite: {

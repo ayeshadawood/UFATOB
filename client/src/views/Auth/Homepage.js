@@ -61,25 +61,25 @@ const Homepage = ({
         <Grid item xs={12} sm={12} md={12}>
           <Carousel autoPlay infiniteLoop showThumbs={false}>
             <div>
-              <img src={image1} />
+              <img src={image1} alt='' />
             </div>
             <div>
-              <img src={image2} />
+              <img src={image2} alt='' />
             </div>
             <div>
-              <img src={image3} />
+              <img src={image3} alt='' />
             </div>
             <div>
-              <img src={image4} />
+              <img src={image4} alt='' />
             </div>
             <div>
-              <img src={image5} />
+              <img src={image5} alt='' />
             </div>
             <div>
-              <img src={image6} />
+              <img src={image6} alt='' />
             </div>
             <div>
-              <img src={image7} />
+              <img src={image7} alt='' />
             </div>
           </Carousel>
         </Grid>
@@ -92,7 +92,11 @@ const Homepage = ({
             {scrappedData !== null &&
               scrappedData.currentAnnouncements.length > 0 &&
               scrappedData.currentAnnouncements.map((currentAnnouncement) => (
-                <a href={currentAnnouncement.url} target='_blank'>
+                <a
+                  href={currentAnnouncement.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <div
                     className={classes.title}
                     style={{ marginBottom: '15px' }}
@@ -105,7 +109,11 @@ const Homepage = ({
             {scrappedData !== null &&
               scrappedData.pastAnnouncements.length > 0 &&
               scrappedData.pastAnnouncements.map((pastAnnouncement) => (
-                <a href={pastAnnouncement.url} target='_blank'>
+                <a
+                  href={pastAnnouncement.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <div
                     className={classes.title}
                     style={{ marginBottom: '15px' }}
@@ -118,7 +126,11 @@ const Homepage = ({
             {scrappedData !== null &&
               scrappedData.upcomingEvents.length > 0 &&
               scrappedData.upcomingEvents.map((upcomingEvent) => (
-                <a href={upcomingEvent.url} target='_blank'>
+                <a
+                  href={upcomingEvent.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <div className={classes.title}>{upcomingEvent.title}</div>
                   <p className={classes.desc}>{upcomingEvent.description}</p>
                 </a>
@@ -128,7 +140,11 @@ const Homepage = ({
             {scrappedData !== null &&
               scrappedData.pastEvents.length > 0 &&
               scrappedData.pastEvents.map((pastEvent) => (
-                <a href={pastEvent.url} target='_blank'>
+                <a
+                  href={pastEvent.url}
+                  target='_blank'
+                  rel='noopener noreferrer'
+                >
                   <div className={classes.title}>{pastEvent.title}</div>
                   <p className={classes.desc}>{pastEvent.description}</p>
                 </a>

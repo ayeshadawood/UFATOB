@@ -1,5 +1,4 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import Person from '@material-ui/icons/Person';
 
 import Dashboard from '../views/University/Dashboard/Dashboard';
 import Requests from '../views/University/Requests/Requests';

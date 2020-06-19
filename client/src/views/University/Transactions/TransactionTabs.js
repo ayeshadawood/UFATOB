@@ -7,11 +7,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getAllTransactionsForUser } from '../../../actions/blockchain';
-import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
 
 function TabPanel(props) {

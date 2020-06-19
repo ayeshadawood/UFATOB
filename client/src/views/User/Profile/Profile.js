@@ -42,7 +42,7 @@ const Profile = ({
 
   useEffect(() => {
     getProfileById(match.params.id);
-  }, [getProfileById]);
+  }, [getProfileById, match.params.id]);
 
   return (
     <Fragment>
@@ -104,7 +104,11 @@ const Profile = ({
                     className={classes.cardCategory}
                     style={{ marginTop: '5px', marginBottom: '5px' }}
                   >
-                    <a href={profile.website} target='_blank'>
+                    <a
+                      href={profile.website}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
                       Go to website
                     </a>
                   </h6>
@@ -119,6 +123,7 @@ const Profile = ({
                       <a
                         href={profile.social.facebook}
                         target='_blank'
+                        rel='noopener noreferrer'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <i
@@ -131,6 +136,7 @@ const Profile = ({
                       <a
                         href={profile.social.instagram}
                         target='_blank'
+                        rel='noopener noreferrer'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <i
@@ -143,6 +149,7 @@ const Profile = ({
                       <a
                         href={profile.social.youtube}
                         target='_blank'
+                        rel='noopener noreferrer'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <i
@@ -155,6 +162,7 @@ const Profile = ({
                       <a
                         href={profile.social.linkedin}
                         target='_blank'
+                        rel='noopener noreferrer'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <i
@@ -167,6 +175,7 @@ const Profile = ({
                       <a
                         href={profile.social.twitter}
                         target='_blank'
+                        rel='noopener noreferrer'
                         style={{ textDecoration: 'none', color: 'inherit' }}
                       >
                         <i

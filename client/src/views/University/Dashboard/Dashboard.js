@@ -1,6 +1,5 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@material-ui/core/styles';
 import GridItem from '../../../components/Grid/GridItem.js';
 import GridContainer from '../../../components/Grid/GridContainer.js';
 import { connect } from 'react-redux';
@@ -9,18 +8,12 @@ import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ProfileDetails from './ProfileDetails';
 
-import styles from '../../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
-
-const useStyles = makeStyles(styles);
-
 const Dashboard = ({
   profile: { loading, profile },
   getCurrentProfile,
   auth: { user },
   deleteProfile,
 }) => {
-  const classes = useStyles();
-
   useEffect(() => {
     getCurrentProfile();
   }, [getCurrentProfile]);

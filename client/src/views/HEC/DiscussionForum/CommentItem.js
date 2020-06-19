@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../../actions/post';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 const CommentItem = ({ comment, auth, deleteComment, post }) => {
   return (

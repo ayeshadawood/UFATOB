@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { sendJoinRequest, deleteGroup } from '../../../actions/group';
 import { connect } from 'react-redux';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
   return (
@@ -69,7 +69,6 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
               <Button
                 color='primary'
                 variant='contained'
-                onClick={() => sendJoinRequest(group._id)}
                 style={{ marginRight: '5px', backgroundColor: 'red' }}
                 onClick={() => deleteGroup(group._id)}
               >

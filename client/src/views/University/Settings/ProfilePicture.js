@@ -56,7 +56,7 @@ const ProfilePicture = ({
             <Grid item xs={12} sm={12} md={12} style={{ textAlign: 'center' }}>
               <img
                 src={user !== null ? user.avatar : ''}
-                alt='Profile picture'
+                alt=''
                 style={{ borderRadius: '50%', width: '200px', height: '200px' }}
               />
             </Grid>

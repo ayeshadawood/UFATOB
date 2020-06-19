@@ -34,7 +34,7 @@ const Group = ({
   useEffect(() => {
     getGroupById(match.params.id);
     getAllPosts(match.params.id);
-  }, [getGroupById, match.params.id]);
+  }, [getGroupById, match.params.id, getAllPosts]);
 
   return (
     <Fragment>

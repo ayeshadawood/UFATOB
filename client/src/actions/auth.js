@@ -48,7 +48,7 @@ export const register = (formData, history, university = '') => async (
 
     dispatch({ type: REGISTER_SUCCESS });
 
-    if (formData.type == 1) {
+    if (formData.type === 1) {
       dispatch(setAlert('University created', 'success'));
     } else {
       dispatch(setAlert('Student created', 'success'));
@@ -115,7 +115,7 @@ export const changePassword = (password) => async (dispatch) => {
 
     const body = JSON.stringify({ password });
 
-    const res = await axios.put('/api/users/password', body, config);
+    await axios.put('/api/users/password', body, config);
 
     dispatch({ type: PASSWORD_UPDATED });
 
