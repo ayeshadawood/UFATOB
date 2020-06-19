@@ -1,6 +1,6 @@
-import Dashboard from '@material-ui/icons/Dashboard';
+import DashboardIcon from '@material-ui/icons/Dashboard';
 
-import DashboardPage from 'views/HEC/Dashboard/Dashboard';
+import Dashboard from 'views/HEC/Dashboard/Dashboard';
 import Blockchain from 'views/HEC/Blockchain/Blockchain';
 import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversities';
 import Requests from '../views/HEC/Requests/Requests';
@@ -13,56 +13,56 @@ const HecRoutes = [
   {
     path: '/dashboard',
     name: 'Dashboard',
-    icon: Dashboard,
-    component: DashboardPage,
+    icon: DashboardIcon,
+    component: Dashboard,
     layout: '/hec',
   },
   {
     path: '/blockchains',
     name: 'Blockchains',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Blockchain,
     layout: '/hec',
   },
   {
     path: '/transactions',
     name: 'Manage Transactions',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Transactions,
     layout: '/hec',
   },
   {
     path: '/requests',
     name: 'Manage Requests',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Requests,
     layout: '/hec',
   },
   {
     path: '/complaints',
     name: 'Manage Complaints',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Complaints,
     layout: '/hec',
   },
   {
     path: '/manage-universities',
     name: 'Manage Universities',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: ManageUniversities,
     layout: '/hec',
   },
   {
     path: '/discussion-forum',
     name: 'Discussion forum',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Groups,
     layout: '/hec',
   },
   {
     path: '/settings',
     name: 'Settings',
-    icon: Dashboard,
+    icon: DashboardIcon,
     component: Settings,
     layout: '/hec',
   },
