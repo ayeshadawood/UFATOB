@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import { createBrowserHistory } from 'history';
-import { Router, Route, Switch, Redirect } from 'react-router-dom';
+import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
 import PrivateRoute from './components/Routing/PrivateRoute';
-
 import setAuthToken from './utils/setAuthToken';
-
 import HEC from './layouts/HEC';
-import User from './layouts/User';
-import Admin from './layouts/Admin';
-import Auth from './layouts/Auth';
-import RTL from './layouts/RTL';
 import University from './layouts/University';
+import User from './layouts/User';
+import Auth from './layouts/Auth';
 
 const hist = createBrowserHistory();
 
@@ -34,8 +30,6 @@ const App = () => {
           <PrivateRoute path='/university' component={University} />
           <PrivateRoute path='/user' component={User} />
           <Route path='/' component={Auth} />
-          <Route path='/admin' component={Admin} />
-          <Route path='/rtl' component={RTL} />
         </Switch>
       </Router>
     </Provider>
