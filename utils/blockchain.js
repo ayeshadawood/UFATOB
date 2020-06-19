@@ -1,5 +1,6 @@
 const sha256 = require('sha256');
 
+// This function creates the hash for the new block
 const hashBlock = (previousBlockHash, currentBlockData, nonce) => {
   const dataAsString =
     previousBlockHash + nonce.toString() + JSON.stringify(currentBlockData);
@@ -8,6 +9,7 @@ const hashBlock = (previousBlockHash, currentBlockData, nonce) => {
   return hash;
 };
 
+// This function checks if the chain is valid or not
 const chainIsValid = (chain) => {
   let validChain = true;
 
@@ -48,6 +50,7 @@ const chainIsValid = (chain) => {
   return validChain;
 };
 
+// This function generates the nonce value for which we get the required proof of work in hash
 const proofOfWork = (previousBlockHash, currentBlockData) => {
   let nonce = 0;
   let hash = hashBlock(previousBlockHash, currentBlockData, nonce);

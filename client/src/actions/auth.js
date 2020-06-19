@@ -206,11 +206,3 @@ export const logout = () => (dispatch) => {
   dispatch({ type: CLEAR_PROFILE });
   dispatch({ type: LOGOUT });
 };
-
-// // Toggle side navbar
-// export const toggleSideNav = (displaySideNav) => (dispatch) => {
-//   dispatch({
-//     type: SIDE_NAV_TOGGLED,
-//     payload: displaySideNav,
-//   });
-// };

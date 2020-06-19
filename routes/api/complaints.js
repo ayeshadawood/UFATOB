@@ -59,22 +59,8 @@ router.post(
   }
 );
 
-// // @route   GET api/complaint
-// // @desc    Show all complaint for uni and hec portal
-// // @access  Public
-// router.get('/', async (req, res) => {
-//   try {
-//     const complaints = await Complaint.find().sort({ date: -1 });
-
-//     res.json(complaints);
-//   } catch (err) {
-//     console.error(err.message);
-//     res.status(500).send('Server Error');
-//   }
-// });
-
 // @route   GET api/complaints/user
-// @desc    Get  all complaints by a user
+// @desc    Get  all complaints of user
 // @access  Private
 router.get('/user', auth, async (req, res) => {
   try {
