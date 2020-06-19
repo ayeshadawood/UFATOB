@@ -1,9 +1,9 @@
 import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
-import GridItem from 'components/Grid/GridItem.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
+import GridItem from '../../../components/Grid/GridItem.js';
+import Card from '../../../components/Card/Card.js';
+import CardHeader from '../../../components/Card/CardHeader.js';
+import CardBody from '../../../components/Card/CardBody.js';
 import { connect } from 'react-redux';
 import { TextField, Button, Grid } from '@material-ui/core';
 import { changeName } from '../../../actions/auth';

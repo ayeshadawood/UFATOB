@@ -4,8 +4,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Navbar from '../components/Navbars/UserNavbar';
-import Footer from 'components/Footer/Footer.js';
-import Sidebar from 'components/Sidebar/Sidebar.js';
+import Footer from '../components/Footer/Footer.js';
+import Sidebar from '../components/Sidebar/Sidebar.js';
 import CreateProfile from '../views/User/ProfileForms/CreateProfile';
 import EditProfile from '../views/User/ProfileForms/EditProfile';
 import AddExperience from '../views/User/ProfileForms/AddExperience';
@@ -23,11 +23,11 @@ import Profile from '../views/User/Profile/Profile';
 
 import routes from '../routes/UserRoutes';
 
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
-import spikes from 'assets/images/spikes.png';
+import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle.js';
+import spikes from '../assets/images/spikes.png';
 
-import bgImage from 'assets/img/sidebar-2.jpg';
-import logo from 'assets/img/reactlogo.png';
+import bgImage from '../assets/img/sidebar-2.jpg';
+import logo from '../assets/img/reactlogo.png';
 
 let ps;
 

@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import GridItem from 'components/Grid/GridItem.js';
-import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
-import CardBody from 'components/Card/CardBody.js';
-import Table from 'components/Table/Table.js';
+import GridItem from '../../../components/Grid/GridItem.js';
+import Card from '../../../components/Card/Card.js';
+import CardHeader from '../../../components/Card/CardHeader.js';
+import CardBody from '../../../components/Card/CardBody.js';
+import Table from '../../../components/Table/Table.js';
 import Moment from 'react-moment';
 import IconButton from '@material-ui/core/IconButton';
 import Close from '@material-ui/icons/Close';

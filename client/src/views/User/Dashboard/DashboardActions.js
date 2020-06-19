@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import GridItem from 'components/Grid/GridItem.js';
+import GridItem from '../../../components/Grid/GridItem.js';
 import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 

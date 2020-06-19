@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import GridItem from 'components/Grid/GridItem.js';
-import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from '../../../components/Grid/GridItem.js';
+import GridContainer from '../../../components/Grid/GridContainer.js';
 import { connect } from 'react-redux';
 import { getCurrentProfile, deleteProfile } from '../../../actions/profile';
 import { Button, Typography } from '@material-ui/core';
@@ -11,7 +11,7 @@ import DashboardActions from './DashboardActions';
 import Experience from './Experience';
 import Education from './Education';
 
-import styles from 'assets/jss/material-dashboard-react/views/dashboardStyle.js';
+import styles from '../../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
 const useStyles = makeStyles(styles);
 

@@ -6,7 +6,7 @@ import Homepage from '../views/Auth/Homepage.js';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
 import styles from '../assets/jss/material-dashboard-react/layouts/authStyle';
-import spikes from 'assets/images/spikes.png';
+import spikes from '../assets/images/spikes.png';
 
 let ps;
 

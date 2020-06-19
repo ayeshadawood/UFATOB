@@ -1,7 +1,7 @@
 import DashboardIcon from '@material-ui/icons/Dashboard';
 
-import Dashboard from 'views/HEC/Dashboard/Dashboard';
-import Blockchain from 'views/HEC/Blockchain/Blockchain';
+import Dashboard from '../views/HEC/Dashboard/Dashboard';
+import Blockchain from '../views/HEC/Blockchain/Blockchain';
 import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversities';
 import Requests from '../views/HEC/Requests/Requests';
 import Complaints from '../views/HEC/Complaints/Complaints';

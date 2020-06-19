@@ -7,10 +7,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Hidden from '@material-ui/core/Hidden';
 import Menu from '@material-ui/icons/Menu';
-import Button from 'components/CustomButtons/Button.js';
+import Button from '../CustomButtons/Button.js';
 import UserNavbarLinks from './UserNavbarLinks';
 
-import styles from 'assets/jss/material-dashboard-react/components/headerStyle.js';
+import styles from '../../assets/jss/material-dashboard-react/components/headerStyle.js';
 
 const useStyles = makeStyles(styles);
 

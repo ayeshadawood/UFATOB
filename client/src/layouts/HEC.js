@@ -4,8 +4,8 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Navbar from '../components/Navbars/HECNavbar';
-import Footer from 'components/Footer/Footer.js';
-import Sidebar from 'components/Sidebar/Sidebar.js';
+import Footer from '../components/Footer/Footer.js';
+import Sidebar from '../components/Sidebar/Sidebar.js';
 import CreateUniversity from '../views/HEC/ManageUniversities/CreateUniversity';
 import Request from '../views/HEC/Requests/Request';
 import Complaint from '../views/HEC/Complaints/Complaint';
@@ -21,11 +21,11 @@ import Profile from '../views/HEC/Profile/Profile';
 
 import routes from '../routes/HecRoutes.js';
 
-import styles from 'assets/jss/material-dashboard-react/layouts/adminStyle.js';
-import spikes from 'assets/images/spikes.png';
+import styles from '../assets/jss/material-dashboard-react/layouts/adminStyle.js';
+import spikes from '../assets/images/spikes.png';
 
-import bgImage from 'assets/img/sidebar-2.jpg';
-import logo from 'assets/img/reactlogo.png';
+import bgImage from '../assets/img/sidebar-2.jpg';
+import logo from '../assets/img/reactlogo.png';
 
 let ps;
 

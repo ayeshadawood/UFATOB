@@ -11,12 +11,12 @@ import Hidden from '@material-ui/core/Hidden';
 import Poppers from '@material-ui/core/Popper';
 import Divider from '@material-ui/core/Divider';
 import Person from '@material-ui/icons/Person';
-import Button from 'components/CustomButtons/Button.js';
+import Button from '../CustomButtons/Button.js';
 import { connect } from 'react-redux';
 import { logout } from '../../actions/auth';
 import { Link } from 'react-router-dom';
 
-import styles from 'assets/jss/material-dashboard-react/components/headerLinksStyle.js';
+import styles from '../../assets/jss/material-dashboard-react/components/headerLinksStyle.js';
 
 const useStyles = makeStyles(styles);
 

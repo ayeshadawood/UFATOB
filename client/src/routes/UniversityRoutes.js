@@ -2,7 +2,6 @@ import DashboardIcon from '@material-ui/icons/Dashboard';
 import Person from '@material-ui/icons/Person';
 
 import Dashboard from '../views/University/Dashboard/Dashboard';
-import UserProfile from 'views/University/Profile/Profile';
 import Requests from '../views/University/Requests/Requests';
 import Complaints from '../views/University/Complaints/Complaints';
 import MyRequests from '../views/University/MyRequests/Requests';
