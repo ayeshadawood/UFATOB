@@ -135,49 +135,6 @@ const Post = ({
           )}
         </Grid>
       </Grid>
-      {/* {!loading && post !== null && (
-        <Fragment>
-          <section className={styles.section}>
-            <SideNav styles={styles} />
-
-            <div
-              className={`${styles.content} ${
-                !auth.displaySideNav ? styles.side_nav_hidden : ''
-              }`}
-            >
-              <Alert />
-              <Row className={styles.list_item}>
-                <Col xs={12} md={3}>
-                  <Link to={`/profile/${post.user._id}`}>
-                    <img src={post.user.avatar} alt='' className='round-img' />
-                    <div className={styles.user_name}>{post.user.name}</div>
-                  </Link>
-                </Col>
-                <Col xs={12} md={9}>
-                  {post.description}
-                </Col>
-              </Row>
-              <CommentForm post={post} />
-              {post.comments.length > 0 ? (
-                post.comments.map((comment) => (
-                  <div key={comment._id}>
-                    <CommentItem
-                      comment={comment}
-                      auth={auth}
-                      post={post}
-                      styles={styles}
-                    />
-                  </div>
-                ))
-              ) : (
-                <div className={styles.sub_heading}>No comments found</div>
-              )}
-            </div>
-          </section>
-
-          <Footer styles={styles} />
-        </Fragment>
-      )} */}
     </Fragment>
   );
 };
