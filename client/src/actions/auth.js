@@ -12,9 +12,13 @@ import {
   LOGOUT,
   CLEAR_PROFILE,
   AUTH_ERROR,
-} from '../actions/types';
-import { setAlert } from '../actions/alert';
+  ACCOUNT_ACTIVATED,
+  ACCOUNT_DEACTIVATED,
+} from './types';
+import { setAlert } from './alert';
 import setAuthToken from '../utils/setAuthToken';
+import { getAllUniversities } from './university';
+import { getAllStudents } from './student';
 
 // Load user
 export const loadUser = () => async (dispatch) => {
@@ -198,6 +202,65 @@ export const removeProfilePicture = () => async (dispatch) => {
     dispatch(setAlert('Profile picture removed', 'success'));
   } catch (err) {
     dispatch(setAlert('Profile picture already removed', 'error'));
+  }
+};
+
+// Activate an account
+export const activateAccount = (id, type) => async (dispatch) => {
+  try {
+    await axios.put(`/api/users/activate/${id}`);
+
+    dispatch({ type: ACCOUNT_ACTIVATED });
+
+    dispatch(setAlert('Account activated', 'success'));
+
+    if (type === 1) {
+      dispatch(getAllUniversities());
+    } else {
+      dispatch(getAllStudents());
+    }
+  } catch (err) {
+    dispatch(setAlert('Error occurred', 'error'));
+  }
+};
+
+// Deactivate an account
+export const deactivateAccount = (id, type) => async (dispatch) => {
+  try {
+    await axios.put(`/api/users/deactivate/${id}`);
+
+    dispatch({ type: ACCOUNT_DEACTIVATED });
+
+    dispatch(setAlert('Account deactivated', 'success'));
+
+    if (type === 1) {
+      dispatch(getAllUniversities());
+    } else {
+      dispatch(getAllStudents());
+    }
+  } catch (err) {
+    dispatch(setAlert('Error occurred', 'error'));
+  }
+};
+
+// Deactivate an account for user
+export const deactivateAccountForUser = (id) => async (dispatch) => {
+  if (
+    window.confirm(
+      'Are you sure? You will need to contact admin for reactivation.'
+    )
+  ) {
+    try {
+      await axios.put(`/api/users/deactivate/${id}`);
+
+      dispatch({ type: ACCOUNT_DEACTIVATED });
+
+      dispatch(setAlert('Account deactivated', 'success'));
+
+      dispatch(logout());
+    } catch (err) {
+      dispatch(setAlert('Error occurred', 'error'));
+    }
   }
 };
 

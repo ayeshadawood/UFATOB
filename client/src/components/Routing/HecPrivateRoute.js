@@ -11,7 +11,7 @@ const HecPrivateRoute = ({
   <Route
     {...rest}
     render={(props) =>
-      !loading && isAuthenticated && user.type === 0 ? (
+      !loading && isAuthenticated && user.type === 0 && user.activated ? (
         <Component {...props} />
       ) : (
         <Redirect to='/' />

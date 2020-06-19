@@ -11,6 +11,8 @@ import {
   NAME_UPDATED,
   PROFILE_PICTURE_UPLOADED,
   PROFILE_PICTURE_REMOVED,
+  ACCOUNT_ACTIVATED,
+  ACCOUNT_DEACTIVATED,
 } from '../actions/types';
 
 const initialState = {
@@ -71,6 +73,8 @@ export default function (state = initialState, action) {
       };
     case PASSWORD_UPDATED:
     case REGISTER_SUCCESS:
+    case ACCOUNT_ACTIVATED:
+    case ACCOUNT_DEACTIVATED:
     default:
       return state;
   }

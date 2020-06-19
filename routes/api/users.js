@@ -295,4 +295,36 @@ router.put('/profile-picture/remove', auth, async (req, res) => {
   }
 });
 
+// @route   PUT /api/users/activate/:id
+// @desc    Activate an account
+// @access  Private
+router.put('/activate/:id', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    user.activated = true;
+    await user.save();
+
+    res.json({ msg: 'Account activated' });
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
+// @route   PUT /api/users/deactivate/:id
+// @desc    Deactivate an account
+// @access  Private
+router.put('/deactivate/:id', auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+
+    user.activated = false;
+    await user.save();
+
+    res.json({ msg: 'Account deactivated' });
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
 module.exports = router;

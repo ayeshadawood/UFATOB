@@ -8,14 +8,13 @@ import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import { Button } from '@material-ui/core';
-import IconButton from '@material-ui/core/IconButton';
-import Close from '@material-ui/icons/Close';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
   getAllUniversities,
   deleteUniversity,
 } from '../../../actions/university';
+import { activateAccount, deactivateAccount } from '../../../actions/auth';
 import Moment from 'react-moment';
 
 const styles = {
@@ -54,6 +53,8 @@ const ManageUniversities = ({
   university: { loading, universities },
   getAllUniversities,
   deleteUniversity,
+  activateAccount,
+  deactivateAccount,
 }) => {
   const classes = useStyles();
 
@@ -68,9 +69,25 @@ const ManageUniversities = ({
           university.name,
           university.email,
           <Moment format='DD-MMM-YYYY'>{university.date}</Moment>,
-          <IconButton onClick={() => deleteUniversity(university._id)}>
-            <Close />
-          </IconButton>,
+          university.activated ? (
+            <Button
+              color='primary'
+              variant='contained'
+              style={{ backgroundColor: 'red' }}
+              onClick={() => deactivateAccount(university._id, 1)}
+            >
+              Deactivate
+            </Button>
+          ) : (
+            <Button
+              color='primary'
+              variant='contained'
+              style={{ backgroundColor: 'green' }}
+              onClick={() => activateAccount(university._id, 1)}
+            >
+              Activate
+            </Button>
+          ),
         ],
       ];
       sNo++;
@@ -121,6 +138,8 @@ ManageUniversities.propTypes = {
   university: PropTypes.object.isRequired,
   getAllUniversities: PropTypes.func.isRequired,
   deleteUniversity: PropTypes.func.isRequired,
+  activateAccount: PropTypes.func.isRequired,
+  deactivateAccount: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -130,4 +149,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getAllUniversities,
   deleteUniversity,
+  activateAccount,
+  deactivateAccount,
 })(ManageUniversities);

@@ -24,6 +24,10 @@ const UserSchema = mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'user',
   },
+  activated: {
+    type: Boolean,
+    default: true,
+  },
   date: {
     type: Date,
     default: Date.now(),

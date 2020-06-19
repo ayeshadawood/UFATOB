@@ -4,7 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridItem from '../../../components/Grid/GridItem.js';
 import GridContainer from '../../../components/Grid/GridContainer.js';
 import { connect } from 'react-redux';
-import { getCurrentProfile, deleteProfile } from '../../../actions/profile';
+import { getCurrentProfile } from '../../../actions/profile';
+import { deactivateAccountForUser } from '../../../actions/auth';
 import { Button, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import DashboardActions from './DashboardActions';
@@ -19,7 +20,7 @@ const Dashboard = ({
   profile: { loading, profile },
   getCurrentProfile,
   auth: { user },
-  deleteProfile,
+  deactivateAccountForUser,
 }) => {
   const classes = useStyles();
 
@@ -66,10 +67,10 @@ const Dashboard = ({
                 color='primary'
                 variant='contained'
                 style={{ backgroundColor: 'red' }}
-                onClick={() => deleteProfile()}
+                onClick={() => deactivateAccountForUser(user._id)}
               >
                 <i className='fas fa-user' style={{ marginRight: '5px' }}></i>{' '}
-                Delete account
+                Deactivate account
               </Button>
             </GridItem>
           </GridContainer>
@@ -83,7 +84,7 @@ Dashboard.propTypes = {
   profile: PropTypes.object.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  deleteProfile: PropTypes.func.isRequired,
+  deactivateAccountForUser: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
@@ -91,6 +92,7 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps, { getCurrentProfile, deleteProfile })(
-  Dashboard
-);
+export default connect(mapStateToProps, {
+  getCurrentProfile,
+  deactivateAccountForUser,
+})(Dashboard);
