@@ -86,7 +86,6 @@ const Homepage = ({
         <Grid item xs={12} sm={12} md={8}>
           <div className={classes.noticeboard}>
             <div className={classes.headingNoticeboard}>NOTICEBOARD</div>
-
             <div className={classes.importantHeading}>
               Current announcements
             </div>
@@ -102,25 +101,6 @@ const Homepage = ({
                   </div>
                 </a>
               ))}
-
-            {/* <a href=''>
-              <div className={classes.title}>Title of announcment</div>
-              <p className={classes.desc}>
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                Sapiente harum, nesciunt ullam, molestias est quas recusandae
-                eligendi officiis vel quasi cumque exercitationem maiores modi
-                quis delectus nobis? Iure eligendi id quis assumenda,
-                reprehenderit dolorum obcaecati sed iusto debitis natus eveniet
-                beatae sunt qui rerum aspernatur facilis nisi Lorem ipsum dolor,
-                sit amet consectetur adipisicing elit. Sapiente harum, nesciunt
-                ullam, molestias est quas recusandae eligendi officiis vel quasi
-                cumque exercitationem maiores modi quis delectus nobis? Iure
-                eligendi id quis assumenda, reprehenderit dolorum obcaecati sed
-                iusto debitis natus eveniet beatae sunt qui rerum aspernatur
-                facilis nisi
-              </p>
-            </a> */}
-
             <div className={classes.importantHeading}>Past announcements</div>
             {scrappedData !== null &&
               scrappedData.pastAnnouncements.length > 0 &&
@@ -134,7 +114,6 @@ const Homepage = ({
                   </div>
                 </a>
               ))}
-
             <div className={classes.importantHeading}>Upcoming events</div>
             {scrappedData !== null &&
               scrappedData.upcomingEvents.length > 0 &&

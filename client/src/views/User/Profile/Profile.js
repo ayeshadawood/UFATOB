@@ -1,24 +1,15 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-// core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
-import CustomInput from 'components/CustomInput/CustomInput.js';
-import Button from 'components/CustomButtons/Button.js';
 import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
 import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
-import CardFooter from 'components/Card/CardFooter.js';
 import { connect } from 'react-redux';
 import { getProfileById } from '../../../actions/profile';
-import { Typography, Grid, TextField } from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 import Moment from 'react-moment';
-
-import avatar from 'assets/img/faces/marc.jpg';
 
 const styles = {
   cardCategoryWhite: {

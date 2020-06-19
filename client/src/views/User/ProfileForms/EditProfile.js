@@ -71,7 +71,11 @@ const EditProfile = ({
 
   const onSubmit = (e) => {
     e.preventDefault();
-    createProfile(formData, history, true);
+    if (status === '') {
+      alert('Status is required');
+    } else {
+      createProfile(formData, history, 2, true);
+    }
   };
 
   useEffect(() => {
@@ -137,6 +141,7 @@ const EditProfile = ({
               fullWidth={true}
               className={classes.input}
               margin='dense'
+              required
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -149,6 +154,7 @@ const EditProfile = ({
               fullWidth={true}
               className={classes.input}
               margin='dense'
+              required
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -161,6 +167,7 @@ const EditProfile = ({
               fullWidth={true}
               className={classes.input}
               margin='dense'
+              required
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -173,6 +180,7 @@ const EditProfile = ({
               fullWidth={true}
               className={classes.input}
               margin='dense'
+              required
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
@@ -187,6 +195,7 @@ const EditProfile = ({
               margin='dense'
               multiline
               rows={5}
+              required
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>

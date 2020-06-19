@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePost, likePost, unlikePost } from '../../../actions/post';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
 
 const PostItem = ({
   post: { _id, user, description, likes },

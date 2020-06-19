@@ -1,12 +1,7 @@
 import React, { Fragment, useEffect, createRef } from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
 import PerfectScrollbar from 'perfect-scrollbar';
 import 'perfect-scrollbar/css/perfect-scrollbar.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Navbar from '../components/Navbars/AuthNavbar';
-import Footer from 'components/Footer/Footer.js';
-import Login from '../views/Auth/Login';
-import Register from '../views/Auth/Register';
 import Homepage from '../views/Auth/Homepage.js';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
 
@@ -14,15 +9,6 @@ import styles from '../assets/jss/material-dashboard-react/layouts/authStyle';
 import spikes from 'assets/images/spikes.png';
 
 let ps;
-
-const switchRoutes = (
-  <Switch>
-    <Route path='/login' component={Login} />
-    <Route path='/register' component={Register} />
-    <Route path='/homepage' component={Homepage} />
-    <Redirect from='/' to='/login' />
-  </Switch>
-);
 
 const useStyles = makeStyles(styles);
 
@@ -52,16 +38,13 @@ const Auth = () => {
         className={classes.wrapper}
         style={{ background: 'url(' + spikes + ')' }}
       >
-        {/* <Navbar /> */}
         <div className={classes.mainPanel} ref={mainPanel}>
           <div className={classes.content}>
             <div className={classes.container}>
               <CustomAlert />
-              {/* {switchRoutes} */}
               <Homepage classes={classes} />
             </div>
           </div>
-          {/* <Footer /> */}
         </div>
       </div>
     </Fragment>

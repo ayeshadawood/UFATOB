@@ -19,11 +19,11 @@ const Education = ({ classes, education, removeEducation }) => {
         ...res,
         [
           education.school,
-          <Moment format='DD-MM-YYYY'>{education.from}</Moment>,
+          <Moment format='DD-MMM-YYYY'>{education.from}</Moment>,
           education.current ? (
             'Now'
           ) : (
-            <Moment format='DD-MM-YYYY'>{education.to}</Moment>
+            <Moment format='DD-MMM-YYYY'>{education.to}</Moment>
           ),
           <IconButton onClick={() => removeEducation(education._id)}>
             <Close />

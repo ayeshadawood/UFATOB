@@ -19,11 +19,11 @@ const Experience = ({ classes, experiences, removeExperience }) => {
         ...res,
         [
           experience.company,
-          <Moment format='DD-MM-YYYY'>{experience.from}</Moment>,
+          <Moment format='DD-MMM-YYYY'>{experience.from}</Moment>,
           experience.current ? (
             'Now'
           ) : (
-            <Moment format='DD-MM-YYYY'>{experience.to}</Moment>
+            <Moment format='DD-MMM-YYYY'>{experience.to}</Moment>
           ),
           <IconButton onClick={() => removeExperience(experience._id)}>
             <Close />
