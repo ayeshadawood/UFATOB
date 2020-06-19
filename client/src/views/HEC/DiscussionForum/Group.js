@@ -92,54 +92,6 @@ const Group = ({
           )}
         </Grid>
       </Grid>
-      {/* <section className={styles.section}>
-        <SideNav styles={styles} />
-
-        <div
-          className={`${styles.content} ${
-            !auth.displaySideNav ? styles.side_nav_hidden : ''
-          }`}
-        >
-          <Alert />
-          <div className={styles.heading}>
-            {!loading && group !== null ? group.name : ''}
-          </div>
-          <div className={styles.sub_heading}>
-            {!loading && group !== null ? group.description : ''}
-          </div>
-          <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {!loading &&
-              auth.user !== null &&
-              group !== null &&
-              group.admin._id !== auth.user._id &&
-              group.members
-                .map((member) => member.user._id)
-                .indexOf(auth.user._id) > -1 && (
-                <div>
-                  <Button
-                    className='my-2'
-                    style={{ float: 'right' }}
-                    onClick={() =>
-                      removeMemberFromGroup(group._id, auth.user._id)
-                    }
-                  >
-                    Leave group
-                  </Button>
-                </div>
-              )}
-            <div>
-              <GroupNavigationTabs
-                group={group}
-                auth={auth}
-                post={post}
-                styles={styles}
-              />
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <Footer styles={styles} /> */}
     </Fragment>
   );
 };

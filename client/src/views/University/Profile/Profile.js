@@ -1,23 +1,15 @@
 import React, { Fragment, useEffect } from 'react';
 import PropTypes from 'prop-types';
-// @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
-import InputLabel from '@material-ui/core/InputLabel';
-// core components
 import GridItem from 'components/Grid/GridItem.js';
 import GridContainer from 'components/Grid/GridContainer.js';
-import CustomInput from 'components/CustomInput/CustomInput.js';
-import Button from 'components/CustomButtons/Button.js';
 import Card from 'components/Card/Card.js';
-import CardHeader from 'components/Card/CardHeader.js';
 import CardAvatar from 'components/Card/CardAvatar.js';
 import CardBody from 'components/Card/CardBody.js';
-import CardFooter from 'components/Card/CardFooter.js';
 import { connect } from 'react-redux';
 import { getProfileById } from '../../../actions/profile';
-import { Typography, Grid, TextField } from '@material-ui/core';
-
-import avatar from 'assets/img/faces/marc.jpg';
+import { Typography } from '@material-ui/core';
+import Moment from 'react-moment';
 
 const styles = {
   cardCategoryWhite: {
@@ -81,6 +73,22 @@ const Profile = ({
                     style={{ marginTop: '5px', marginBottom: '5px' }}
                   >
                     {profile.contactNo}
+                  </h6>
+                )}
+                {!loading && profile !== null && profile.status && (
+                  <h6
+                    className={classes.cardCategory}
+                    style={{ marginTop: '5px', marginBottom: '5px' }}
+                  >
+                    {profile.status}
+                  </h6>
+                )}
+                {!loading && profile !== null && profile.company && (
+                  <h6
+                    className={classes.cardCategory}
+                    style={{ marginTop: '5px', marginBottom: '5px' }}
+                  >
+                    {profile.company}
                   </h6>
                 )}
                 {!loading && profile !== null && profile.location && (
@@ -182,6 +190,140 @@ const Profile = ({
                 {!loading && profile !== null && profile.bio && (
                   <p className={classes.description}>{profile.bio}</p>
                 )}
+                {!loading && profile !== null && profile.skills.length > 0 && (
+                  <h6
+                    className={classes.cardCategory}
+                    style={{ marginTop: '5px', marginBottom: '5px' }}
+                  >
+                    {profile.skills.map((skill) => (
+                      <div
+                        style={{
+                          fontSize: '1.1rem',
+                          display: 'inline',
+                          marginRight: '10px',
+                        }}
+                      >
+                        <i
+                          class='fas fa-check'
+                          style={{ marginRight: '5px' }}
+                        ></i>
+                        {skill}
+                      </div>
+                    ))}
+                  </h6>
+                )}
+                <GridContainer>
+                  <GridItem xs={12} sm={12} md={6}>
+                    {!loading &&
+                      profile !== null &&
+                      profile.experience.length > 0 && (
+                        <Fragment>
+                          <h4
+                            className={classes.cardTitle}
+                            style={{
+                              fontSize: '1.5rem',
+                              marginTop: '10px',
+                              marginBottom: '10px',
+                              textAlign: 'left',
+                            }}
+                          >
+                            Experience credentials
+                          </h4>
+                          {profile.experience.map((experience) => (
+                            <div
+                              style={{
+                                textAlign: 'left',
+                                marginBottom: '10px',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                {experience.company}
+                              </div>
+                              <div>{experience.title}</div>
+                              <div>
+                                `
+                                {
+                                  <Moment format='DD-MMM-YYYY'>
+                                    {experience.from}
+                                  </Moment>
+                                }{' '}
+                                to{' '}
+                                {experience.current ? (
+                                  'Now'
+                                ) : (
+                                  <Moment format='DD-MMM-YYYY'>
+                                    {experience.to}
+                                  </Moment>
+                                )}
+                                `
+                              </div>
+                              <div>{experience.description}</div>
+                            </div>
+                          ))}
+                        </Fragment>
+                      )}
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={6}>
+                    {!loading &&
+                      profile !== null &&
+                      profile.education.length > 0 && (
+                        <Fragment>
+                          <h4
+                            className={classes.cardTitle}
+                            style={{
+                              fontSize: '1.5rem',
+                              marginTop: '10px',
+                              marginBottom: '10px',
+                              textAlign: 'left',
+                            }}
+                          >
+                            Education credentials
+                          </h4>
+                          {profile.education.map((education) => (
+                            <div
+                              style={{
+                                textAlign: 'left',
+                                marginBottom: '10px',
+                              }}
+                            >
+                              <div
+                                style={{
+                                  fontSize: '1.2rem',
+                                  fontWeight: 'bold',
+                                }}
+                              >
+                                {education.school}
+                              </div>
+                              <div>{education.degree}</div>
+                              <div>
+                                `
+                                {
+                                  <Moment format='DD-MMM-YYYY'>
+                                    {education.from}
+                                  </Moment>
+                                }{' '}
+                                to{' '}
+                                {education.current ? (
+                                  'Now'
+                                ) : (
+                                  <Moment format='DD-MMM-YYYY'>
+                                    {education.to}
+                                  </Moment>
+                                )}
+                                `
+                              </div>
+                              <div>{education.description}</div>
+                            </div>
+                          ))}
+                        </Fragment>
+                      )}
+                  </GridItem>
+                </GridContainer>
               </CardBody>
             </Card>
           )}
