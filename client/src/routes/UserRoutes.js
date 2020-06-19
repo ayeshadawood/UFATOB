@@ -5,6 +5,7 @@ import Requests from '../views/User/Requests/Requests';
 import Complaints from '../views/User/Complaints/Complaints';
 import Settings from '../views/User/Settings/Settings';
 import Transactions from '../views/User/Transactions/Transactions';
+import Groups from '../views/User/DiscussionForum/Groups';
 
 const UserRoutes = [
   {
@@ -33,6 +34,13 @@ const UserRoutes = [
     name: 'Complaints',
     icon: DashboardIcon,
     component: Complaints,
+    layout: '/user',
+  },
+  {
+    path: '/discussion-forum',
+    name: 'Discussion forum',
+    icon: DashboardIcon,
+    component: Groups,
     layout: '/user',
   },
   {

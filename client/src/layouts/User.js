@@ -15,6 +15,11 @@ import CreateRequest from '../views/User/Requests/CreateRequest';
 import CreateComplaint from '../views/User/Complaints/CreateComplaint';
 import Complaint from '../views/User/Complaints/Complaint';
 import CustomAlert from '../components/CustomAlert/CustomAlert';
+import CreateGroup from '../views/User/DiscussionForum/CreateGroup';
+import EditGroup from '../views/User/DiscussionForum/EditGroup';
+import Group from '../views/User/DiscussionForum/Group';
+import Post from '../views/User/DiscussionForum/Post';
+import Profile from '../views/User/Profile/Profile';
 
 import routes from '../routes/UserRoutes';
 
@@ -46,8 +51,13 @@ const switchRoutes = (
     <Route path='/user/add-education' component={AddEducation} />
     <Route path='/user/create-request' component={CreateRequest} />
     <Route path='/user/create-complaint' component={CreateComplaint} />
+    <Route path='/user/create-group' component={CreateGroup} />
     <Route path='/user/request/:id' component={Request} />
     <Route path='/user/complaint/:id' component={Complaint} />
+    <Route path='/user/edit-group/:id' component={EditGroup} />
+    <Route path='/user/group/:id' component={Group} />
+    <Route path='/user/post/:id' component={Post} />
+    <Route path='/user/profile/:id' component={Profile} />
     <Redirect from='/user' to='/user/dashboard' />
   </Switch>
 );

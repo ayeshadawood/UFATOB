@@ -20,7 +20,7 @@ import styles from 'assets/jss/material-dashboard-react/components/headerLinksSt
 
 const useStyles = makeStyles(styles);
 
-const UserNavbarLinks = ({ logout }) => {
+const UserNavbarLinks = ({ logout, auth: { loading, user } }) => {
   const classes = useStyles();
 
   const [openProfile, setOpenProfile] = useState(null);
@@ -77,12 +77,18 @@ const UserNavbarLinks = ({ logout }) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role='menu'>
-                    <MenuItem
-                      onClick={handleCloseProfile}
-                      className={classes.dropdownItem}
+                    <Link
+                      to={`/user/profile/${
+                        !loading && user !== null ? user._id : ''
+                      }`}
                     >
-                      Profile
-                    </MenuItem>
+                      <MenuItem
+                        onClick={handleCloseProfile}
+                        className={classes.dropdownItem}
+                      >
+                        Profile
+                      </MenuItem>
+                    </Link>
                     <Link to='/user/settings'>
                       <MenuItem
                         onClick={handleCloseProfile}
@@ -111,6 +117,11 @@ const UserNavbarLinks = ({ logout }) => {
 
 UserNavbarLinks.propTypes = {
   logout: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 
-export default connect(null, { logout })(UserNavbarLinks);
+const mapStateToProps = (state) => ({
+  auth: state.auth,
+});
+
+export default connect(mapStateToProps, { logout })(UserNavbarLinks);
