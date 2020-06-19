@@ -5,8 +5,6 @@ import UniversitiesList from 'views/HEC/Universities/UniversitiesList';
 // import RequestsList from 'views/HEC/Requests/RequestsList';
 // import ComplaintsList from 'views/HEC/Complaints/ComplaintsList';
 import Blockchain from 'views/HEC/Blockchain/Blockchain';
-import NetworkNodes from 'views/HEC/ManageNetworkNodes/NetworkNodes';
-import ViewContracts from 'views/HEC/ViewContracts/ViewContracts';
 import ManageUniversities from '../views/HEC/ManageUniversities/ManageUniversities';
 import Requests from '../views/HEC/Requests/Requests';
 import Complaints from '../views/HEC/Complaints/Complaints';
