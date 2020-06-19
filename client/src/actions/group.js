@@ -1,14 +1,9 @@
 import axios from 'axios';
 import {
   ALL_GROUPS_LOADED,
-  ALL_GROUPS_LOADED_FOR_USER,
   GROUP_LOADED,
   GROUP_CREATED,
   GROUP_UPDATED,
-  GROUP_REQUEST_SENT,
-  GROUP_MEMBER_ADDED,
-  GROUP_REQUEST_DELETED,
-  GROUP_MEMBER_REMOVED,
   GROUP_DELETED,
   GROUP_ERROR,
 } from './types';
@@ -21,23 +16,6 @@ export const getAllGroups = () => async (dispatch) => {
 
     dispatch({
       type: ALL_GROUPS_LOADED,
-      payload: res.data,
-    });
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-// Get all groups for user
-export const getAllGroupsForUser = () => async (dispatch) => {
-  try {
-    const res = await axios.get('/api/groups/user');
-
-    dispatch({
-      type: ALL_GROUPS_LOADED_FOR_USER,
       payload: res.data,
     });
   } catch (err) {
@@ -98,44 +76,6 @@ export const createGroup = (formData, history) => async (dispatch) => {
   }
 };
 
-// Send join request for a group
-export const sendJoinRequest = (groupId) => async (dispatch) => {
-  try {
-    const res = await axios.put(`/api/groups/request/${groupId}`);
-
-    dispatch({
-      type: GROUP_REQUEST_SENT,
-      payload: res.data,
-    });
-
-    dispatch(setAlert('Group request sent', 'success'));
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-// Add member to group
-export const addMemberToGroup = (groupId, userId) => async (dispatch) => {
-  try {
-    const res = await axios.put(`/api/groups/${groupId}/${userId}`);
-
-    dispatch({
-      type: GROUP_MEMBER_ADDED,
-      payload: res.data,
-    });
-
-    dispatch(setAlert('Group member added', 'success'));
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
 // Update a group
 export const updateGroup = (formData, id, history) => async (dispatch) => {
   const config = {
@@ -180,46 +120,6 @@ export const deleteGroup = (id) => async (dispatch) => {
     });
 
     dispatch(setAlert('Group removed', 'success'));
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-// Delete join request for group
-export const deleteJoinRequest = (groupId, requestId) => async (dispatch) => {
-  try {
-    const res = await axios.delete(
-      `/api/groups/request/${groupId}/${requestId}`
-    );
-
-    dispatch({
-      type: GROUP_REQUEST_DELETED,
-      payload: res.data,
-    });
-
-    dispatch(setAlert('Group request deleted', 'success'));
-  } catch (err) {
-    dispatch({
-      type: GROUP_ERROR,
-      payload: { msg: err.response.statusText, status: err.response.status },
-    });
-  }
-};
-
-// Remove member from group
-export const removeMemberFromGroup = (groupId, userId) => async (dispatch) => {
-  try {
-    const res = await axios.delete(`/api/groups/${groupId}/${userId}`);
-
-    dispatch({
-      type: GROUP_MEMBER_REMOVED,
-      payload: res.data,
-    });
-
-    dispatch(setAlert('Group member removed', 'success'));
   } catch (err) {
     dispatch({
       type: GROUP_ERROR,

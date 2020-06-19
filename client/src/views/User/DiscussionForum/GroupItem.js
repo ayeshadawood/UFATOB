@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { sendJoinRequest, deleteGroup } from '../../../actions/group';
+import { deleteGroup } from '../../../actions/group';
 import { connect } from 'react-redux';
 import { Button, Grid } from '@material-ui/core';
 
-const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
+const GroupItem = ({ group, auth, deleteGroup }) => {
   return (
     <Fragment>
       <Grid
@@ -43,7 +43,6 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
                 <Button
                   color='primary'
                   variant='contained'
-                  onClick={() => sendJoinRequest(group._id)}
                   style={{ marginRight: '5px', backgroundColor: 'green' }}
                 >
                   Update
@@ -68,11 +67,9 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
 GroupItem.propTypes = {
   group: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  sendJoinRequest: PropTypes.func.isRequired,
   deleteGroup: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
-  sendJoinRequest,
   deleteGroup,
 })(GroupItem);

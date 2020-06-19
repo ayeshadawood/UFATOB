@@ -77,18 +77,6 @@ const HECNavbarLinks = ({ logout, auth: { loading, user } }) => {
               <Paper>
                 <ClickAwayListener onClickAway={handleCloseProfile}>
                   <MenuList role='menu'>
-                    <Link
-                      to={`/hec/profile/${
-                        !loading && user !== null ? user._id : ''
-                      }`}
-                    >
-                      <MenuItem
-                        onClick={handleCloseProfile}
-                        className={classes.dropdownItem}
-                      >
-                        Profile
-                      </MenuItem>
-                    </Link>
                     <Link to='/hec/settings'>
                       <MenuItem
                         onClick={handleCloseProfile}

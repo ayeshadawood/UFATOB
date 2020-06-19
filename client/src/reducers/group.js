@@ -1,15 +1,10 @@
 import {
   ALL_GROUPS_LOADED,
   GROUP_ERROR,
-  ALL_GROUPS_LOADED_FOR_USER,
   GROUP_CREATED,
   GROUP_LOADED,
   GROUP_UPDATED,
   GROUP_DELETED,
-  GROUP_REQUEST_SENT,
-  GROUP_REQUEST_DELETED,
-  GROUP_MEMBER_ADDED,
-  GROUP_MEMBER_REMOVED,
 } from '../actions/types';
 
 const initialState = {
@@ -24,7 +19,6 @@ export default function (state = initialState, action) {
 
   switch (type) {
     case ALL_GROUPS_LOADED:
-    case ALL_GROUPS_LOADED_FOR_USER:
       return {
         ...state,
         groups: payload,
@@ -52,34 +46,6 @@ export default function (state = initialState, action) {
         loading: false,
         errors: null,
         groups: [...state.groups.filter((group) => group._id !== payload)],
-      };
-    case GROUP_REQUEST_SENT:
-      return {
-        ...state,
-        loading: false,
-        errors: null,
-        groups: [
-          ...state.groups.map((group) =>
-            group._id === payload._id
-              ? { ...group, requests: payload.requests }
-              : group
-          ),
-        ],
-      };
-    case GROUP_REQUEST_DELETED:
-      return {
-        ...state,
-        loading: false,
-        errors: null,
-        group: { ...state.group, requests: payload.requests },
-      };
-    case GROUP_MEMBER_ADDED:
-    case GROUP_MEMBER_REMOVED:
-      return {
-        ...state,
-        loading: false,
-        errors: null,
-        group: { ...state.group, members: payload.members },
       };
     case GROUP_ERROR:
       return {

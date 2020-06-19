@@ -92,14 +92,15 @@ const PostItem = ({
               ></i>{' '}
               Unlike
             </Button>
-            <Button
-              color='primary'
-              variant='contained'
-              href={`/hec/post/${_id}`}
-              style={{ marginRight: '5px' }}
-            >
-              View
-            </Button>
+            <Link to={`/hec/post/${_id}`}>
+              <Button
+                color='primary'
+                variant='contained'
+                style={{ marginRight: '5px' }}
+              >
+                View
+              </Button>
+            </Link>
             {auth.user._id === user._id && (
               <Button
                 color='primary'

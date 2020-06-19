@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { sendJoinRequest, deleteGroup } from '../../../actions/group';
+import { deleteGroup } from '../../../actions/group';
 import { connect } from 'react-redux';
 import { Button, Grid } from '@material-ui/core';
 
-const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
+const GroupItem = ({ group, auth, deleteGroup }) => {
   return (
     <Fragment>
       <Grid
@@ -37,30 +37,12 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
           </div>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          {auth.user !== null &&
-            group.admin !== auth.user._id &&
-            group.requests
-              .map((request) => request.user)
-              .indexOf(auth.user._id) === -1 &&
-            group.members
-              .map((member) => member.user)
-              .indexOf(auth.user._id) === -1 && (
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={() => sendJoinRequest(group._id)}
-                style={{ marginRight: '5px' }}
-              >
-                <i className='far fa-envelope'></i> Join
-              </Button>
-            )}
           {auth.user !== null && group.admin === auth.user._id && (
             <Fragment>
               <Link to={`/hec/edit-group/${group._id}`}>
                 <Button
                   color='primary'
                   variant='contained'
-                  onClick={() => sendJoinRequest(group._id)}
                   style={{ marginRight: '5px', backgroundColor: 'green' }}
                 >
                   Update
@@ -85,11 +67,9 @@ const GroupItem = ({ group, auth, sendJoinRequest, deleteGroup }) => {
 GroupItem.propTypes = {
   group: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
-  sendJoinRequest: PropTypes.func.isRequired,
   deleteGroup: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
-  sendJoinRequest,
   deleteGroup,
 })(GroupItem);

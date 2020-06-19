@@ -4,7 +4,9 @@ import { Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import store from './store';
 import { loadUser } from './actions/auth';
-import PrivateRoute from './components/Routing/PrivateRoute';
+import HecPrivateRoute from './components/Routing/HecPrivateRoute';
+import UniversityPrivateRoute from './components/Routing/UniversityPrivateRoute';
+import UserPrivateRoute from './components/Routing/UserPrivateRoute';
 import setAuthToken from './utils/setAuthToken';
 import HEC from './layouts/HEC';
 import University from './layouts/University';
@@ -26,9 +28,9 @@ const App = () => {
     <Provider store={store}>
       <Router history={hist}>
         <Switch>
-          <PrivateRoute path='/hec' component={HEC} />
-          <PrivateRoute path='/university' component={University} />
-          <PrivateRoute path='/user' component={User} />
+          <HecPrivateRoute path='/hec' component={HEC} />
+          <UniversityPrivateRoute path='/university' component={University} />
+          <UserPrivateRoute path='/user' component={User} />
           <Route path='/' component={Auth} />
         </Switch>
       </Router>
