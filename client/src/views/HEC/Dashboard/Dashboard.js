@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect } from 'react';
 import ChartistGraph from 'react-chartist';
 import { makeStyles } from '@material-ui/core/styles';
 import AccessTime from '@material-ui/icons/AccessTime';
@@ -12,6 +12,7 @@ import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import CardFooter from '../../../components/Card/CardFooter.js';
+import Chart from 'chart.js';
 
 import { bugs } from '../../../variables/general.js';
 
@@ -23,9 +24,92 @@ const useStyles = makeStyles(styles);
 
 export default function Dashboard() {
   const classes = useStyles();
+
+  const barChartRef = useRef(null);
+
+  const loadBarChart = () => {
+    const ctx = barChartRef.current.getContext('2d');
+    // Line chart
+    new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['2016', '2017', '2018', '2019', '2020'],
+        datasets: [
+          {
+            label: 'Comsats',
+            data: [12, 19, 3, 20, 2],
+            backgroundColor: 'rgba(0, 0, 255, 0.5)',
+            borderColor: 'rgba(0, 0, 255, 1)',
+            borderWidth: 2,
+            fill: false,
+            pointRadius: 4,
+          },
+          {
+            label: 'Nust',
+            data: [13, 15, 13, 50, 22],
+            backgroundColor: 'rgba(0, 255, 0, 0.5)',
+            borderColor: 'rgba(0, 255, 0, 1)',
+            borderWidth: 2,
+            fill: false,
+            pointRadius: 4,
+          },
+        ],
+      },
+      options: {
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
+
+    // Bar chart
+    // new Chart(ctx, {
+    //   type: 'bar',
+    //   data: {
+    //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //     datasets: [
+    //       {
+    //         label: 'Funding in Rs.',
+    //         data: [12, 19, 3, 5, 2, 3],
+    //         backgroundColor: 'rgba(0, 0, 255, 0.5)',
+    //         borderColor: 'rgba(0, 0, 255, 1)',
+    //         borderWidth: 2,
+    //       },
+    //     ],
+    //   },
+    //   options: {
+    //     scales: {
+    //       yAxes: [
+    //         {
+    //           ticks: {
+    //             beginAtZero: true,
+    //           },
+    //         },
+    //       ],
+    //     },
+    //   },
+    // });
+  };
+
+  useEffect(() => {
+    loadBarChart();
+  }, [loadBarChart]);
+
   return (
     <div>
       <GridContainer>
+        <GridItem xs={12} sm={12} md={12}>
+          <canvas
+            ref={barChartRef}
+            style={{ height: '400px !important' }}
+          ></canvas>
+        </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card chart>
             <CardHeader color='warning'>
