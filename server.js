@@ -17,6 +17,7 @@ app.use('/api/blockchain', require('./routes/api/blockchain'));
 app.use('/api/scrapper', require('./routes/api/scrapper'));
 app.use('/api/groups', require('./routes/api/groups'));
 app.use('/api/posts', require('./routes/api/posts'));
+app.use('/api/data-visualization', require('./routes/api/data-visualization'));
 
 const PORT = process.env.PORT || 5000;
 

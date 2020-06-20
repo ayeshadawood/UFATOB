@@ -10,6 +10,7 @@ import blockchain from './blockchain';
 import scrapper from './scrapper';
 import post from './post';
 import group from './group';
+import dataVisualization from './data-visualization';
 
 export default combineReducers({
   alert,
@@ -23,4 +24,5 @@ export default combineReducers({
   scrapper,
   post,
   group,
+  dataVisualization,
 });

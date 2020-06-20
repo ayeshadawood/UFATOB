@@ -1,4 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import ChartistGraph from 'react-chartist';
 import { makeStyles } from '@material-ui/core/styles';
 import AccessTime from '@material-ui/icons/AccessTime';
@@ -13,6 +14,9 @@ import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import CardFooter from '../../../components/Card/CardFooter.js';
 import Chart from 'chart.js';
+import { connect } from 'react-redux';
+import { getDataStatisticsByUniversity } from '../../../actions/dataVisualization';
+import { Typography } from '@material-ui/core';
 
 import { bugs } from '../../../variables/general.js';
 
@@ -22,64 +26,80 @@ import styles from '../../../assets/jss/material-dashboard-react/views/dashboard
 
 const useStyles = makeStyles(styles);
 
-export default function Dashboard() {
+const Dashboard = ({
+  dataVisualization: { loading, university },
+  getDataStatisticsByUniversity,
+}) => {
   const classes = useStyles();
 
-  const barChartRef = useRef(null);
+  const [universityChartDataLoaded, setUniversityChartDataLoaded] = useState(
+    false
+  );
 
-  const loadBarChart = () => {
-    const ctx = barChartRef.current.getContext('2d');
+  const universityChart = useRef(null);
+
+  // This function gets the labels for univeristy chart
+  const getUniversityChartLabels = () => {
+    let res = [];
+    for (let key in university) {
+      res = [...res, key];
+    }
+    return res;
+  };
+
+  // This function gets the data for the univeristy chart
+  const getUniversityChartData = () => {
+    let res = [];
+    for (let key in university) {
+      res = [...res, university[key]];
+    }
+    return res;
+  };
+
+  // This function generates random background colors for chart
+  const generateUniversityChartBackgroundColors = () => {
+    let res = [];
+    let count = 0;
+
+    for (let key in university) {
+      count++;
+    }
+
+    for (let i = 0; i < count; i++) {
+      const red = Math.floor(Math.random() * 256);
+      const blue = Math.floor(Math.random() * 256);
+      const green = Math.floor(Math.random() * 256);
+      res = [...res, `rgba(${red}, ${green}, ${blue}, 0.6)`];
+    }
+
+    return res;
+  };
+
+  const loadUniversityChart = () => {
+    const ctx = universityChart.current.getContext('2d');
     // Line chart
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['2016', '2017', '2018', '2019', '2020'],
-        datasets: [
-          {
-            label: 'Comsats',
-            data: [12, 19, 3, 20, 2],
-            backgroundColor: 'rgba(0, 0, 255, 0.5)',
-            borderColor: 'rgba(0, 0, 255, 1)',
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 4,
-          },
-          {
-            label: 'Nust',
-            data: [13, 15, 13, 50, 22],
-            backgroundColor: 'rgba(0, 255, 0, 0.5)',
-            borderColor: 'rgba(0, 255, 0, 1)',
-            borderWidth: 2,
-            fill: false,
-            pointRadius: 4,
-          },
-        ],
-      },
-      options: {
-        scales: {
-          yAxes: [
-            {
-              ticks: {
-                beginAtZero: true,
-              },
-            },
-          ],
-        },
-      },
-    });
-
-    // Bar chart
     // new Chart(ctx, {
-    //   type: 'bar',
+    //   type: 'line',
     //   data: {
-    //     labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+    //     labels: ['2016', '2017', '2018', '2019', '2020'],
     //     datasets: [
     //       {
-    //         label: 'Funding in Rs.',
-    //         data: [12, 19, 3, 5, 2, 3],
+    //         label: 'Comsats',
+    //         data: [12, 19, 3, 20, 2],
     //         backgroundColor: 'rgba(0, 0, 255, 0.5)',
     //         borderColor: 'rgba(0, 0, 255, 1)',
     //         borderWidth: 2,
+    //         fill: false,
+    //         pointRadius: 4,
+    //       },
+    //       {
+    //         label: 'Nust',
+    //         data: [13, 15, 13, 50, 22],
+    //         backgroundColor: 'rgba(0, 255, 0, 0.5)',
+    //         borderColor: 'rgba(0, 255, 0, 1)',
+    //         borderWidth: 2,
+    //         fill: false,
+    //         pointRadius: 4,
     //       },
     //     ],
     //   },
@@ -95,20 +115,56 @@ export default function Dashboard() {
     //     },
     //   },
     // });
+
+    // Bar chart
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: getUniversityChartLabels(),
+        datasets: [
+          {
+            label: 'Funding in Rs',
+            data: getUniversityChartData(),
+            backgroundColor: generateUniversityChartBackgroundColors(),
+          },
+        ],
+      },
+      options: {
+        legend: {
+          display: false,
+        },
+        scales: {
+          yAxes: [
+            {
+              ticks: {
+                beginAtZero: true,
+              },
+            },
+          ],
+        },
+      },
+    });
   };
 
   useEffect(() => {
-    loadBarChart();
-  }, [loadBarChart]);
+    if (!universityChartDataLoaded) {
+      getDataStatisticsByUniversity();
+      setUniversityChartDataLoaded(true);
+    }
+
+    if (!loading && university !== null) {
+      loadUniversityChart();
+    }
+  }, [getDataStatisticsByUniversity, loadUniversityChart, loading]);
 
   return (
     <div>
       <GridContainer>
         <GridItem xs={12} sm={12} md={12}>
-          <canvas
-            ref={barChartRef}
-            style={{ height: '400px !important' }}
-          ></canvas>
+          <Typography variant='h4' style={{ marginBottom: '10px' }}>
+            Per Institution Funding
+          </Typography>
+          <canvas ref={universityChart}></canvas>
         </GridItem>
         <GridItem xs={12} sm={12} md={12}>
           <Card chart>
@@ -229,4 +285,17 @@ export default function Dashboard() {
       </GridContainer>
     </div>
   );
-}
+};
+
+Dashboard.propTypes = {
+  dataVisualization: PropTypes.object.isRequired,
+  getDataStatisticsByUniversity: PropTypes.func.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  dataVisualization: state.dataVisualization,
+});
+
+export default connect(mapStateToProps, { getDataStatisticsByUniversity })(
+  Dashboard
+);

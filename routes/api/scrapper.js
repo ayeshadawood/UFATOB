@@ -129,6 +129,7 @@ router.post('/', async (req, res) => {
 
     res.json({ msg: 'Data scraped from HEC' });
   } catch (err) {
+    console.log(err);
     return res.status(500).send('Server Error');
   }
 });
