@@ -31,10 +31,7 @@ const GroupItem = ({ group, auth, deleteGroup }) => {
           </Link>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          <div>{group.description}</div>
-          <div style={{ marginBottom: '10px' }}>
-            <strong>Members:</strong> {group.members.length + 1}
-          </div>
+          <div style={{ marginBottom: '10px' }}>{group.description}</div>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
           {auth.user !== null && group.admin === auth.user._id && (
