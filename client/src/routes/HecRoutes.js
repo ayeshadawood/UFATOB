@@ -8,6 +8,7 @@ import Complaints from '../views/HEC/Complaints/Complaints';
 import Settings from '../views/HEC/Settings/Settings';
 import Transactions from '../views/HEC/Transactions/Transactions';
 import Groups from '../views/HEC/DiscussionForum/Groups';
+import Profiles from '../views/HEC/Profiles/Profiles';
 
 const HecRoutes = [
   {
@@ -57,6 +58,13 @@ const HecRoutes = [
     name: 'Discussion forum',
     icon: DashboardIcon,
     component: Groups,
+    layout: '/hec',
+  },
+  {
+    path: '/profiles',
+    name: 'Profiles',
+    icon: DashboardIcon,
+    component: Profiles,
     layout: '/hec',
   },
   {

@@ -20,7 +20,7 @@ import EditGroup from '../views/User/DiscussionForum/EditGroup';
 import Group from '../views/User/DiscussionForum/Group';
 import Post from '../views/User/DiscussionForum/Post';
 import Profile from '../views/User/Profile/Profile';
-import NewProfile from '../views/User/NewProfile/Profile';
+// import NewProfile from '../views/User/NewProfile/Profile';
 
 import routes from '../routes/UserRoutes';
 
@@ -60,7 +60,7 @@ const switchRoutes = (
     <Route path='/user/post/:id' component={Post} />
     <Route path='/user/profile/:id' component={Profile} />
     <Redirect from='/user' to='/user/dashboard' />
-    <Route path='/user/newprofile' component={NewProfile} />
+    {/* <Route path='/user/newprofile' component={NewProfile} /> */}
   </Switch>
 );
 

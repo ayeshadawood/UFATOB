@@ -5,6 +5,18 @@ import { Alert } from '@material-ui/lab';
 import { connect } from 'react-redux';
 
 const CustomAlert = ({ alert: { showAlerts, alerts } }) => {
+  const dangerAlertStyle = {
+    backgroundColor: 'red',
+    color: 'white',
+    fontSize: '1.2rem',
+  };
+
+  const successAlertStyle = {
+    backgroundColor: 'green',
+    color: 'white',
+    fontSize: '1.2rem',
+  };
+
   return (
     <Fragment>
       <Snackbar
@@ -19,7 +31,16 @@ const CustomAlert = ({ alert: { showAlerts, alerts } }) => {
                 key={alert.id}
                 style={{ marginBottom: '10px', width: '100%' }}
               >
-                <Alert severity={alert.alertType}>{alert.msg}</Alert>
+                <Alert
+                  severity={alert.alertType}
+                  style={
+                    alert.alertType === 'error'
+                      ? dangerAlertStyle
+                      : successAlertStyle
+                  }
+                >
+                  {alert.msg}
+                </Alert>
               </div>
             ))}
         </Fragment>

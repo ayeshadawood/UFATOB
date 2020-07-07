@@ -7,18 +7,27 @@ import {
   EXPERIENCE_REMOVED,
   EDUCATION_REMOVED,
   PROFILE_DELETED,
+  ALL_PROFILES_LOADED,
 } from '../actions/types';
 
 const initialState = {
   profile: null,
   loading: true,
   errors: null,
+  profiles: [],
 };
 
 export default function (state = initialState, action) {
   const { type, payload } = action;
 
   switch (type) {
+    case ALL_PROFILES_LOADED:
+      return {
+        ...state,
+        loading: false,
+        errors: null,
+        profiles: payload,
+      };
     case PROFILE_LOADED:
     case EXPERIENCE_ADDED:
     case EDUCATION_ADDED:

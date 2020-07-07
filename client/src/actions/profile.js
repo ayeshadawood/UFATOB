@@ -9,8 +9,26 @@ import {
   CLEAR_PROFILE,
   USER_DELETED,
   PROFILE_ERROR,
+  ALL_PROFILES_LOADED,
 } from './types';
 import { setAlert } from './alert';
+
+// Get all profiles
+export const getAllProfiles = () => async (dispatch) => {
+  try {
+    const res = await axios.get('/api/profiles');
+
+    dispatch({
+      type: ALL_PROFILES_LOADED,
+      payload: res.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PROFILE_ERROR,
+      payload: { msg: err.response.statusText, status: err.response.status },
+    });
+  }
+};
 
 // Get current profile
 export const getCurrentProfile = () => async (dispatch) => {

@@ -7,6 +7,18 @@ const User = require('../../models/User');
 const { connectDB, dropDB } = require('../../config/db');
 const config = require('config');
 
+// @route   GET api/profiles
+// @desc    Get all profiles
+// @access  Private
+router.get('/', auth, async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar']);
+    res.json(profiles);
+  } catch (err) {
+    return res.status(500).send('Server Error');
+  }
+});
+
 // @route   GET api/profiles/me
 // @desc    Get current user profile
 // @access  Private
