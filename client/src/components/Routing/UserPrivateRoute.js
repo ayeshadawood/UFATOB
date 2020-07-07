@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-const HecPrivateRoute = ({
+const UserPrivateRoute = ({
   component: Component,
   auth: { isAuthenticated, loading, user },
   ...rest
@@ -11,16 +11,18 @@ const HecPrivateRoute = ({
   <Route
     {...rest}
     render={(props) =>
-      !loading && isAuthenticated && user.type === 2 && user.activated ? (
-        <Component {...props} />
-      ) : (
+      !loading && !isAuthenticated ? (
         <Redirect to='/' />
+      ) : !loading && isAuthenticated && user !== null && user.type !== 2 ? (
+        <Redirect to='/' />
+      ) : (
+        <Component {...props} />
       )
     }
   />
 );
 
-HecPrivateRoute.propTypes = {
+UserPrivateRoute.propTypes = {
   auth: PropTypes.object.isRequired,
 };
 
@@ -28,4 +30,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(HecPrivateRoute);
+export default connect(mapStateToProps)(UserPrivateRoute);

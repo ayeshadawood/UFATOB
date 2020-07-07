@@ -6,6 +6,7 @@ import Complaints from '../views/User/Complaints/Complaints';
 import Settings from '../views/User/Settings/Settings';
 import Transactions from '../views/User/Transactions/Transactions';
 import Groups from '../views/User/DiscussionForum/Groups';
+import Profiles from '../views/User/Profiles/Profiles';
 
 const UserRoutes = [
   {
@@ -41,6 +42,13 @@ const UserRoutes = [
     name: 'Discussion forum',
     icon: DashboardIcon,
     component: Groups,
+    layout: '/user',
+  },
+  {
+    path: '/profiles',
+    name: 'Profiles',
+    icon: DashboardIcon,
+    component: Profiles,
     layout: '/user',
   },
   {

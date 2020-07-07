@@ -10,6 +10,7 @@ import ManageStudents from '../views/University/ManageStudents/ManageStudents';
 import Transactions from '../views/University/Transactions/Transactions';
 import Blockchain from '../views/University/Blockchain/Blockchain';
 import Groups from '../views/University/DiscussionForum/Groups';
+import Profiles from '../views/University/Profiles/Profiles';
 
 const dashboardRoutes = [
   {
@@ -73,6 +74,13 @@ const dashboardRoutes = [
     name: 'Discussion forum',
     icon: DashboardIcon,
     component: Groups,
+    layout: '/university',
+  },
+  {
+    path: '/profiles',
+    name: 'Profiles',
+    icon: DashboardIcon,
+    component: Profiles,
     layout: '/university',
   },
   {
