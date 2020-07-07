@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import GridItem from '../../../components/Grid/GridItem.js';
 import GridContainer from '../../../components/Grid/GridContainer.js';
@@ -8,7 +8,7 @@ import {
   getDataStatisticsByUniversity,
   getDataStatisticsByYear,
 } from '../../../actions/dataVisualization';
-import { Typography } from '@material-ui/core';
+import { Typography, CircularProgress } from '@material-ui/core';
 
 const Dashboard = ({
   dataVisualization: { loading, university, year },
@@ -241,22 +241,30 @@ const Dashboard = ({
   ]);
 
   return (
-    <div>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Typography variant='h4' style={{ marginBottom: '10px' }}>
-            Per Institution Funding
-          </Typography>
-          <canvas ref={universityChart}></canvas>
-        </GridItem>
-        <GridItem xs={12} sm={12} md={12}>
-          <Typography variant='h4' style={{ marginBottom: '10px' }}>
-            Per Year Funding
-          </Typography>
-          <canvas ref={yearChart}></canvas>
-        </GridItem>
-      </GridContainer>
-    </div>
+    <Fragment>
+      {loading ? (
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Fragment>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Typography variant='h4' style={{ marginBottom: '10px' }}>
+                Per Institution Funding
+              </Typography>
+              <canvas ref={universityChart}></canvas>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={12}>
+              <Typography variant='h4' style={{ marginBottom: '10px' }}>
+                Per Year Funding
+              </Typography>
+              <canvas ref={yearChart}></canvas>
+            </GridItem>
+          </GridContainer>
+        </Fragment>
+      )}
+    </Fragment>
   );
 };
 

@@ -3,10 +3,15 @@ import {
   ALL_DV_DATA_LOADED_UNIVERSITY,
   DV_ERROR,
   ALL_DV_DATA_LOADED_YEAR,
+  SET_DV_LOADING,
 } from './types';
 
 // Get data statistics by university
 export const getDataStatisticsByUniversity = () => async (dispatch) => {
+  dispatch({
+    type: SET_DV_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/data-visualization/university');
 
@@ -24,6 +29,10 @@ export const getDataStatisticsByUniversity = () => async (dispatch) => {
 
 // Get data statistics by year
 export const getDataStatisticsByYear = () => async (dispatch) => {
+  dispatch({
+    type: SET_DV_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/data-visualization/year');
 

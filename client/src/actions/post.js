@@ -9,11 +9,16 @@ import {
   COMMENT_REMOVED_POST,
   POST_REMOVED,
   POST_ERROR,
+  SET_POST_LOADING,
 } from './types';
 import { setAlert } from './alert';
 
 // Get all posts
 export const getAllPosts = (groupId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/posts/group/${groupId}`);
 
@@ -31,6 +36,10 @@ export const getAllPosts = (groupId) => async (dispatch) => {
 
 // Get post by id
 export const getPostById = (postId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/posts/${postId}`);
 
@@ -48,6 +57,10 @@ export const getPostById = (postId) => async (dispatch) => {
 
 // Create new post
 export const createNewPost = (groupId, formData) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -74,6 +87,10 @@ export const createNewPost = (groupId, formData) => async (dispatch) => {
 
 // Comment on post
 export const addComment = (postId, formData) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -104,6 +121,10 @@ export const addComment = (postId, formData) => async (dispatch) => {
 
 // Like post
 export const likePost = (postId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/posts/like/${postId}`);
 
@@ -121,6 +142,10 @@ export const likePost = (postId) => async (dispatch) => {
 
 // Unlike post
 export const unlikePost = (postId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/posts/unlike/${postId}`);
 
@@ -138,6 +163,10 @@ export const unlikePost = (postId) => async (dispatch) => {
 
 // Delete post
 export const deletePost = (postId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     await axios.delete(`/api/posts/${postId}`);
 
@@ -158,6 +187,10 @@ export const deletePost = (postId) => async (dispatch) => {
 
 // Delete comment on post
 export const deleteComment = (postId, commentId) => async (dispatch) => {
+  dispatch({
+    type: SET_POST_LOADING,
+  });
+
   try {
     const res = await axios.delete(`/api/posts/comment/${postId}/${commentId}`);
 

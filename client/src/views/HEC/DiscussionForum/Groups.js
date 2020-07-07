@@ -2,7 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { getAllGroups, searchGroup } from '../../../actions/group';
 import PropTypes from 'prop-types';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  Grid,
+  TextField,
+  CircularProgress,
+} from '@material-ui/core';
 import GroupItem from './GroupItem';
 import { Link } from 'react-router-dom';
 
@@ -74,19 +80,33 @@ const Groups = ({
           </form>
         </Grid>
         <Grid item xs={12} sm={12} md={12}>
-          <Grid container>
-            {!loading && groups.length > 0 ? (
-              groups.map((group) => (
-                <Grid item xs={12} sm={12} md={12}>
-                  <GroupItem key={group._id} group={group} auth={auth} />
-                </Grid>
-              ))
-            ) : (
-              <Typography variant='h6' style={{ marginBottom: '10px' }}>
-                No groups found
-              </Typography>
-            )}
-          </Grid>
+          {loading ? (
+            <div
+              style={{
+                textAlign: 'center',
+                marginTop: '20px',
+                marginBottom: '20px',
+              }}
+            >
+              <CircularProgress />
+            </div>
+          ) : (
+            <Fragment>
+              <Grid container>
+                {!loading && groups.length > 0 ? (
+                  groups.map((group) => (
+                    <Grid item xs={12} sm={12} md={12}>
+                      <GroupItem key={group._id} group={group} auth={auth} />
+                    </Grid>
+                  ))
+                ) : (
+                  <Typography variant='h6' style={{ marginBottom: '10px' }}>
+                    No groups found
+                  </Typography>
+                )}
+              </Grid>
+            </Fragment>
+          )}
         </Grid>
       </Grid>
     </Fragment>

@@ -7,7 +7,7 @@ import Table from '../../../components/Table/Table.js';
 import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { getAllBlockchains, fixBlockchain } from '../../../actions/blockchain';
 import { Link } from 'react-router-dom';
@@ -83,21 +83,35 @@ const Blockchain = ({
                 Below is a list of all the network nodes and their chain status
               </p>
             </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor='primary'
-                tableHead={[
-                  'S.No.',
-                  'Name',
-                  'Email',
-                  'Chain status',
-                  'Actions',
-                ]}
-                tableData={
-                  !loading && blockchains.length > 0 ? getBlockchains() : []
-                }
-              />
-            </CardBody>
+            {loading ? (
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                }}
+              >
+                <CircularProgress />
+              </div>
+            ) : (
+              <Fragment>
+                <CardBody>
+                  <Table
+                    tableHeaderColor='primary'
+                    tableHead={[
+                      'S.No.',
+                      'Name',
+                      'Email',
+                      'Chain status',
+                      'Actions',
+                    ]}
+                    tableData={
+                      !loading && blockchains.length > 0 ? getBlockchains() : []
+                    }
+                  />
+                </CardBody>
+              </Fragment>
+            )}
           </Card>
         </GridItem>
       </GridContainer>

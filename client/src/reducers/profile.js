@@ -8,6 +8,7 @@ import {
   EDUCATION_REMOVED,
   PROFILE_DELETED,
   ALL_PROFILES_LOADED,
+  SET_PROFILE_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -53,6 +54,11 @@ export default function (state = initialState, action) {
         profile: null,
         loading: false,
         errors: null,
+      };
+    case SET_PROFILE_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

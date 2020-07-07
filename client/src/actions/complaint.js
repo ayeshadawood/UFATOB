@@ -10,12 +10,17 @@ import {
   COMPLAINT_CONSIDERED,
   COMPLAINT_NOT_CONSIDERED,
   ALL_COMPLAINTS_LOADED_FOR_HEC,
+  SET_COMPLAINT_LOADING,
 } from './types';
 
 // Create complaint
 export const createComplaint = (formData, history, university = '') => async (
   dispatch
 ) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -46,6 +51,10 @@ export const createComplaint = (formData, history, university = '') => async (
 
 // Get all complaints for user
 export const getUserComplaints = () => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/complaints/user');
 
@@ -63,6 +72,10 @@ export const getUserComplaints = () => async (dispatch) => {
 
 // Get all complaints for university
 export const getUniversityComplaints = () => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/complaints/university');
 
@@ -80,6 +93,10 @@ export const getUniversityComplaints = () => async (dispatch) => {
 
 // Get all complaints for hec
 export const getHecComplaints = () => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/complaints/hec');
 
@@ -97,6 +114,10 @@ export const getHecComplaints = () => async (dispatch) => {
 
 // Get complaint by id
 export const getComplaint = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/complaints/${id}`);
 
@@ -114,6 +135,10 @@ export const getComplaint = (id) => async (dispatch) => {
 
 // Forwared complaint to HEC
 export const forwardComplaint = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/complaints/forward/${id}`);
 
@@ -133,6 +158,10 @@ export const forwardComplaint = (id) => async (dispatch) => {
 
 // Consider a complaint
 export const considerComplaint = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/complaints/consider/${id}`);
 
@@ -152,6 +181,10 @@ export const considerComplaint = (id) => async (dispatch) => {
 
 // Not consider a complaint
 export const notConsiderComplaint = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_COMPLAINT_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/complaints/not-consider/${id}`);
 

@@ -5,6 +5,7 @@ import {
   GROUP_LOADED,
   GROUP_UPDATED,
   GROUP_DELETED,
+  SET_GROUP_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -52,6 +53,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_GROUP_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

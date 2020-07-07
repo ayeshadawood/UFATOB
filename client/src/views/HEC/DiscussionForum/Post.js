@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getPostById, addComment } from '../../../actions/post';
-import { Button, Typography, Grid, TextField } from '@material-ui/core';
+import {
+  Button,
+  Typography,
+  Grid,
+  TextField,
+  CircularProgress,
+} from '@material-ui/core';
 import CommentItem from './CommentItem';
 
 const Post = ({
@@ -35,104 +41,124 @@ const Post = ({
 
   return (
     <Fragment>
-      <Grid
-        container
-        style={{
-          backgroundColor: '#e6e6e6',
-          padding: '10px',
-          borderRadius: '5px',
-          marginBottom: '10px',
-        }}
-      >
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={3}
+      {loading ? (
+        <div
           style={{
-            display: 'flex',
-            justifyContent: 'center',
+            textAlign: 'center',
+            marginTop: '20px',
+            marginBottom: '20px',
           }}
         >
-          <Link
-            to={`/profile/${!loading && post !== null ? post.user._id : ''}`}
-            style={{ textDecoration: 'none', color: 'inherit' }}
+          <CircularProgress />
+        </div>
+      ) : (
+        <Fragment>
+          <Grid
+            container
+            style={{
+              backgroundColor: '#e6e6e6',
+              padding: '10px',
+              borderRadius: '5px',
+              marginBottom: '10px',
+            }}
           >
-            <img
-              src={!loading && post !== null ? post.user.avatar : ''}
-              alt=''
-              style={{ width: '100px', height: '100px', borderRadius: '50%' }}
-            />
-            <div
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={3}
               style={{
                 display: 'flex',
                 justifyContent: 'center',
-                fontWeight: 'bold',
               }}
             >
-              {!loading && post !== null ? post.user.name : ''}
-            </div>
-          </Link>
-        </Grid>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={9}
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-          }}
-        >
-          <div>{!loading && post !== null ? post.description : ''}</div>
-        </Grid>
-      </Grid>
-      <Grid container>
-        <Grid item xs={12} sm={12} md={12}>
-          <form onSubmit={(e) => onSubmit(e)}>
-            <Grid container>
-              <Grid item xs={12} sm={12} md={12}>
-                <TextField
-                  name='description'
-                  value={description}
-                  onChange={(e) => onChange(e)}
-                  label='Comment description'
-                  variant='outlined'
-                  fullWidth={true}
-                  margin='dense'
-                  multiline
-                  rows={5}
-                  style={{ marginBottom: '10px' }}
+              <Link
+                to={`/profile/${
+                  !loading && post !== null ? post.user._id : ''
+                }`}
+                style={{ textDecoration: 'none', color: 'inherit' }}
+              >
+                <img
+                  src={!loading && post !== null ? post.user.avatar : ''}
+                  alt=''
+                  style={{
+                    width: '100px',
+                    height: '100px',
+                    borderRadius: '50%',
+                  }}
                 />
-              </Grid>
-              <Grid item xs={12} sm={12} md={12}>
-                <Button
-                  type='submit'
-                  color='primary'
-                  variant='contained'
-                  style={{ marginBottom: '10px' }}
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'center',
+                    fontWeight: 'bold',
+                  }}
                 >
-                  Submit
-                </Button>
-              </Grid>
+                  {!loading && post !== null ? post.user.name : ''}
+                </div>
+              </Link>
             </Grid>
-          </form>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
-          {post !== null && post.comments.length > 0 ? (
-            post.comments.map((comment) => (
-              <div key={comment._id}>
-                <CommentItem comment={comment} auth={auth} post={post} />
-              </div>
-            ))
-          ) : (
-            <Typography variant='h6' style={{ marginBottom: '10px' }}>
-              No comments found
-            </Typography>
-          )}
-        </Grid>
-      </Grid>
+            <Grid
+              item
+              xs={12}
+              sm={12}
+              md={9}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+              }}
+            >
+              <div>{!loading && post !== null ? post.description : ''}</div>
+            </Grid>
+          </Grid>
+          <Grid container>
+            <Grid item xs={12} sm={12} md={12}>
+              <form onSubmit={(e) => onSubmit(e)}>
+                <Grid container>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <TextField
+                      name='description'
+                      value={description}
+                      onChange={(e) => onChange(e)}
+                      label='Comment description'
+                      variant='outlined'
+                      fullWidth={true}
+                      margin='dense'
+                      multiline
+                      rows={5}
+                      style={{ marginBottom: '10px' }}
+                    />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={12}>
+                    <Button
+                      type='submit'
+                      color='primary'
+                      variant='contained'
+                      style={{ marginBottom: '10px' }}
+                    >
+                      Submit
+                    </Button>
+                  </Grid>
+                </Grid>
+              </form>
+            </Grid>
+            <Grid item xs={12} sm={12} md={12}>
+              {post !== null && post.comments.length > 0 ? (
+                post.comments.map((comment) => (
+                  <div key={comment._id}>
+                    <CommentItem comment={comment} auth={auth} post={post} />
+                  </div>
+                ))
+              ) : (
+                <Typography variant='h6' style={{ marginBottom: '10px' }}>
+                  No comments found
+                </Typography>
+              )}
+            </Grid>
+          </Grid>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

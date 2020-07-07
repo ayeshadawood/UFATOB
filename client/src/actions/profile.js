@@ -10,11 +10,16 @@ import {
   USER_DELETED,
   PROFILE_ERROR,
   ALL_PROFILES_LOADED,
+  SET_PROFILE_LOADING,
 } from './types';
 import { setAlert } from './alert';
 
 // Get all profiles
 export const getAllProfiles = () => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/profiles');
 
@@ -32,6 +37,10 @@ export const getAllProfiles = () => async (dispatch) => {
 
 // Get current profile
 export const getCurrentProfile = () => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/profiles/me');
 
@@ -49,6 +58,10 @@ export const getCurrentProfile = () => async (dispatch) => {
 
 // Get profile by id
 export const getProfileById = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/profiles/${id}`);
 
@@ -68,6 +81,10 @@ export const getProfileById = (id) => async (dispatch) => {
 export const createProfile = (formData, history, type, edit = false) => async (
   dispatch
 ) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -101,6 +118,10 @@ export const createProfile = (formData, history, type, edit = false) => async (
 
 // Add experience
 export const addExperience = (formData, history) => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -128,6 +149,10 @@ export const addExperience = (formData, history) => async (dispatch) => {
 
 // Add education
 export const addEducation = (formData, history) => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -155,6 +180,10 @@ export const addEducation = (formData, history) => async (dispatch) => {
 
 // Remove experience
 export const removeExperience = (experienceId) => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     const res = await axios.delete(`/api/profiles/experience/${experienceId}`);
 
@@ -171,6 +200,10 @@ export const removeExperience = (experienceId) => async (dispatch) => {
 
 // Remove education
 export const removeEducation = (educationId) => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     const res = await axios.delete(`/api/profiles/education/${educationId}`);
 
@@ -187,6 +220,10 @@ export const removeEducation = (educationId) => async (dispatch) => {
 
 // Delete profile, user & posts
 export const deleteProfile = () => async (dispatch) => {
+  dispatch({
+    type: SET_PROFILE_LOADING,
+  });
+
   try {
     await axios.delete('/api/profiles');
 

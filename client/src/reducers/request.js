@@ -8,6 +8,7 @@ import {
   ALL_REQUESTS_LOADED_FOR_HEC,
   REQUEST_ACCEPTED,
   REQUEST_REJECTED,
+  SET_REQUEST_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +65,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_REQUEST_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

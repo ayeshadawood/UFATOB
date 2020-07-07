@@ -6,11 +6,16 @@ import {
   GROUP_UPDATED,
   GROUP_DELETED,
   GROUP_ERROR,
+  SET_GROUP_LOADING,
 } from './types';
 import { setAlert } from './alert';
 
 // Get all groups
 export const getAllGroups = () => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/groups');
 
@@ -28,6 +33,10 @@ export const getAllGroups = () => async (dispatch) => {
 
 // Get group by id
 export const getGroupById = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/groups/${id}`);
 
@@ -45,6 +54,10 @@ export const getGroupById = (id) => async (dispatch) => {
 
 // Create a new group
 export const createGroup = (formData, history) => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -78,6 +91,10 @@ export const createGroup = (formData, history) => async (dispatch) => {
 
 // Update a group
 export const updateGroup = (formData, id, history) => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -111,6 +128,10 @@ export const updateGroup = (formData, id, history) => async (dispatch) => {
 
 // Delete a group
 export const deleteGroup = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   try {
     await axios.delete(`/api/groups/${id}`);
 
@@ -130,6 +151,10 @@ export const deleteGroup = (id) => async (dispatch) => {
 
 // Search for a group
 export const searchGroup = (description) => async (dispatch) => {
+  dispatch({
+    type: SET_GROUP_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/groups/search/${description}`);
 

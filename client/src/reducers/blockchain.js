@@ -6,6 +6,7 @@ import {
   TRANSACTION_CREATED,
   ALL_TRANSACTIONS_VERIFIED,
   BLOCKCHAIN_FIXED,
+  SET_BLOCKCHAIN_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -46,6 +47,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_BLOCKCHAIN_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     case TRANSACTION_CREATED:
     case ALL_TRANSACTIONS_VERIFIED:

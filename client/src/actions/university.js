@@ -3,11 +3,16 @@ import {
   ALL_UNIVERSITIES_LOADED,
   UNIVERSITY_ERROR,
   UNIVERSITY_REMOVED,
+  SET_UNIVERSTITY_LOADING,
 } from './types';
 import { setAlert } from './alert';
 
 // Get all universities
 export const getAllUniversities = () => async (dispatch) => {
+  dispatch({
+    type: SET_UNIVERSTITY_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/users/university');
 
@@ -25,6 +30,10 @@ export const getAllUniversities = () => async (dispatch) => {
 
 // Delete a university
 export const deleteUniversity = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_UNIVERSTITY_LOADING,
+  });
+
   try {
     await axios.delete(`/api/users/university/${id}`);
 

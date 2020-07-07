@@ -2,6 +2,7 @@ import {
   ALL_UNIVERSITIES_LOADED,
   UNIVERSITY_ERROR,
   UNIVERSITY_REMOVED,
+  SET_UNIVERSTITY_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -36,6 +37,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_UNIVERSTITY_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

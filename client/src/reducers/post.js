@@ -8,6 +8,7 @@ import {
   POST_LOADED,
   COMMENT_ADDED_POST,
   COMMENT_REMOVED_POST,
+  SET_POST_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -74,6 +75,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_POST_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

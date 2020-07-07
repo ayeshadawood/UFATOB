@@ -10,6 +10,7 @@ import CardBody from '../../../components/Card/CardBody.js';
 import { connect } from 'react-redux';
 import { getAllTransactions } from '../../../actions/blockchain';
 import Moment from 'react-moment';
+import { CircularProgress } from '@material-ui/core';
 
 import styles from '../../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
@@ -57,22 +58,38 @@ const Blockchain = ({
                 Below is a list of all the Smart Contracts in the current chain
               </p>
             </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor='primary'
-                tableHead={[
-                  'S.No.',
-                  'Title',
-                  'Sender',
-                  'Reciever',
-                  'Amount',
-                  'Created at',
-                ]}
-                tableData={
-                  !loading && transactions.length > 0 ? getTransactions() : []
-                }
-              />
-            </CardBody>
+            {loading ? (
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                }}
+              >
+                <CircularProgress />
+              </div>
+            ) : (
+              <Fragment>
+                <CardBody>
+                  <Table
+                    tableHeaderColor='primary'
+                    tableHead={[
+                      'S.No.',
+                      'Title',
+                      'Sender',
+                      'Reciever',
+                      'Amount',
+                      'Created at',
+                    ]}
+                    tableData={
+                      !loading && transactions.length > 0
+                        ? getTransactions()
+                        : []
+                    }
+                  />
+                </CardBody>
+              </Fragment>
+            )}
           </Card>
         </GridItem>
       </GridContainer>

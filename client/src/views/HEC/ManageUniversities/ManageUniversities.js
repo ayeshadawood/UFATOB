@@ -7,7 +7,7 @@ import Table from '../../../components/Table/Table.js';
 import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import {
@@ -118,15 +118,37 @@ const ManageUniversities = ({
                 Below is a list of all the registered universities
               </p>
             </CardHeader>
-            <CardBody>
-              <Table
-                tableHeaderColor='primary'
-                tableHead={['S.No.', 'Name', 'Email', 'Created at', 'Actions']}
-                tableData={
-                  !loading && universities.length > 0 ? getUniversities() : []
-                }
-              />
-            </CardBody>
+            {loading ? (
+              <div
+                style={{
+                  textAlign: 'center',
+                  marginTop: '20px',
+                  marginBottom: '20px',
+                }}
+              >
+                <CircularProgress />
+              </div>
+            ) : (
+              <Fragment>
+                <CardBody>
+                  <Table
+                    tableHeaderColor='primary'
+                    tableHead={[
+                      'S.No.',
+                      'Name',
+                      'Email',
+                      'Created at',
+                      'Actions',
+                    ]}
+                    tableData={
+                      !loading && universities.length > 0
+                        ? getUniversities()
+                        : []
+                    }
+                  />
+                </CardBody>
+              </Fragment>
+            )}
           </Card>
         </GridItem>
       </GridContainer>

@@ -10,12 +10,17 @@ import {
   ALL_REQUESTS_LOADED_FOR_HEC,
   REQUEST_ACCEPTED,
   REQUEST_REJECTED,
+  SET_REQUEST_LOADING,
 } from './types';
 
 //Create fund request
 export const createRequest = (formData, history, institute = '') => async (
   dispatch
 ) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -46,6 +51,10 @@ export const createRequest = (formData, history, institute = '') => async (
 
 // Get all requests for user
 export const getUserRequests = () => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/requests/user');
 
@@ -63,6 +72,10 @@ export const getUserRequests = () => async (dispatch) => {
 
 // Get all requests for hec
 export const getHecRequests = () => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/requests/hec');
 
@@ -80,6 +93,10 @@ export const getHecRequests = () => async (dispatch) => {
 
 // Get all requests for university
 export const getUniversityRequests = () => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/requests/university');
 
@@ -97,6 +114,10 @@ export const getUniversityRequests = () => async (dispatch) => {
 
 // Get request by id
 export const getRequest = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/requests/${id}`);
 
@@ -114,6 +135,10 @@ export const getRequest = (id) => async (dispatch) => {
 
 // Forwared request to HEC
 export const forwardRequest = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/requests/forward/${id}`);
 
@@ -133,6 +158,10 @@ export const forwardRequest = (id) => async (dispatch) => {
 
 // Accept a request
 export const acceptRequest = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/requests/accept/${id}`);
 
@@ -152,6 +181,10 @@ export const acceptRequest = (id) => async (dispatch) => {
 
 // Reject a request
 export const rejectRequest = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_REQUEST_LOADING,
+  });
+
   try {
     const res = await axios.put(`/api/requests/reject/${id}`);
 

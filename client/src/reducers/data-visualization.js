@@ -2,6 +2,7 @@ import {
   ALL_DV_DATA_LOADED_UNIVERSITY,
   DV_ERROR,
   ALL_DV_DATA_LOADED_YEAR,
+  SET_DV_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_DV_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

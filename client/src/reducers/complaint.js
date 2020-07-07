@@ -8,6 +8,7 @@ import {
   COMPLAINT_CONSIDERED,
   COMPLAINT_NOT_CONSIDERED,
   ALL_COMPLAINTS_LOADED_FOR_HEC,
+  SET_COMPLAINT_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -64,6 +65,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_COMPLAINT_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

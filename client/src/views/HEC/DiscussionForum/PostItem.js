@@ -101,7 +101,7 @@ const PostItem = ({
                 View
               </Button>
             </Link>
-            {auth.user._id === user._id && (
+            {auth.user !== null && auth.user._id === user._id && (
               <Button
                 color='primary'
                 variant='contained'

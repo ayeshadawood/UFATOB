@@ -7,11 +7,16 @@ import {
   TRANSACTION_CREATED,
   ALL_TRANSACTIONS_VERIFIED,
   BLOCKCHAIN_FIXED,
+  SET_BLOCKCHAIN_LOADING,
 } from './types';
 import { setAlert } from './alert';
 
 // Get all the blockhains
 export const getAllBlockchains = () => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/blockchain');
 
@@ -29,6 +34,10 @@ export const getAllBlockchains = () => async (dispatch) => {
 
 // Get all the transactions for a blockchain
 export const getAllTransactions = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   try {
     const res = await axios.get(`/api/blockchain/transactions/${id}`);
 
@@ -46,6 +55,10 @@ export const getAllTransactions = (id) => async (dispatch) => {
 
 // Get all the transactions for user
 export const getAllTransactionsForUser = () => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/blockchain/my-transactions');
 
@@ -63,6 +76,10 @@ export const getAllTransactionsForUser = () => async (dispatch) => {
 
 // Get all the transactions for user
 export const createTransaction = (formData, history) => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   const config = {
     headers: {
       'Content-Type': 'application/json',
@@ -86,6 +103,10 @@ export const createTransaction = (formData, history) => async (dispatch) => {
 
 // Verfiy all transactions
 export const verfiyAllTransactions = () => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   try {
     await axios.put('/api/blockchain/mine');
 
@@ -104,6 +125,10 @@ export const verfiyAllTransactions = () => async (dispatch) => {
 
 // Fix a blockchain
 export const fixBlockchain = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_BLOCKCHAIN_LOADING,
+  });
+
   try {
     await axios.put(`/api/blockchain/consensus/${id}`);
 
