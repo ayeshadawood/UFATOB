@@ -30,6 +30,7 @@ const Blockchain = ({
         ...res,
         [
           sNo,
+          transaction.title,
           transaction.sender.name,
           transaction.reciever.name,
           `Rs. ${transaction.amount}`,
@@ -53,7 +54,7 @@ const Blockchain = ({
             <CardHeader color='primary'>
               <h4 className={classes.cardTitleWhite}>Blockchain</h4>
               <p className={classes.cardCategoryWhite}>
-                Below is a list of all the transactions in the current chain
+                Below is a list of all the Smart Contracts in the current chain
               </p>
             </CardHeader>
             <CardBody>
@@ -61,6 +62,7 @@ const Blockchain = ({
                 tableHeaderColor='primary'
                 tableHead={[
                   'S.No.',
+                  'Title',
                   'Sender',
                   'Reciever',
                   'Amount',

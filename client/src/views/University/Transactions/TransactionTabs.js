@@ -79,6 +79,7 @@ const TransactionTabs = ({
           ...res,
           [
             sNo,
+            transaction.title,
             transaction.sender.name,
             transaction.reciever.name,
             `Rs.${transaction.amount}`,
@@ -100,6 +101,7 @@ const TransactionTabs = ({
           ...res,
           [
             sNo,
+            transaction.title,
             transaction.sender.name,
             transaction.reciever.name,
             `Rs.${transaction.amount}`,
@@ -142,6 +144,7 @@ const TransactionTabs = ({
               tableHeaderColor='primary'
               tableHead={[
                 'S.No.',
+                'Title',
                 'Sender',
                 'Reciever',
                 'Amount',
@@ -159,6 +162,7 @@ const TransactionTabs = ({
               tableHeaderColor='primary'
               tableHead={[
                 'S.No.',
+                'Title',
                 'Sender',
                 'Reciever',
                 'Amount',

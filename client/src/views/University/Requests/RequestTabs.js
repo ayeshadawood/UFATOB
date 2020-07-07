@@ -85,6 +85,8 @@ const RequestTabs = ({
           [
             sNo,
             request.title,
+            request.name,
+            request.registrationNumber,
             <Fragment>
               <Link to={`/university/request/${request._id}`}>
                 <Button color='primary' variant='contained'>
@@ -118,6 +120,9 @@ const RequestTabs = ({
           [
             sNo,
             request.title,
+            request.name,
+            request.registrationNumber,
+
             <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -142,6 +147,8 @@ const RequestTabs = ({
           [
             sNo,
             request.title,
+            request.name,
+            request.registrationNumber,
             <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -166,6 +173,8 @@ const RequestTabs = ({
           [
             sNo,
             request.title,
+            request.name,
+            request.registrationNumber,
             <Link to={`/university/request/${request._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -210,7 +219,13 @@ const RequestTabs = ({
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={[
+                'S.No.',
+                'Title',
+                'Name',
+                'Registartion Number',
+                'Actions',
+              ]}
               tableData={
                 !loading && requests.length > 0 ? getQueuedRequests() : []
               }
@@ -219,7 +234,13 @@ const RequestTabs = ({
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={[
+                'S.No.',
+                'Title',
+                'Name',
+                'Registartion Number',
+                'Actions',
+              ]}
               tableData={
                 !loading && requests.length > 0 ? getForwardedRequests() : []
               }
@@ -228,7 +249,13 @@ const RequestTabs = ({
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={[
+                'S.No.',
+                'Title',
+                'Name',
+                'Registartion Number',
+                'Actions',
+              ]}
               tableData={
                 !loading && requests.length > 0 ? getAcceptedRequests() : []
               }
@@ -237,7 +264,13 @@ const RequestTabs = ({
           <TabPanel value={value} index={3} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={[
+                'S.No.',
+                'Title',
+                'Name',
+                'Registartion Number',
+                'Actions',
+              ]}
               tableData={
                 !loading && requests.length > 0 ? getRejectedRequests() : []
               }

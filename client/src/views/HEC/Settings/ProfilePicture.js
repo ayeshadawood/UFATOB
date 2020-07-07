@@ -76,7 +76,7 @@ const ProfilePicture = ({
                   <Button
                     color='primary'
                     variant='contained'
-                    fullWidth={true}
+                    //fullWidth={true}
                     type='submit'
                     className={classes.input}
                   >
@@ -87,7 +87,7 @@ const ProfilePicture = ({
                   <Button
                     color='primary'
                     variant='contained'
-                    fullWidth={true}
+                    //fullWidth={true}
                     style={{ backgroundColor: 'red' }}
                     onClick={() => removeProfilePicture()}
                   >

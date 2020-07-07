@@ -53,9 +53,9 @@ export const register = (formData, history, university = '') => async (
     dispatch({ type: REGISTER_SUCCESS });
 
     if (formData.type === 1) {
-      dispatch(setAlert('University created', 'success'));
+      dispatch(setAlert('Student account created', 'success'));
     } else {
-      dispatch(setAlert('Student created', 'success'));
+      dispatch(setAlert('Univeristy account created', 'success'));
     }
 
     history.goBack();

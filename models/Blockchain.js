@@ -11,6 +11,15 @@ const BlockchainSchema = mongoose.Schema({
       },
       transactions: [
         {
+          title: {
+            type: String,
+          },
+          detail: {
+            type: String,
+          },
+          reference: {
+            type: String,
+          },
           amount: {
             type: Number,
           },
@@ -44,6 +53,15 @@ const BlockchainSchema = mongoose.Schema({
   ],
   pendingTransactions: [
     {
+      title: {
+        type: String,
+      },
+      detail: {
+        type: String,
+      },
+      reference: {
+        type: String,
+      },
       amount: {
         type: Number,
       },

@@ -85,6 +85,7 @@ const ComplaintTabs = ({
           [
             sNo,
             complaint.title,
+            complaint.name,
             <Fragment>
               <Link to={`/university/complaint/${complaint._id}`}>
                 <Button color='primary' variant='contained'>
@@ -118,6 +119,7 @@ const ComplaintTabs = ({
           [
             sNo,
             complaint.title,
+            complaint.name,
             <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -142,6 +144,7 @@ const ComplaintTabs = ({
           [
             sNo,
             complaint.title,
+            complaint.name,
             <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -166,6 +169,7 @@ const ComplaintTabs = ({
           [
             sNo,
             complaint.title,
+            complaint.name,
             <Link to={`/university/complaint/${complaint._id}`}>
               <Button color='primary' variant='contained'>
                 Open
@@ -210,7 +214,7 @@ const ComplaintTabs = ({
           <TabPanel value={value} index={0} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Name', 'Actions']}
               tableData={
                 !loading && complaints.length > 0 ? getQueuedComplaints() : []
               }
@@ -219,7 +223,7 @@ const ComplaintTabs = ({
           <TabPanel value={value} index={1} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Name', 'Actions']}
               tableData={
                 !loading && complaints.length > 0
                   ? getForwardedComplaints()
@@ -230,7 +234,7 @@ const ComplaintTabs = ({
           <TabPanel value={value} index={2} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Name', 'Actions']}
               tableData={
                 !loading && complaints.length > 0
                   ? getConsideredComplaints()
@@ -241,7 +245,7 @@ const ComplaintTabs = ({
           <TabPanel value={value} index={3} dir={theme.direction}>
             <Table
               tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
+              tableHead={['S.No.', 'Title', 'Name', 'Actions']}
               tableData={
                 !loading && complaints.length > 0
                   ? getNotConsideredComplaints()

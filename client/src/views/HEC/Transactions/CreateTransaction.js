@@ -39,11 +39,14 @@ const CreateTransaction = ({
   const classes = useStyles();
 
   const [formData, setFormData] = useState({
+    title: '',
+    detail: '',
+    reference: '',
     reciever: '',
     amount: '',
   });
 
-  const { reciever, amount } = formData;
+  const { title, detail, reference, reciever, amount } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -62,10 +65,34 @@ const CreateTransaction = ({
     <Fragment>
       <Typography variant='h5' className={classes.heading}>
         <i className='fas fa-user'></i> Fill in the following information to
-        create a transaction
+        create a Smart Contract
       </Typography>
       <form onSubmit={(e) => onSubmit(e)}>
         <Grid container>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='title'
+              value={title}
+              onChange={(e) => onChange(e)}
+              label='Contract Title'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='reference'
+              value={reference}
+              onChange={(e) => onChange(e)}
+              label='Any Reference'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+            />
+          </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <FormControl
               variant='outlined'
@@ -107,10 +134,23 @@ const CreateTransaction = ({
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='detail'
+              value={detail}
+              onChange={(e) => onChange(e)}
+              label='Details'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              size='medium'
+            />
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <Button
               color='primary'
               variant='contained'
-              fullWidth={true}
+              //fullWidth={true}
               type='submit'
             >
               Submit

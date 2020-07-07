@@ -76,18 +76,16 @@ const ProfilePicture = ({
                   <Button
                     color='primary'
                     variant='contained'
-                    fullWidth={true}
+                    //fullWidth={true}
                     type='submit'
                     className={classes.input}
                   >
                     Upload
                   </Button>
-                </Grid>
-                <Grid item xs={12} sm={12} md={12}>
                   <Button
                     color='primary'
                     variant='contained'
-                    fullWidth={true}
+                    //fullWidth={true}
                     style={{ backgroundColor: 'red' }}
                     onClick={() => removeProfilePicture()}
                   >

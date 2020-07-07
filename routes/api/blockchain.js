@@ -41,6 +41,9 @@ router.get('/transactions/:id', auth, async (req, res) => {
         result = [
           ...result,
           {
+            title: transaction.title,
+            detail: transaction.detail,
+            reference: transaction.reference,
             amount: transaction.amount,
             sender,
             reciever,
@@ -99,6 +102,9 @@ router.get('/my-transactions', auth, async (req, res) => {
           result = [
             ...result,
             {
+              title: transaction.title,
+              detail: transaction.detail,
+              reference: transaction.reference,
               amount: transaction.amount,
               sender,
               reciever,
@@ -122,6 +128,9 @@ router.get('/my-transactions', auth, async (req, res) => {
             result = [
               ...result,
               {
+                title: transaction.title,
+                detail: transaction.detail,
+                reference: transaction.reference,
                 amount: transaction.amount,
                 sender,
                 reciever,
@@ -148,6 +157,9 @@ router.get('/my-transactions', auth, async (req, res) => {
         result = [
           ...result,
           {
+            title: transaction.title,
+            detail: transaction.detail,
+            reference: transaction.reference,
             amount: transaction.amount,
             sender,
             reciever,
@@ -169,6 +181,9 @@ router.get('/my-transactions', auth, async (req, res) => {
           result = [
             ...result,
             {
+              title: transaction.title,
+              detail: transaction.detail,
+              reference: transaction.reference,
               amount: transaction.amount,
               sender,
               reciever,
@@ -253,6 +268,8 @@ router.post(
     auth,
     check('amount', 'Amount is required').isInt(),
     check('reciever', 'Reciever is required').not().isEmpty(),
+    check('title', 'Title is required').not().isEmpty(),
+    check('detail', 'Detail of the contract is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -260,8 +277,10 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { amount, reciever } = req.body;
-
+    const { amount, reciever, title, detail, reference } = req.body;
+    if (reference == null) {
+      reference = null;
+    }
     try {
       // Updating the blockchain of the current user
       await connectDB(`${req.user.id}`);
@@ -269,6 +288,9 @@ router.post(
       const blockchains = await Blockchain.find();
       blockchains[0].pendingTransactions.push({
         amount,
+        title,
+        detail,
+        reference,
         sender: req.user.id,
         reciever,
         transactionId: v1().split('-').join(''),
@@ -291,6 +313,9 @@ router.post(
         const blockchains = await Blockchain.find();
         blockchains[0].pendingTransactions.push({
           amount,
+          title,
+          detail,
+          reference,
           sender: req.user.id,
           reciever,
           transactionId: v1().split('-').join(''),
