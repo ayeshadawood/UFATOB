@@ -28,7 +28,7 @@ const CommentItem = ({ comment, auth, deleteComment, post }) => {
           }}
         >
           <Link
-            to={`/university/profile/${comment.user._id}`}
+            to={`/hec/profile/${comment.user._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img
@@ -60,7 +60,7 @@ const CommentItem = ({ comment, auth, deleteComment, post }) => {
         >
           <div style={{ marginBottom: '5px' }}>{comment.description}</div>
           <div>
-            {auth.user._id === comment.user._id && (
+            {auth.user !== null && auth.user._id === comment.user._id && (
               <Button
                 color='primary'
                 variant='contained'

@@ -5,7 +5,7 @@ import GridContainer from '../../../components/Grid/GridContainer.js';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../../actions/profile';
 import { deactivateAccountForUser } from '../../../actions/auth';
-import { Button, Typography } from '@material-ui/core';
+import { Button, Typography, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import ProfileDetails from './ProfileDetails';
 
@@ -21,7 +21,11 @@ const Dashboard = ({
 
   return (
     <Fragment>
-      {!loading && profile === null ? (
+      {loading ? (
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress />
+        </div>
+      ) : !loading && profile === null ? (
         <Fragment>
           <Typography variant='h5'>
             <i className='fas fa-user'></i> You have not setup a profile, please

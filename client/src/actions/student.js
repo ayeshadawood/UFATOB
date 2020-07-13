@@ -1,9 +1,18 @@
 import axios from 'axios';
-import { ALL_STUDENTS_LOADED, STUDENT_ERROR, STUDENT_REMOVED } from './types';
+import {
+  ALL_STUDENTS_LOADED,
+  STUDENT_ERROR,
+  STUDENT_REMOVED,
+  SET_STUDENT_LOADING,
+} from './types';
 import { setAlert } from './alert';
 
 // Get all students
 export const getAllStudents = () => async (dispatch) => {
+  dispatch({
+    type: SET_STUDENT_LOADING,
+  });
+
   try {
     const res = await axios.get('/api/users/student');
 
@@ -21,6 +30,10 @@ export const getAllStudents = () => async (dispatch) => {
 
 // Delete a student
 export const deleteStudent = (id) => async (dispatch) => {
+  dispatch({
+    type: SET_STUDENT_LOADING,
+  });
+
   try {
     await axios.delete(`/api/users/student/${id}`);
 

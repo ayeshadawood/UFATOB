@@ -2,6 +2,7 @@ import {
   ALL_STUDENTS_LOADED,
   STUDENT_ERROR,
   STUDENT_REMOVED,
+  SET_STUDENT_LOADING,
 } from '../actions/types';
 
 const initialState = {
@@ -34,6 +35,11 @@ export default function (state = initialState, action) {
         ...state,
         loading: false,
         errors: payload,
+      };
+    case SET_STUDENT_LOADING:
+      return {
+        ...state,
+        loading: true,
       };
     default:
       return state;

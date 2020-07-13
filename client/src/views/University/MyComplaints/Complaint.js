@@ -8,6 +8,7 @@ import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import { connect } from 'react-redux';
 import { getComplaint } from '../../../actions/complaint';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = {
   cardCategoryWhite: {
@@ -73,66 +74,78 @@ const Complaint = ({
 
   return (
     <Fragment>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color='primary'>
-              <h4 className={classes.cardTitleWhite}>Complaint</h4>
-              <p className={classes.cardCategoryWhite}>
-                Below is the detail of the complaint
-              </p>
-            </CardHeader>
-            <CardBody>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Title:</strong>{' '}
-                  {!loading && complaint !== null ? complaint.title : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Name:</strong>{' '}
-                  {!loading && complaint !== null ? complaint.name : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Email:</strong>{' '}
-                  {!loading && complaint !== null ? complaint.email : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Contact no:</strong>{' '}
-                  {!loading && complaint !== null ? complaint.contactNo : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Registration number:</strong>{' '}
-                  {!loading && complaint !== null
-                    ? complaint.registrationNumber
-                    : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Description:</strong>{' '}
-                  {!loading && complaint !== null ? complaint.description : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Status:</strong>{' '}
-                  {!loading && complaint !== null
-                    ? getComplaintStatus(complaint.status)
-                    : ''}
-                </div>
-              </GridItem>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      {loading ? (
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Fragment>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color='primary'>
+                  <h4 className={classes.cardTitleWhite}>Complaint</h4>
+                  <p className={classes.cardCategoryWhite}>
+                    Below is the detail of the complaint
+                  </p>
+                </CardHeader>
+                <CardBody>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Title:</strong>{' '}
+                      {!loading && complaint !== null ? complaint.title : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Name:</strong>{' '}
+                      {!loading && complaint !== null ? complaint.name : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Email:</strong>{' '}
+                      {!loading && complaint !== null ? complaint.email : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Contact no:</strong>{' '}
+                      {!loading && complaint !== null
+                        ? complaint.contactNo
+                        : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Registration number:</strong>{' '}
+                      {!loading && complaint !== null
+                        ? complaint.registrationNumber
+                        : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Description:</strong>{' '}
+                      {!loading && complaint !== null
+                        ? complaint.description
+                        : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Status:</strong>{' '}
+                      {!loading && complaint !== null
+                        ? getComplaintStatus(complaint.status)
+                        : ''}
+                    </div>
+                  </GridItem>
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

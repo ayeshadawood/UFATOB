@@ -7,7 +7,7 @@ import Table from '../../../components/Table/Table.js';
 import Card from '../../../components/Card/Card.js';
 import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAllStudents, deleteStudent } from '../../../actions/student';
@@ -116,11 +116,33 @@ const ManageStudents = ({
               </p>
             </CardHeader>
             <CardBody>
-              <Table
-                tableHeaderColor='primary'
-                tableHead={['S.No.', 'Name', 'Email', 'Created at', 'Actions']}
-                tableData={!loading && students.length > 0 ? getStudents() : []}
-              />
+              {loading ? (
+                <div
+                  style={{
+                    textAlign: 'center',
+                    marginTop: '20px',
+                    marginBottom: '20px',
+                  }}
+                >
+                  <CircularProgress />
+                </div>
+              ) : (
+                <Fragment>
+                  <Table
+                    tableHeaderColor='primary'
+                    tableHead={[
+                      'S.No.',
+                      'Name',
+                      'Email',
+                      'Created at',
+                      'Actions',
+                    ]}
+                    tableData={
+                      !loading && students.length > 0 ? getStudents() : []
+                    }
+                  />
+                </Fragment>
+              )}
             </CardBody>
           </Card>
         </GridItem>
