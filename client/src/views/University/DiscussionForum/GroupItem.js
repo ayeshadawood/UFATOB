@@ -19,7 +19,7 @@ const GroupItem = ({ group, auth, deleteGroup }) => {
       >
         <Grid item xs={12} sm={12} md={12}>
           <Link
-            to={`/hec/group/${group._id}`}
+            to={`/university/group/${group._id}`}
             style={{
               textDecoration: 'none',
               color: 'inherit',
@@ -36,7 +36,7 @@ const GroupItem = ({ group, auth, deleteGroup }) => {
         <Grid item xs={12} sm={12} md={12}>
           {auth.user !== null && group.admin === auth.user._id && (
             <Fragment>
-              <Link to={`/hec/edit-group/${group._id}`}>
+              <Link to={`/university/edit-group/${group._id}`}>
                 <Button
                   color='primary'
                   variant='contained'

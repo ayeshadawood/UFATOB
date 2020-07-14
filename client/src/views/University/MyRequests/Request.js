@@ -145,7 +145,7 @@ const Request = ({ request: { request, loading }, getRequest, match }) => {
                     <div className={classes.row}>
                       {!loading && request !== null && request.institute ? (
                         <Fragment>
-                          <strong>Institute:</strong> {request.institute}
+                          <strong>Institute:</strong> {request.institute.name}
                         </Fragment>
                       ) : (
                         ''

@@ -28,7 +28,7 @@ const CommentItem = ({ comment, auth, deleteComment, post }) => {
           }}
         >
           <Link
-            to={`/hec/profile/${comment.user._id}`}
+            to={`/university/profile/${comment.user._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img

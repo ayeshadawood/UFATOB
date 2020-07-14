@@ -118,10 +118,16 @@ const Complaint = ({
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
                     <div className={classes.row}>
-                      <strong>Registration number:</strong>{' '}
-                      {!loading && complaint !== null
-                        ? complaint.registrationNumber
-                        : ''}
+                      {!loading &&
+                      complaint !== null &&
+                      complaint.registrationNumber ? (
+                        <Fragment>
+                          <strong>Registration number:</strong>{' '}
+                          {complaint.registrationNumber}
+                        </Fragment>
+                      ) : (
+                        ''
+                      )}
                     </div>
                   </GridItem>
                   <GridItem xs={12} sm={12} md={12}>
