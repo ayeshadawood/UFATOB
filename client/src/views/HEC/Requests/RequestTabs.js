@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import {
@@ -77,43 +77,50 @@ const RequestTabs = ({
     setValue(index);
   };
 
+  const [description, setDescription] = useState('');
+
   const getQueuedRequests = () => {
     let res = [];
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status === 1) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            <Fragment>
-              <Link to={`/hec/request/${request._id}`}>
-                <Button color='primary' variant='contained'>
-                  Open
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              <Fragment>
+                <Link to={`/hec/request/${request._id}`}>
+                  <Button color='primary' variant='contained'>
+                    Open
+                  </Button>
+                </Link>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  onClick={() => acceptRequest(request._id)}
+                  style={{ backgroundColor: 'green', marginLeft: '5px' }}
+                >
+                  Accept
                 </Button>
-              </Link>
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={() => acceptRequest(request._id)}
-                style={{ backgroundColor: 'green', marginLeft: '5px' }}
-              >
-                Accept
-              </Button>
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={() => rejectRequest(request._id)}
-                style={{ backgroundColor: 'red', marginLeft: '5px' }}
-              >
-                Reject
-              </Button>
-            </Fragment>,
-          ],
-        ];
+                <Button
+                  color='primary'
+                  variant='contained'
+                  onClick={() => rejectRequest(request._id)}
+                  style={{ backgroundColor: 'red', marginLeft: '5px' }}
+                >
+                  Reject
+                </Button>
+              </Fragment>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -123,21 +130,26 @@ const RequestTabs = ({
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status === 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            <Link to={`/hec/request/${request._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              <Link to={`/hec/request/${request._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -147,21 +159,26 @@ const RequestTabs = ({
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status === 3) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            <Link to={`/hec/request/${request._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              <Link to={`/hec/request/${request._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -185,6 +202,16 @@ const RequestTabs = ({
           </div>
         ) : (
           <Fragment>
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label='Search'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              style={{ marginBottom: '20px' }}
+            />
             <AppBar position='static' color='default'>
               <Tabs
                 value={value}
