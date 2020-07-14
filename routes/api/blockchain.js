@@ -39,6 +39,7 @@ router.get('/transactions/:id', auth, async (req, res) => {
           reciever = transaction.recieverName;
         } else {
           reciever = await User.findById(transaction.reciever).select('name');
+          reciever = reciever.name;
         }
 
         result = [
@@ -103,6 +104,7 @@ router.get('/my-transactions', auth, async (req, res) => {
             reciever = transaction.recieverName;
           } else {
             reciever = await User.findById(transaction.reciever).select('name');
+            reciever = reciever.name;
           }
 
           result = [
@@ -121,15 +123,21 @@ router.get('/my-transactions', auth, async (req, res) => {
         } else {
           if (
             user._id.toString() === transaction.sender.toString() ||
-            user._id.toString() === transaction.reciever.toString()
+            user._id.toString() === transaction.reciever
           ) {
             const sender = await User.findById(transaction.sender).select(
               'name'
             );
 
-            const reciever = await User.findById(transaction.reciever).select(
-              'name'
-            );
+            let reciever = '';
+            if (transaction.reciever === 'Other') {
+              reciever = transaction.recieverName;
+            } else {
+              reciever = await User.findById(transaction.reciever).select(
+                'name'
+              );
+              reciever = reciever.name;
+            }
 
             result = [
               ...result,
@@ -163,6 +171,7 @@ router.get('/my-transactions', auth, async (req, res) => {
           reciever = await User.findOne({ _id: transaction.reciever }).select(
             'name'
           );
+          reciever = reciever.name;
         }
 
         result = [
@@ -181,13 +190,17 @@ router.get('/my-transactions', auth, async (req, res) => {
       } else {
         if (
           user._id.toString() === transaction.sender.toString() ||
-          user._id.toString() === transaction.reciever.toString()
+          user._id.toString() === transaction.reciever
         ) {
           const sender = await User.findById(transaction.sender).select('name');
 
-          const reciever = await User.findById(transaction.reciever).select(
-            'name'
-          );
+          let reciever = '';
+          if (transaction.reciever === 'Other') {
+            reciever = transaction.recieverName;
+          } else {
+            reciever = await User.findById(transaction.reciever).select('name');
+            reciever = reciever.name;
+          }
 
           result = [
             ...result,
