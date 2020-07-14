@@ -73,7 +73,7 @@ const Post = ({
               }}
             >
               <Link
-                to={`/profile/${
+                to={`/user/profile/${
                   !loading && post !== null ? post.user._id : ''
                 }`}
                 style={{ textDecoration: 'none', color: 'inherit' }}

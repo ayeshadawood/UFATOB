@@ -35,7 +35,7 @@ const PostItem = ({
           }}
         >
           <Link
-            to={`/hec/profile/${user._id}`}
+            to={`/user/profile/${user._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img
@@ -92,7 +92,7 @@ const PostItem = ({
               ></i>{' '}
               Unlike
             </Button>
-            <Link to={`/hec/post/${_id}`}>
+            <Link to={`/user/post/${_id}`}>
               <Button
                 color='primary'
                 variant='contained'

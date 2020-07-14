@@ -31,7 +31,7 @@ const ProfileItem = ({
               )}
             </p>
             <div className='butt'>
-              <Link to={`/hec/profile/${user !== null ? user._id : ''}`}>
+              <Link to={`/user/profile/${user !== null ? user._id : ''}`}>
                 <Button color='primary' variant='contained'>
                   View Profile
                 </Button>

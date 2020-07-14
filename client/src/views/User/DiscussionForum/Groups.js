@@ -45,7 +45,7 @@ const Groups = ({
     <Fragment>
       <Grid container>
         <Grid item xs={12} sm={12} md={12}>
-          <Link to='/hec/create-group'>
+          <Link to='/user/create-group'>
             <Button
               color='primary'
               variant='contained'
