@@ -11,6 +11,7 @@ import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getAllTransactionsForUser } from '../../../actions/blockchain';
 import Moment from 'react-moment';
+import { CircularProgress } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -119,59 +120,73 @@ const TransactionTabs = ({
   return (
     <Fragment>
       <div className={classes.root}>
-        <AppBar position='static' color='default'>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor='primary'
-            textColor='primary'
-            variant='fullWidth'
-            aria-label='full width tabs example'
+        {loading ? (
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '20px',
+              marginBottom: '20px',
+            }}
           >
-            <Tab label='Pending' {...a11yProps(0)} />
-            <Tab label='Verified' {...a11yProps(1)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={[
-                'S.No.',
-                'Sender',
-                'Reciever',
-                'Amount',
-                'Created at',
-              ]}
-              tableData={
-                !loading && userTransactions.length > 0
-                  ? getPendingTransactions()
-                  : []
-              }
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={[
-                'S.No.',
-                'Sender',
-                'Reciever',
-                'Amount',
-                'Created at',
-              ]}
-              tableData={
-                !loading && userTransactions.length > 0
-                  ? getVerifiedTransactions()
-                  : []
-              }
-            />
-          </TabPanel>
-        </SwipeableViews>
+            <CircularProgress />
+          </div>
+        ) : (
+          <Fragment>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor='primary'
+                textColor='primary'
+                variant='fullWidth'
+                aria-label='full width tabs example'
+              >
+                <Tab label='Pending' {...a11yProps(0)} />
+                <Tab label='Verified' {...a11yProps(1)} />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel value={value} index={0} dir={theme.direction}>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={[
+                    'S.No.',
+                    'Sender',
+                    'Reciever',
+                    'Amount',
+                    'Created at',
+                  ]}
+                  tableData={
+                    !loading && userTransactions.length > 0
+                      ? getPendingTransactions()
+                      : []
+                  }
+                />
+              </TabPanel>
+              <TabPanel value={value} index={1} dir={theme.direction}>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={[
+                    'S.No.',
+                    'Sender',
+                    'Reciever',
+                    'Amount',
+                    'Created at',
+                  ]}
+                  tableData={
+                    !loading && userTransactions.length > 0
+                      ? getVerifiedTransactions()
+                      : []
+                  }
+                />
+              </TabPanel>
+            </SwipeableViews>
+          </Fragment>
+        )}
       </div>
     </Fragment>
   );

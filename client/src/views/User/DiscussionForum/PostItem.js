@@ -35,7 +35,7 @@ const PostItem = ({
           }}
         >
           <Link
-            to={`/user/profile/${user._id}`}
+            to={`/hec/profile/${user._id}`}
             style={{ textDecoration: 'none', color: 'inherit' }}
           >
             <img
@@ -92,7 +92,7 @@ const PostItem = ({
               ></i>{' '}
               Unlike
             </Button>
-            <Link to={`/user/post/${_id}`}>
+            <Link to={`/hec/post/${_id}`}>
               <Button
                 color='primary'
                 variant='contained'
@@ -101,7 +101,7 @@ const PostItem = ({
                 View
               </Button>
             </Link>
-            {auth.user._id === user._id && (
+            {auth.user !== null && auth.user._id === user._id && (
               <Button
                 color='primary'
                 variant='contained'

@@ -8,6 +8,7 @@ import CardHeader from '../../../components/Card/CardHeader.js';
 import CardBody from '../../../components/Card/CardBody.js';
 import { connect } from 'react-redux';
 import { getRequest } from '../../../actions/request';
+import { CircularProgress } from '@material-ui/core';
 
 const styles = {
   cardCategoryWhite: {
@@ -69,90 +70,100 @@ const Request = ({ request: { request, loading }, getRequest, match }) => {
 
   return (
     <Fragment>
-      <GridContainer>
-        <GridItem xs={12} sm={12} md={12}>
-          <Card>
-            <CardHeader color='primary'>
-              <h4 className={classes.cardTitleWhite}>Fund Request</h4>
-              <p className={classes.cardCategoryWhite}>
-                Below is the detail of the fund request
-              </p>
-            </CardHeader>
-            <CardBody>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Title:</strong>{' '}
-                  {!loading && request !== null ? request.title : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Name:</strong>{' '}
-                  {!loading && request !== null ? request.name : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Father name:</strong>{' '}
-                  {!loading && request !== null ? request.fatherName : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>CNIC:</strong>{' '}
-                  {!loading && request !== null ? request.cnic : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Date of birth:</strong>{' '}
-                  {!loading && request !== null ? request.dateOfBirth : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Registration number:</strong>{' '}
-                  {!loading && request !== null
-                    ? request.registrationNumber
-                    : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Degree program:</strong>{' '}
-                  {!loading && request !== null ? request.degreeProgram : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Department:</strong>{' '}
-                  {!loading && request !== null ? request.department : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Semester:</strong>{' '}
-                  {!loading && request !== null ? request.semester : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Description:</strong>{' '}
-                  {!loading && request !== null ? request.description : ''}
-                </div>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <div className={classes.row}>
-                  <strong>Status:</strong>{' '}
-                  {!loading && request !== null
-                    ? getRequestStatus(request.status)
-                    : ''}
-                </div>
-              </GridItem>
-            </CardBody>
-          </Card>
-        </GridItem>
-      </GridContainer>
+      {loading ? (
+        <div style={{ textAlign: 'center' }}>
+          <CircularProgress />
+        </div>
+      ) : (
+        <Fragment>
+          <GridContainer>
+            <GridItem xs={12} sm={12} md={12}>
+              <Card>
+                <CardHeader color='primary'>
+                  <h4 className={classes.cardTitleWhite}>Fund Request</h4>
+                  <p className={classes.cardCategoryWhite}>
+                    Below is the detail of the fund request
+                  </p>
+                </CardHeader>
+                <CardBody>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Title:</strong>{' '}
+                      {!loading && request !== null ? request.title : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Name:</strong>{' '}
+                      {!loading && request !== null ? request.name : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Father name:</strong>{' '}
+                      {!loading && request !== null ? request.fatherName : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>CNIC:</strong>{' '}
+                      {!loading && request !== null ? request.cnic : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Date of birth:</strong>{' '}
+                      {!loading && request !== null ? request.dateOfBirth : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Registration number:</strong>{' '}
+                      {!loading && request !== null
+                        ? request.registrationNumber
+                        : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Degree program:</strong>{' '}
+                      {!loading && request !== null
+                        ? request.degreeProgram
+                        : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Department:</strong>{' '}
+                      {!loading && request !== null ? request.department : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Semester:</strong>{' '}
+                      {!loading && request !== null ? request.semester : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Description:</strong>{' '}
+                      {!loading && request !== null ? request.description : ''}
+                    </div>
+                  </GridItem>
+                  <GridItem xs={12} sm={12} md={12}>
+                    <div className={classes.row}>
+                      <strong>Status:</strong>{' '}
+                      {!loading && request !== null
+                        ? getRequestStatus(request.status)
+                        : ''}
+                    </div>
+                  </GridItem>
+                </CardBody>
+              </Card>
+            </GridItem>
+          </GridContainer>
+        </Fragment>
+      )}
     </Fragment>
   );
 };

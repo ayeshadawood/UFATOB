@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getUserRequests } from '../../../actions/request';
@@ -159,53 +159,67 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
   return (
     <Fragment>
       <div className={classes.root}>
-        <AppBar position='static' color='default'>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            indicatorColor='primary'
-            textColor='primary'
-            variant='fullWidth'
-            aria-label='full width tabs example'
+        {loading ? (
+          <div
+            style={{
+              textAlign: 'center',
+              marginTop: '20px',
+              marginBottom: '20px',
+            }}
           >
-            <Tab label='Pending' {...a11yProps(0)} />
-            <Tab label='Accepted' {...a11yProps(1)} />
-            <Tab label='Rejected' {...a11yProps(2)} />
-          </Tabs>
-        </AppBar>
-        <SwipeableViews
-          axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
-          index={value}
-          onChangeIndex={handleChangeIndex}
-        >
-          <TabPanel value={value} index={0} dir={theme.direction}>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Status', 'Actions']}
-              tableData={
-                !loading && requests.length > 0 ? getPendingRequests() : []
-              }
-            />
-          </TabPanel>
-          <TabPanel value={value} index={1} dir={theme.direction}>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
-              tableData={
-                !loading && requests.length > 0 ? getAcceptedRequests() : []
-              }
-            />
-          </TabPanel>
-          <TabPanel value={value} index={2} dir={theme.direction}>
-            <Table
-              tableHeaderColor='primary'
-              tableHead={['S.No.', 'Title', 'Actions']}
-              tableData={
-                !loading && requests.length > 0 ? getRejectedRequests() : []
-              }
-            />
-          </TabPanel>
-        </SwipeableViews>
+            <CircularProgress />
+          </div>
+        ) : (
+          <Fragment>
+            <AppBar position='static' color='default'>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor='primary'
+                textColor='primary'
+                variant='fullWidth'
+                aria-label='full width tabs example'
+              >
+                <Tab label='Pending' {...a11yProps(0)} />
+                <Tab label='Accepted' {...a11yProps(1)} />
+                <Tab label='Rejected' {...a11yProps(2)} />
+              </Tabs>
+            </AppBar>
+            <SwipeableViews
+              axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+              index={value}
+              onChangeIndex={handleChangeIndex}
+            >
+              <TabPanel value={value} index={0} dir={theme.direction}>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={['S.No.', 'Title', 'Status', 'Actions']}
+                  tableData={
+                    !loading && requests.length > 0 ? getPendingRequests() : []
+                  }
+                />
+              </TabPanel>
+              <TabPanel value={value} index={1} dir={theme.direction}>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={['S.No.', 'Title', 'Actions']}
+                  tableData={
+                    !loading && requests.length > 0 ? getAcceptedRequests() : []
+                  }
+                />
+              </TabPanel>
+              <TabPanel value={value} index={2} dir={theme.direction}>
+                <Table
+                  tableHeaderColor='primary'
+                  tableHead={['S.No.', 'Title', 'Actions']}
+                  tableData={
+                    !loading && requests.length > 0 ? getRejectedRequests() : []
+                  }
+                />
+              </TabPanel>
+            </SwipeableViews>
+          </Fragment>
+        )}
       </div>
     </Fragment>
   );
