@@ -35,16 +35,24 @@ router.get('/university', auth, async (req, res) => {
       for (let j = 0; j < transactions.length; j++) {
         const transaction = transactions[j];
 
-        user = await User.findById(transaction.reciever).select('-password');
+        let user;
+
+        let userName = '';
+        if (transaction.reciever === 'Other') {
+          userName = transaction.recieverName;
+        } else {
+          user = await User.findById(transaction.reciever).select('-password');
+          userName = user.name;
+        }
 
         // If the user is a student then continue
-        if (user.type === 2) continue;
+        if (user && user.type === 2) continue;
 
         // If the entry of user does not exist then initialize it otherwise add the amount
-        if (!result[`${user.name}`]) {
-          result[`${user.name}`] = transaction.amount;
+        if (!result[`${userName}`]) {
+          result[`${userName}`] = transaction.amount;
         } else {
-          result[`${user.name}`] += transaction.amount;
+          result[`${userName}`] += transaction.amount;
         }
       }
     }
@@ -85,29 +93,36 @@ router.get('/year', auth, async (req, res) => {
       for (let j = 0; j < transactions.length; j++) {
         const transaction = transactions[j];
 
-        user = await User.findById(transaction.reciever).select('-password');
+        let user;
+
+        let userName = '';
+        if (transaction.reciever === 'Other') {
+          userName = transaction.recieverName;
+        } else {
+          user = await User.findById(transaction.reciever).select('-password');
+          userName = user.name;
+        }
 
         // If the user is a student then continue
-        if (user.type === 2) continue;
+        if (user && user.type === 2) continue;
 
         const date = new Date(transaction.timeStamp);
         const year = date.getFullYear();
 
         // Add the entry in the corresponding date property
         if (!result[year]) {
-          result[year] = { [`${user.name}`]: transaction.amount };
+          result[year] = { [`${userName}`]: transaction.amount };
         } else {
           // If the entry does not exist for current year then create one otherwise add the amount
-          if (!result[year][`${user.name}`]) {
+          if (!result[year][`${userName}`]) {
             result[year] = {
               ...result[year],
-              [`${user.name}`]: transaction.amount,
+              [`${userName}`]: transaction.amount,
             };
           } else {
             result[year] = {
               ...result[year],
-              [`${user.name}`]:
-                result[year][`${user.name}`] + transaction.amount,
+              [`${userName}`]: result[year][`${userName}`] + transaction.amount,
             };
           }
         }

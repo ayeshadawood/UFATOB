@@ -28,8 +28,10 @@ const BlockchainSchema = mongoose.Schema({
             ref: 'user',
           },
           reciever: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'user',
+            type: String,
+          },
+          recieverName: {
+            type: String,
           },
           transactionId: {
             type: String,
@@ -70,8 +72,10 @@ const BlockchainSchema = mongoose.Schema({
         ref: 'user',
       },
       reciever: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'user',
+        type: String,
+      },
+      recieverName: {
+        type: String,
       },
       transactionId: {
         type: String,

@@ -44,12 +44,21 @@ const CreateTransaction = ({
     reference: '',
     reciever: '',
     amount: '',
+    recieverName: '',
   });
 
-  const { title, detail, reference, reciever, amount } = formData;
+  const { title, detail, reference, reciever, amount, recieverName } = formData;
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+
+    if (e.target.name === 'reciever') {
+      if (e.target.value === 'Other') {
+        setRecieverNameDisabled(false);
+      } else {
+        setRecieverNameDisabled(true);
+      }
+    }
   };
 
   const onSubmit = (e) => {
@@ -60,6 +69,8 @@ const CreateTransaction = ({
   useEffect(() => {
     getAllUniversities();
   }, [getAllUniversities]);
+
+  const [recieverNameDisabled, setRecieverNameDisabled] = useState(true);
 
   return (
     <Fragment>
@@ -117,8 +128,23 @@ const CreateTransaction = ({
                       {university.name}
                     </MenuItem>
                   ))}
+                <MenuItem value='Other'>Other</MenuItem>
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <TextField
+              name='recieverName'
+              value={recieverName}
+              onChange={(e) => onChange(e)}
+              label='Receiver name'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              disabled={recieverNameDisabled}
+              required
+            />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>
             <TextField
@@ -144,6 +170,8 @@ const CreateTransaction = ({
               className={classes.input}
               margin='dense'
               size='medium'
+              multiline
+              rows={5}
             />
           </Grid>
           <Grid item xs={12} sm={12} md={12}>

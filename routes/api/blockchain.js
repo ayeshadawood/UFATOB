@@ -34,9 +34,12 @@ router.get('/transactions/:id', auth, async (req, res) => {
 
         const sender = await User.findById(transaction.sender).select('name');
 
-        const reciever = await User.findById(transaction.reciever).select(
-          'name'
-        );
+        let reciever = '';
+        if (transaction.reciever === 'Other') {
+          reciever = transaction.recieverName;
+        } else {
+          reciever = await User.findById(transaction.reciever).select('name');
+        }
 
         result = [
           ...result,
@@ -95,9 +98,12 @@ router.get('/my-transactions', auth, async (req, res) => {
         if (user.type === 0) {
           const sender = await User.findById(transaction.sender).select('name');
 
-          const reciever = await User.findById(transaction.reciever).select(
-            'name'
-          );
+          let reciever = '';
+          if (transaction.reciever === 'Other') {
+            reciever = transaction.recieverName;
+          } else {
+            reciever = await User.findById(transaction.reciever).select('name');
+          }
 
           result = [
             ...result,
@@ -150,9 +156,14 @@ router.get('/my-transactions', auth, async (req, res) => {
       if (user.type === 0) {
         const sender = await User.findById(transaction.sender).select('name');
 
-        const reciever = await User.findById(transaction.reciever).select(
-          'name'
-        );
+        let reciever = '';
+        if (transaction.reciever === 'Other') {
+          reciever = transaction.recieverName;
+        } else {
+          reciever = await User.findOne({ _id: transaction.reciever }).select(
+            'name'
+          );
+        }
 
         result = [
           ...result,
@@ -270,6 +281,7 @@ router.post(
     check('reciever', 'Reciever is required').not().isEmpty(),
     check('title', 'Title is required').not().isEmpty(),
     check('detail', 'Detail of the contract is required').not().isEmpty(),
+    check('reference', 'Reference is required').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -277,24 +289,35 @@ router.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { amount, reciever, title, detail, reference } = req.body;
-    if (reference == null) {
-      reference = null;
-    }
+    const {
+      amount,
+      reciever,
+      title,
+      detail,
+      reference,
+      recieverName,
+    } = req.body;
+
     try {
       // Updating the blockchain of the current user
       await connectDB(`${req.user.id}`);
 
-      const blockchains = await Blockchain.find();
-      blockchains[0].pendingTransactions.push({
+      const newTransaction = {
         amount,
         title,
         detail,
         reference,
         sender: req.user.id,
-        reciever,
         transactionId: v1().split('-').join(''),
-      });
+        reciever,
+      };
+
+      if (reciever === 'Other') {
+        newTransaction.recieverName = recieverName;
+      }
+
+      const blockchains = await Blockchain.find();
+      blockchains[0].pendingTransactions.push(newTransaction);
 
       await blockchains[0].save();
 
@@ -311,15 +334,7 @@ router.post(
         await connectDB(`${user.id}`);
 
         const blockchains = await Blockchain.find();
-        blockchains[0].pendingTransactions.push({
-          amount,
-          title,
-          detail,
-          reference,
-          sender: req.user.id,
-          reciever,
-          transactionId: v1().split('-').join(''),
-        });
+        blockchains[0].pendingTransactions.push(newTransaction);
 
         await blockchains[0].save();
       }

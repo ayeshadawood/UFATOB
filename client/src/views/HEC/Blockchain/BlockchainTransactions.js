@@ -33,7 +33,7 @@ const Blockchain = ({
           sNo,
           transaction.title,
           transaction.sender.name,
-          transaction.reciever.name,
+          transaction.reciever,
           `Rs. ${transaction.amount}`,
           <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
         ],
