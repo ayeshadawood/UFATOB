@@ -11,6 +11,7 @@ import scrapper from './scrapper';
 import post from './post';
 import group from './group';
 import dataVisualization from './data-visualization';
+import conversation from './conversation';
 
 export default combineReducers({
   alert,
@@ -25,4 +26,5 @@ export default combineReducers({
   post,
   group,
   dataVisualization,
+  conversation,
 });
