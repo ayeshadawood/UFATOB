@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import {
@@ -75,36 +75,43 @@ const ComplaintTabs = ({
     setValue(index);
   };
 
+  const [description, setDescription] = useState('');
+
   const getQueuedComplaints = () => {
     let res = [];
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 0) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            complaint.name,
-            <Fragment>
-              <Link to={`/university/complaint/${complaint._id}`}>
-                <Button color='primary' variant='contained'>
-                  Open
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              complaint.name,
+              <Fragment>
+                <Link to={`/university/complaint/${complaint._id}`}>
+                  <Button color='primary' variant='contained'>
+                    Open
+                  </Button>
+                </Link>
+                <Button
+                  color='primary'
+                  variant='contained'
+                  onClick={() => forwardComplaint(complaint._id)}
+                  style={{ backgroundColor: 'green', marginLeft: '5px' }}
+                >
+                  Forward
                 </Button>
-              </Link>
-              <Button
-                color='primary'
-                variant='contained'
-                onClick={() => forwardComplaint(complaint._id)}
-                style={{ backgroundColor: 'green', marginLeft: '5px' }}
-              >
-                Forward
-              </Button>
-            </Fragment>,
-          ],
-        ];
+              </Fragment>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -114,22 +121,27 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 1) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            complaint.name,
-            <Link to={`/university/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              complaint.name,
+              <Link to={`/university/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -139,22 +151,27 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            complaint.name,
-            <Link to={`/university/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              complaint.name,
+              <Link to={`/university/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -164,22 +181,27 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 3) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            complaint.name,
-            <Link to={`/university/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              complaint.name,
+              <Link to={`/university/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -203,6 +225,16 @@ const ComplaintTabs = ({
           </div>
         ) : (
           <Fragment>
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label='Search'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              style={{ marginBottom: '20px' }}
+            />
             <AppBar position='static' color='default'>
               <Tabs
                 value={value}

@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getUserRequests } from '../../../actions/request';
@@ -68,6 +68,8 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     setValue(index);
   };
 
+  const [description, setDescription] = useState('');
+
   const getRequestStatus = (status) => {
     switch (status) {
       case 1:
@@ -82,22 +84,27 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status < 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            getRequestStatus(request.status),
-            <Link to={`/university/request/${request._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              getRequestStatus(request.status),
+              <Link to={`/university/request/${request._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -107,21 +114,26 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status === 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              <Link to={`/university/request/${request._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -131,21 +143,26 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
     let sNo = 1;
     requests.forEach((request) => {
       if (request.status === 3) {
-        res = [
-          ...res,
-          [
-            sNo,
-            request.title,
-            <Link to={`/university/request/${request._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(request.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              request.title,
+              <Link to={`/university/request/${request._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -169,6 +186,16 @@ const RequestTabs = ({ request: { requests, loading }, getUserRequests }) => {
           </div>
         ) : (
           <Fragment>
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label='Search'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              style={{ marginBottom: '20px' }}
+            />
             <AppBar position='static' color='default'>
               <Tabs
                 value={value}

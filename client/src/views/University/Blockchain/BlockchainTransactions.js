@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import GridItem from '../../../components/Grid/GridItem.js';
@@ -10,7 +10,7 @@ import CardBody from '../../../components/Card/CardBody.js';
 import { connect } from 'react-redux';
 import { getAllTransactions } from '../../../actions/blockchain';
 import Moment from 'react-moment';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, TextField } from '@material-ui/core';
 
 import styles from '../../../assets/jss/material-dashboard-react/views/dashboardStyle.js';
 
@@ -23,22 +23,32 @@ const Blockchain = ({
 }) => {
   const classes = useStyles();
 
+  const [description, setDescription] = useState('');
+
   const getTransactions = () => {
     let res = [];
     let sNo = 1;
     transactions.forEach((transaction) => {
-      res = [
-        ...res,
-        [
-          sNo,
-          transaction.title,
-          transaction.sender.name,
-          transaction.reciever,
-          `Rs. ${transaction.amount}`,
-          <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
-        ],
-      ];
-      sNo++;
+      if (
+        description === '' ||
+        new RegExp(description, 'i').test(transaction.title) ||
+        new RegExp(description, 'i').test(transaction.sender.name) ||
+        new RegExp(description, 'i').test(transaction.reciever) ||
+        new RegExp(description, 'i').test(transaction.amount)
+      ) {
+        res = [
+          ...res,
+          [
+            sNo,
+            transaction.title,
+            transaction.sender.name,
+            transaction.reciever,
+            `Rs. ${transaction.amount}`,
+            <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
+          ],
+        ];
+        sNo++;
+      }
     });
     return res;
   };
@@ -71,6 +81,16 @@ const Blockchain = ({
             ) : (
               <Fragment>
                 <CardBody>
+                  <TextField
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)}
+                    label='Search'
+                    variant='outlined'
+                    fullWidth={true}
+                    className={classes.input}
+                    margin='dense'
+                    style={{ marginBottom: '20px' }}
+                  />
                   <Table
                     tableHeaderColor='primary'
                     tableHead={[
