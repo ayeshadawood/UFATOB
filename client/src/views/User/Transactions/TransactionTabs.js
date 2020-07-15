@@ -11,7 +11,7 @@ import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getAllTransactionsForUser } from '../../../actions/blockchain';
 import Moment from 'react-moment';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress, TextField } from '@material-ui/core';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -71,22 +71,32 @@ const TransactionTabs = ({
     setValue(index);
   };
 
+  const [description, setDescription] = useState('');
+
   const getPendingTransactions = () => {
     let res = [];
     let sNo = 1;
     userTransactions.forEach((transaction) => {
       if (transaction.status === 0) {
-        res = [
-          ...res,
-          [
-            sNo,
-            transaction.sender.name,
-            transaction.reciever,
-            `Rs.${transaction.amount}`,
-            <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
-          ],
-        ];
-        sNo++;
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(transaction.title) ||
+          new RegExp(description, 'i').test(transaction.sender.name) ||
+          new RegExp(description, 'i').test(transaction.reciever) ||
+          new RegExp(description, 'i').test(transaction.amount)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              transaction.sender.name,
+              transaction.reciever,
+              `Rs.${transaction.amount}`,
+              <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
+            ],
+          ];
+          sNo++;
+        }
       }
     });
     return res;
@@ -97,17 +107,25 @@ const TransactionTabs = ({
     let sNo = 1;
     userTransactions.forEach((transaction) => {
       if (transaction.status === 1) {
-        res = [
-          ...res,
-          [
-            sNo,
-            transaction.sender.name,
-            transaction.reciever,
-            `Rs.${transaction.amount}`,
-            <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
-          ],
-        ];
-        sNo++;
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(transaction.title) ||
+          new RegExp(description, 'i').test(transaction.sender.name) ||
+          new RegExp(description, 'i').test(transaction.reciever) ||
+          new RegExp(description, 'i').test(transaction.amount)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              transaction.sender.name,
+              transaction.reciever,
+              `Rs.${transaction.amount}`,
+              <Moment format='DD-MMM-YYYY'>{transaction.timeStamp}</Moment>,
+            ],
+          ];
+          sNo++;
+        }
       }
     });
     return res;
@@ -132,6 +150,16 @@ const TransactionTabs = ({
           </div>
         ) : (
           <Fragment>
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label='Search'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              style={{ marginBottom: '20px' }}
+            />
             <AppBar position='static' color='default'>
               <Tabs
                 value={value}

@@ -7,7 +7,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, TextField } from '@material-ui/core';
 import Table from '../../../components/Table/Table.js';
 import { connect } from 'react-redux';
 import { getUserComplaints } from '../../../actions/complaint';
@@ -71,6 +71,8 @@ const ComplaintTabs = ({
     setValue(index);
   };
 
+  const [description, setDescription] = useState('');
+
   const getComplaintStatus = (status) => {
     switch (status) {
       case 0:
@@ -87,22 +89,27 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status < 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            getComplaintStatus(complaint.status),
-            <Link to={`/user/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              getComplaintStatus(complaint.status),
+              <Link to={`/user/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -112,21 +119,26 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 2) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            <Link to={`/user/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              <Link to={`/user/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -136,21 +148,26 @@ const ComplaintTabs = ({
     let sNo = 1;
     complaints.forEach((complaint) => {
       if (complaint.status === 3) {
-        res = [
-          ...res,
-          [
-            sNo,
-            complaint.title,
-            <Link to={`/user/complaint/${complaint._id}`}>
-              <Button color='primary' variant='contained'>
-                Open
-              </Button>
-              ,
-            </Link>,
-          ],
-        ];
+        if (
+          description === '' ||
+          new RegExp(description, 'i').test(complaint.title)
+        ) {
+          res = [
+            ...res,
+            [
+              sNo,
+              complaint.title,
+              <Link to={`/user/complaint/${complaint._id}`}>
+                <Button color='primary' variant='contained'>
+                  Open
+                </Button>
+                ,
+              </Link>,
+            ],
+          ];
+          sNo++;
+        }
       }
-      sNo++;
     });
     return res;
   };
@@ -174,6 +191,16 @@ const ComplaintTabs = ({
           </div>
         ) : (
           <Fragment>
+            <TextField
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              label='Search'
+              variant='outlined'
+              fullWidth={true}
+              className={classes.input}
+              margin='dense'
+              style={{ marginBottom: '20px' }}
+            />
             <AppBar position='static' color='default'>
               <Tabs
                 value={value}
