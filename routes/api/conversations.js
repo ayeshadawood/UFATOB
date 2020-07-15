@@ -1,8 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const { check, validationResult } = require('express-validator');
-const auth = require('../../../middleware/auth');
-const Conversation = require('../../../models/chat/Conversation');
+const auth = require('../../middleware/auth');
+const Conversation = require('../../models/Conversation');
 
 // @route   GET /api/chat/conversations/user
 // @desc    Get all conversations for user
@@ -12,9 +12,9 @@ router.get('/user', auth, async (req, res) => {
     let conversations = await Conversation.find()
       .populate('users.user', ['name', 'avatar'])
       .populate('messages.user', ['name', 'avatar']);
-    conversations = conversations.filter(conversation => {
+    conversations = conversations.filter((conversation) => {
       const index = conversation.users
-        .map(item => item.user._id)
+        .map((item) => item.user._id)
         .indexOf(req.user.id);
       if (index !== -1) {
         return conversation;
@@ -48,12 +48,8 @@ router.post(
   '/',
   [
     auth,
-    check('user1', 'User 1 is requried')
-      .not()
-      .isEmpty(),
-    check('user2', 'User 2 is requried')
-      .not()
-      .isEmpty()
+    check('user1', 'User 1 is requried').not().isEmpty(),
+    check('user2', 'User 2 is requried').not().isEmpty(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -65,8 +61,8 @@ router.post(
 
     try {
       let conversations = await Conversation.find();
-      conversations = conversations.filter(conversation => {
-        const users = conversation.users.map(item => item.user);
+      conversations = conversations.filter((conversation) => {
+        const users = conversation.users.map((item) => item.user);
         if (users.indexOf(user1) !== -1 && users.indexOf(user2) !== -1) {
           return conversation;
         }
@@ -99,7 +95,6 @@ router.post(
 
       res.json(conversation);
     } catch (err) {
-      console.log(err);
       return res.status(500).send('Server error');
     }
   }

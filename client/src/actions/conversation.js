@@ -6,7 +6,7 @@ import {
   MESSAGE_ADDED,
   CONVERSATION_ERROR,
   SET_CONVERSATION_LOADING,
-} from '../types';
+} from './types';
 
 // Get all conversations for user
 export const getAllConversationsForCurrentUser = () => async (dispatch) => {
@@ -15,7 +15,7 @@ export const getAllConversationsForCurrentUser = () => async (dispatch) => {
   });
 
   try {
-    const res = await axios.get('/api/chat/conversations/user');
+    const res = await axios.get('/api/conversations/user');
 
     dispatch({
       type: ALL_CONVERSATIONS_LOADED,
@@ -36,7 +36,7 @@ export const getConversationById = (id) => async (dispatch) => {
   });
 
   try {
-    const res = await axios.get(`/api/chat/conversations/${id}`);
+    const res = await axios.get(`/api/conversations/${id}`);
 
     dispatch({
       type: CONVERSATION_LOADED,
@@ -65,7 +65,7 @@ export const createConversation = (user1, user2) => async (dispatch) => {
   const body = JSON.stringify({ user1, user2 });
 
   try {
-    const res = await axios.post('/api/chat/conversations', body, config);
+    const res = await axios.post('/api/conversations', body, config);
 
     dispatch({
       type: CONVERSATION_CREATED,

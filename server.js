@@ -26,6 +26,7 @@ app.use('/api/scrapper', require('./routes/api/scrapper'));
 app.use('/api/groups', require('./routes/api/groups'));
 app.use('/api/posts', require('./routes/api/posts'));
 app.use('/api/data-visualization', require('./routes/api/data-visualization'));
+app.use('/api/conversations', require('./routes/api/conversations'));
 
 // Setup SocketIO to send and receive messages in real time in chat module
 io.on('connection', (socket) => {

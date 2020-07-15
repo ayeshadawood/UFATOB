@@ -7,6 +7,7 @@ import Settings from '../views/User/Settings/Settings';
 import Transactions from '../views/User/Transactions/Transactions';
 import Groups from '../views/User/DiscussionForum/Groups';
 import Profiles from '../views/User/Profiles/Profiles';
+import MyConversations from '../views/User/MyConversations/MyConversations';
 
 const UserRoutes = [
   {
@@ -49,6 +50,13 @@ const UserRoutes = [
     name: 'Profiles',
     icon: DashboardIcon,
     component: Profiles,
+    layout: '/user',
+  },
+  {
+    path: '/my-conversations',
+    name: 'Chat',
+    icon: DashboardIcon,
+    component: MyConversations,
     layout: '/user',
   },
   {

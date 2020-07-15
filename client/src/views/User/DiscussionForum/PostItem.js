@@ -1,9 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deletePost, likePost, unlikePost } from '../../../actions/post';
 import { Button, Grid } from '@material-ui/core';
+import { createConversation } from '../../../actions/conversation';
 
 const PostItem = ({
   post: { _id, user, description, likes },
@@ -11,8 +12,15 @@ const PostItem = ({
   deletePost,
   likePost,
   unlikePost,
-  styles,
+  createConversation,
+  history,
 }) => {
+  const redirectToChat = async () => {
+    const conversationId = await createConversation(auth.user._id, user._id);
+
+    history.push(`/user/conversation/${conversationId}`);
+  };
+
   return (
     <Fragment>
       <Grid
@@ -111,6 +119,17 @@ const PostItem = ({
                 Delete
               </Button>
             )}
+            {auth.user !== null && auth.user._id !== user._id && (
+              <Button
+                variant='dark'
+                className='mt-3'
+                color='primary'
+                variant='contained'
+                onClick={() => redirectToChat()}
+              >
+                Chat
+              </Button>
+            )}
           </div>
         </Grid>
       </Grid>
@@ -124,11 +143,13 @@ PostItem.propTypes = {
   deletePost: PropTypes.func.isRequired,
   likePost: PropTypes.func.isRequired,
   unlikePost: PropTypes.func.isRequired,
-  styles: PropTypes.object.isRequired,
+  createConversation: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 export default connect(null, {
   deletePost,
   likePost,
   unlikePost,
-})(PostItem);
+  createConversation,
+})(withRouter(PostItem));
