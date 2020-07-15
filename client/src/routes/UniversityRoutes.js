@@ -11,6 +11,7 @@ import Transactions from '../views/University/Transactions/Transactions';
 import Blockchain from '../views/University/Blockchain/Blockchain';
 import Groups from '../views/University/DiscussionForum/Groups';
 import Profiles from '../views/University/Profiles/Profiles';
+import MyConversations from '../views/University/MyConversations/MyConversations';
 
 const dashboardRoutes = [
   {
@@ -81,6 +82,13 @@ const dashboardRoutes = [
     name: 'Profiles',
     icon: DashboardIcon,
     component: Profiles,
+    layout: '/university',
+  },
+  {
+    path: '/my-conversations',
+    name: 'Chat',
+    icon: DashboardIcon,
+    component: MyConversations,
     layout: '/university',
   },
   {

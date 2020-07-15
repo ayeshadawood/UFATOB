@@ -1,11 +1,27 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { deleteComment } from '../../../actions/post';
 import { Button, Grid } from '@material-ui/core';
+import { createConversation } from '../../../actions/conversation';
 
-const CommentItem = ({ comment, auth, deleteComment, post }) => {
+const CommentItem = ({
+  comment,
+  auth,
+  deleteComment,
+  post,
+  history,
+  createConversation,
+}) => {
+  const redirectToChat = async () => {
+    const conversationId = await createConversation(
+      auth.user._id,
+      comment.user._id
+    );
+
+    history.push(`/hec/conversation/${conversationId}`);
+  };
   return (
     <Fragment>
       <Grid
@@ -70,6 +86,17 @@ const CommentItem = ({ comment, auth, deleteComment, post }) => {
                 Delete
               </Button>
             )}
+            {auth.user !== null && auth.user._id !== comment.user._id && (
+              <Button
+                variant='dark'
+                className='mt-3'
+                color='primary'
+                variant='contained'
+                onClick={() => redirectToChat()}
+              >
+                Chat
+              </Button>
+            )}
           </div>
         </Grid>
       </Grid>
@@ -82,8 +109,11 @@ CommentItem.propTypes = {
   auth: PropTypes.object.isRequired,
   deleteComment: PropTypes.func.isRequired,
   post: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  createConversation: PropTypes.func.isRequired,
 };
 
 export default connect(null, {
   deleteComment,
-})(CommentItem);
+  createConversation,
+})(withRouter(CommentItem));

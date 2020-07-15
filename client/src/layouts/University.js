@@ -21,6 +21,7 @@ import EditGroup from '../views/University/DiscussionForum/EditGroup';
 import Group from '../views/University/DiscussionForum/Group';
 import Post from '../views/University/DiscussionForum/Post';
 import Profile from '../views/University/Profile/Profile';
+import Conversation from '../views/University/Conversation/Conversation';
 
 import routes from '../routes/UniversityRoutes';
 
@@ -66,6 +67,7 @@ const switchRoutes = (
     <Route path='/university/group/:id' component={Group} />
     <Route path='/university/post/:id' component={Post} />
     <Route path='/university/profile/:id' component={Profile} />
+    <Route path='/university/conversation/:id' component={Conversation} />
     <Redirect from='/university' to='/university/dashboard' />
   </Switch>
 );

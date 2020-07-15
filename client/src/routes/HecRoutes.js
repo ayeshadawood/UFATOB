@@ -9,6 +9,7 @@ import Settings from '../views/HEC/Settings/Settings';
 import Transactions from '../views/HEC/Transactions/Transactions';
 import Groups from '../views/HEC/DiscussionForum/Groups';
 import Profiles from '../views/HEC/Profiles/Profiles';
+import MyConversations from '../views/HEC/MyConversations/MyConversations';
 
 const HecRoutes = [
   {
@@ -65,6 +66,13 @@ const HecRoutes = [
     name: 'Profiles',
     icon: DashboardIcon,
     component: Profiles,
+    layout: '/hec',
+  },
+  {
+    path: '/my-conversations',
+    name: 'Chat',
+    icon: DashboardIcon,
+    component: MyConversations,
     layout: '/hec',
   },
   {
