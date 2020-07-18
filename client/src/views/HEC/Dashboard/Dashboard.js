@@ -251,7 +251,7 @@ const Dashboard = ({
           <GridContainer>
             <GridItem xs={12} sm={12} md={12}>
               <Typography variant='h4' style={{ marginBottom: '10px' }}>
-                Per Institution Funding
+                Per Institution/Contracter Funding
               </Typography>
               <canvas ref={universityChart}></canvas>
             </GridItem>
